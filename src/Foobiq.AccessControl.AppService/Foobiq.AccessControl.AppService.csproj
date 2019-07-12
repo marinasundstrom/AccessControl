@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.4.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="8.4.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Api.Analyzers" Version="2.2.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Azure.Devices" Version="1.18.1" />
+    <PackageReference Include="Microsoft.Azure.NotificationHubs" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Azure.EventHubs" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Foobiq.AccessControl.AppService.Application\Foobiq.AccessControl.AppService.Application.csproj" />
+    <ProjectReference Include="..\Foobiq.AccessControl.AppService.Core\Foobiq.AccessControl.AppService.Core.csproj" />
+    <ProjectReference Include="..\Foobiq.AccessControl.AppService.Domain\Foobiq.AccessControl.AppService.Domain.csproj" />
+    <ProjectReference Include="..\Foobiq.AccessControl.AppService.Persistence\Foobiq.AccessControl.AppService.Persistence.csproj" />
+    <ProjectReference Include="..\Foobiq.AccessControl.Commands\Foobiq.AccessControl.Commands.csproj" />
+    <ProjectReference Include="..\Foobiq.AccessControl.Events\Foobiq.AccessControl.Events.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,1 @@
+﻿pscp -pw raspberry -v -r accesspoint.db pi@192.168.1.254:/home/pi/AccessPoint

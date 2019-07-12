@@ -1,0 +1,56 @@
+﻿@page "/LogIn"
+@using System.ComponentModel.DataAnnotations
+@using Foobiq.AccessControl.AppService.Contracts
+@using Foobiq.AccessControl.WebPortal.Utils
+@inject IUriHelper UriHelper
+@inject ITokenClient TokenClient
+@inject TokenAuthenticationStateProvider AuthStateProvider
+@layout BaseLayout
+
+    <div class="sigin-container text-center">
+
+        <EditForm Model="@credentials" OnValidSubmit="@SubmitCredentials" class="form-signin">
+
+            <span class="oi oi-lock-locked"></span>
+
+            <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
+            <DataAnnotationsValidator />
+            <label for="Email" class="sr-only">Email</label>
+            <InputText class="form-control" placeholder="Email address" @bind-Value="@credentials.Email"></InputText>
+            <ValidationMessage For="@(() => credentials.Email)"></ValidationMessage>
+            <label for="Password" class="sr-only">Password</label>
+            <input type="password" class="form-control" placeholder="Password" @bind="@credentials.Password" />
+            <ValidationMessage For="@(() => credentials.Password)"></ValidationMessage>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
+            <p class="mt-5 mb-3 text-muted">© @DateTime.Now.Year</p>
+        </EditForm>
+
+    </div>
+
+@code {
+FormCredentials credentials = new FormCredentials();
+
+async Task SubmitCredentials()
+{
+    try
+    {
+        var response = await TokenClient.AuthAsync(credentials.Email, credentials.Password);
+
+        await AuthStateProvider.SetTokenAsync(response.Token);
+
+        UriHelper.NavigateTo("/");
+    }
+    catch
+    {
+        credentials = new FormCredentials();
+    }
+}
+
+class FormCredentials
+{
+    [Required, EmailAddress]
+    public string Email { get; set; }
+    [Required]
+    public string Password { get; set; }
+}
+}

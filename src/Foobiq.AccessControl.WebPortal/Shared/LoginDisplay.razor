@@ -1,0 +1,18 @@
+﻿@using Foobiq.AccessControl.WebPortal.Utils
+@inject TokenAuthenticationStateProvider AuthStateProvider
+
+<AuthorizeView>
+    <Authorized>
+        <a href="Manage">Hello, @context.User.Identity.Name!</a>
+        <a href="#" @onclick="@LogOut" class="ml-md-auto">Log out</a>
+    </Authorized>
+    <NotAuthorized>
+        <a href="Register">Register</a>
+        <a href="Login"class="ml-md-auto">Log in</a>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code  {
+    public Task LogOut()
+          => AuthStateProvider.SetTokenAsync(null);
+}

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:validation="clr-namespace:Foobiq.AccessControl.Validation"
+             mc:Ignorable="d"
+             x:Class="Foobiq.AccessControl.Views.RegistrationPage"
+             Title="Register">
+    <ContentPage.Content>
+        <StackLayout Margin="10" VerticalOptions="StartAndExpand">
+            <Label Text="Username" />
+            <Entry x:Name="usernameEntry" Placeholder="username" Text="{Binding Email, Mode=TwoWay}">
+                <Entry.Behaviors>
+                    <validation:EntryValidationBehavior PropertyName="Email" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="Password" />
+            <Entry x:Name="passwordEntry" IsPassword="true" Text="{Binding Password, Mode=TwoWay}">
+                <Entry.Behaviors>
+                    <validation:EntryValidationBehavior PropertyName="Password" />
+                </Entry.Behaviors>
+            </Entry>
+            <Button Text="Register" Command="{Binding RegisterCommand}" IsEnabled="{Binding IsSubmitEnabled}" />
+            <Label x:Name="messageLabel" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

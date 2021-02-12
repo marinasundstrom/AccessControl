@@ -20,6 +20,8 @@ using Foobiq.AccessControl.AppService.Application.Login;
 using Foobiq.AccessControl.AppService.Application.Services;
 using FluentValidation;
 using Foobiq.AccessControl.AppService.Application.Hubs;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 
@@ -37,7 +39,9 @@ namespace Foobiq.AccessControl.AppService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddControllers()
+                .AddNewtonsoftJson();
 
             services.AddDbContext<AccessControlContext>
                 (options => {
@@ -45,16 +49,12 @@ namespace Foobiq.AccessControl.AppService
                     options2 => options2.MigrationsAssembly(typeof(AccessControlContext).AssemblyQualifiedName));
                     options.EnableSensitiveDataLogging();
                 })
-                .AddDefaultIdentity<User>()
+                .AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AccessControlContext>();
 
             services.AddCors(options => 
             {
-                options.AddPolicy("CorsPolicy",
-                 builder => builder.AllowAnyOrigin()
-                 .AllowAnyMethod()
-                 .AllowAnyHeader()
-                 .AllowCredentials());
+                options.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
 
                 // options.AddPolicy("AllowSpecificOrigin",
                 //   builder => builder.WithOrigins("https://localhost:44387"));
@@ -137,7 +137,7 @@ namespace Foobiq.AccessControl.AppService
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -152,17 +152,18 @@ namespace Foobiq.AccessControl.AppService
             // TODO: Re-enable !
             //app.UseHttpsRedirection();
 
-            app.UseCors("CorsPolicy");
+            app.UseCors();
 
             app.UseAuthentication();
+
+            app.UseRouting();
 
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
-            app.UseMvc();
-
-            app.UseSignalR(builder =>
+            app.UseEndpoints(builder =>
             {
+                builder.MapControllers();
                 builder.MapHub<AlarmNotificationsHub>("/alarms-notifications-hub");
                 builder.MapHub<AccessLogHub>("/accesslog");
             });

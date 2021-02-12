@@ -4,8 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Blazor.Extensions.Storage;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 
 namespace Foobiq.AccessControl.WebPortal.Utils
@@ -13,19 +14,19 @@ namespace Foobiq.AccessControl.WebPortal.Utils
     public class TokenAuthenticationStateProvider : AuthenticationStateProvider
     {
         private readonly IJSRuntime _jsRuntime;
-        private readonly LocalStorage _localStorage;
+        private readonly ILocalStorageService _localStorage;
 
-        public TokenAuthenticationStateProvider(LocalStorage localStorage)
+        public TokenAuthenticationStateProvider(ILocalStorageService localStorage)
         {
             _localStorage = localStorage;
         }
 
         public async Task<string> GetTokenAsync()
-            => await _localStorage.GetItem<string>("authToken");
+            => await _localStorage.GetItemAsync<string>("authToken");
 
         public async Task SetTokenAsync(string token)
         {
-            await _localStorage.SetItem("authToken", token);
+            await _localStorage.SetItemAsync("authToken", token);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 

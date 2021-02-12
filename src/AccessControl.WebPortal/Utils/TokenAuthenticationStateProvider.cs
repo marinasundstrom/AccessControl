@@ -30,6 +30,12 @@ namespace AccessControl.WebPortal.Utils
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
+        public async Task ClearTokenAsync()
+        {
+            await _localStorage.RemoveItemAsync("authToken");
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await GetTokenAsync();

@@ -14,5 +14,5 @@
 
 @code  {
     public Task LogOut()
-          => AuthStateProvider.SetTokenAsync(null);
+          => AuthStateProvider.ClearTokenAsync();
 }

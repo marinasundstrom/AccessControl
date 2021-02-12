@@ -4,7 +4,7 @@
 @using AccessControl.AppService
 @using AccessControl.AppService.Contracts
 @inject IIdentitiesClient IdentitiesClient
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Edit identity</h1>
 
@@ -62,14 +62,14 @@
 
 @functions {
     [Parameter]
-    string Id { get; set; }
+    public string Id { get; set; }
 
     List<CardCredential> credentials;
     Identity Identity { get; set; }
 
     string CardNo { get; set; }
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         Identity = await IdentitiesClient.GetAsync(Guid.Parse(Id));
         credentials = (await IdentitiesClient.GetCredentialsAsync(Guid.Parse(Id))).ToList();
@@ -86,7 +86,7 @@
         {
             Console.WriteLine(exc);
         }
-        // UriHelper.NavigateTo("/identities");
+        // NavigationManager.NavigateTo("/identities");
     }
 
     protected async Task OnAddCredentialClicked()

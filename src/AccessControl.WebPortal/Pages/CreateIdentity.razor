@@ -4,7 +4,7 @@
 @using AccessControl.AppService
 @using AccessControl.AppService.Contracts
 @inject IIdentitiesClient IdentitiesClient
-@inject IUriHelper UriHelper
+@inject NavigationManager NavigationManager
 
 <h1>Create identity</h1>
 
@@ -41,6 +41,6 @@
         {
             Console.WriteLine(exc);
         }
-        UriHelper.NavigateTo("/identities");
+        NavigationManager.NavigateTo("/identities");
     }
 }

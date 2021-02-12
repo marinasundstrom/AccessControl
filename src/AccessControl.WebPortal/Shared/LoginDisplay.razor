@@ -4,7 +4,7 @@
 <AuthorizeView>
     <Authorized>
         <a href="Manage">Hello, @context.User.Identity.Name!</a>
-        <a href="#" @onclick="@LogOut" class="ml-md-auto">Log out</a>
+        <a href="#" @onclick="LogOut" class="ml-md-auto">Log out</a>
     </Authorized>
     <NotAuthorized>
         <a href="Register">Register</a>

@@ -41,7 +41,7 @@ else
 List<AccessLogEntry> items;
 IDisposable subscription;
 
-protected override async Task OnInitAsync()
+protected override async Task OnInitializedAsync()
 {
         var list = (await AccessLogClient.GetAllAsync()).ToList();
         list.Reverse();

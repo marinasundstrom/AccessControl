@@ -46,7 +46,7 @@ else
     int slider;
     bool isArmed;
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         await Task.WhenAll(
             GetConfiguration(),

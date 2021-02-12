@@ -39,7 +39,7 @@ else
 @functions {
     IEnumerable<Identity> identities;
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         identities = await IdentitiesClient.GetAllAsync();
     }

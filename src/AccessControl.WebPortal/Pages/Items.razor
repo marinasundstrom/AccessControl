@@ -38,7 +38,7 @@ else
 @code {
 Item[] items;
 
-protected override async Task OnInitAsync()
+protected override async Task OnInitializedAsync()
 {
     items = (await ItemsClient.GetAllAsync()).ToArray();
 }

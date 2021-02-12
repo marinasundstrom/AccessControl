@@ -5,7 +5,7 @@ using System.Device.Pwm.Drivers;
 using System.Device.Spi;
 using System.Net.Http;
 using System.Threading;
-using AccessControl.AppService;
+using AppService;
 using AccessPoint.Components;
 using AccessPoint.Components.Mfrc522;
 using AccessPoint.HostedServices;

@@ -1,4 +1,4 @@
-﻿using AccessControl.AppService.Contracts;
+﻿using AppService.Contracts;
 using AccessControl.Services;
 using AccessControl.Validation;
 using AccessControl.Views;

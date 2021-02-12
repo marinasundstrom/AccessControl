@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AccessControl.AppService.Client\AccessControl.AppService.Client.csproj" />
+    <ProjectReference Include="..\..\..\AppService.Client\AppService.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

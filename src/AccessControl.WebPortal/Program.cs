@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
-using AccessControl.AppService;
+using AppService;
 using AccessControl.WebPortal.Utils;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

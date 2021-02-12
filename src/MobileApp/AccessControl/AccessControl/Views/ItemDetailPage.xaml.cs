@@ -4,7 +4,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 using AccessControl.ViewModels;
-using AccessControl.AppService.Contracts;
+using AppService.Contracts;
 
 namespace AccessControl.Views
 {

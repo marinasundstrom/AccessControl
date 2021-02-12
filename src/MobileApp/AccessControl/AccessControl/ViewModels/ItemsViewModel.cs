@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using AccessControl.Views;
-using AccessControl.AppService.Contracts;
+using AppService.Contracts;
 using Microsoft.Extensions.Logging;
 
 namespace AccessControl.ViewModels

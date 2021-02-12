@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AccessControl.AppService.Client\AccessControl.AppService.Client.csproj" />
+    <ProjectReference Include="..\AppService.Client\AppService.Client.csproj" />
     <ProjectReference Include="..\AccessControl.Commands\AccessControl.Commands.csproj" />
     <ProjectReference Include="..\AccessControl.Events\AccessControl.Events.csproj" />
   </ItemGroup>

@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/AccessControl.AppService/AccessControl.AppService.csproj"
+                "${workspaceFolder}/src/AppService/AppService.csproj"
             ],
             "problemMatcher": "$tsc"
         },
@@ -17,13 +17,13 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/AccessControl.AppService/AccessControl.AppService.csproj"
+                "${workspaceFolder}/src/AppService/AppService.csproj"
             ],
             "windows": {
-                "command": "${workspaceFolder}\\src\\AccessControl.AppService\\publish.bat"
+                "command": "${workspaceFolder}\\src\\AppService\\publish.bat"
             },
             "osx": {
-                "command": "${workspaceFolder}/src/AccessControl.AppService/publish.sh"
+                "command": "${workspaceFolder}/src/AppService/publish.sh"
             },
             "problemMatcher": "$tsc"
         },
@@ -34,7 +34,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/AccessControl.AppService/AccessControl.AppService.csproj"
+                "${workspaceFolder}/src/AppService/AppService.csproj"
             ],
             "problemMatcher": "$tsc"
         }

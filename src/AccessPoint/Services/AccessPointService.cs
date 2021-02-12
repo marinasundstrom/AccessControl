@@ -35,7 +35,7 @@ namespace AccessPoint.Services
         private readonly IServiceEventClient _serviceEventClient;
         private readonly IRfidReader _rfidReader;
 
-        private readonly AccessControl.AppService.Contracts.IAuthorizationClient _authorizationClient;
+        private readonly AppService.Contracts.IAuthorizationClient _authorizationClient;
 
         private const int RedLED = 0;
         private const int GreenLED = 1;
@@ -63,7 +63,7 @@ namespace AccessPoint.Services
             ICommandReceiver commandReceiver,
             IServiceEventClient serviceEventClient,
             IRfidReader rfidReader,
-            AccessControl.AppService.Contracts.IAuthorizationClient authorizationClient)
+            AppService.Contracts.IAuthorizationClient authorizationClient)
         {
             this.logger = logger;
 
@@ -128,7 +128,7 @@ namespace AccessPoint.Services
             {
                 _ = BlinkBlue(ct.Token);
 
-                var result = await _authorizationClient.AuthorizeAsync(new AccessControl.AppService.Contracts.AuthorizeCardCommand()
+                var result = await _authorizationClient.AuthorizeAsync(new AppService.Contracts.AuthorizeCardCommand()
                 {
                     DeviceId = "AccessPoint1",
                     CardNo = cardData.UID,

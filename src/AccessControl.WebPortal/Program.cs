@@ -32,7 +32,7 @@ namespace AccessControl.WebPortal
             var serviceEndpoint = builder.Configuration["ServiceEndpoint"];
 
             async Task<string> RetrieveAuthorizationToken(IServiceProvider sp)
-            {         
+            {
                 return await sp.GetRequiredService<TokenAuthenticationStateProvider>().GetTokenAsync();
             }
 
@@ -90,18 +90,20 @@ namespace AccessControl.WebPortal
             builder.Services.AddTokenAuthenticationStateProvider();
 
             builder.Services.AddScoped<IAlarmNotificationClient>(sp =>
-            {
-                var serviceEndpoint = sp.GetRequiredService<NavigationManager>().BaseUri;
-                return new AlarmNotificationClient(
-                    new HubConnectionBuilder().WithUrl($"{serviceEndpoint}alarms-notifications-hub").Build());
-            });
+                  new AlarmNotificationClient(
+                      new HubConnectionBuilder().WithUrl($"{serviceEndpoint}alarms-notifications-hub", opt =>
+                      {
+                          opt.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;
+                          opt.AccessTokenProvider = () => RetrieveAuthorizationToken(sp);
+                      }).Build()));
 
-            builder.Services.AddTransient<IAccessLogNotifier>(sp =>
-            {
-                var serviceEndpoint = sp.GetRequiredService<NavigationManager>().BaseUri;
-                return new AccessLogNotifier(
-                    new HubConnectionBuilder().WithUrl($"{serviceEndpoint}accesslog").Build());
-            });
+            builder.Services.AddScoped<IAccessLogNotifier>(sp =>
+                new AccessLogNotifier(
+                    new HubConnectionBuilder().WithUrl($"{serviceEndpoint}accesslog", opt =>
+                    {
+                        opt.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;
+                        opt.AccessTokenProvider = () => RetrieveAuthorizationToken(sp);
+                    }).Build()));
 
             await builder.Build().RunAsync();
         }

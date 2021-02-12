@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace AppService.Application.Alarm.Hubs
 {
-    [Authorize]
+    //[Authorize]
     public class AlarmNotificationsHub : Hub<IAlarmNotificationClient>
     {
         public async Task SendAlarmNotification(AlarmNotification notification)

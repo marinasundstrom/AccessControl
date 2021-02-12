@@ -13,7 +13,7 @@ namespace AppService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Policy = "AdministratorsOnly")]
+    [Authorize]
     public class IdentitiesController : ControllerBase
     {
         private AccessControlContext db;

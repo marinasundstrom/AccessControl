@@ -99,7 +99,7 @@ namespace AccessControl
                 new AlarmNotificationClient(
                     new HubConnectionBuilder().WithUrl($"{serviceEndpoint}alarms-notifications-hub", opt =>
                     {
-                        //opt.Transports = HttpTransportType.WebSockets;
+                        opt.Transports = HttpTransportType.WebSockets;
                         opt.AccessTokenProvider = RetrieveAuthorizationToken;
                     }).Build()));
 

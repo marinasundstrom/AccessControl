@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3D915078
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppService", "src\AppService\AppService.csproj", "{F5A76666-B800-4ED8-BAAC-51E6ACFF13D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppService.Client", "src\AppService.Client\AppService.Client.csproj", "{11119153-C54A-4AEE-B400-FCC5AC8920E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppService.Client", "src\AppService.Client\AppService.Client.csproj", "{11119153-C54A-4AEE-B400-FCC5AC8920E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppService.Tests", "tests\AppService.Tests\AppService.Tests.csproj", "{A127A7A3-7828-47C4-A359-7799F93E8C0D}"
 EndProject
@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Android", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.iOS", "src\MobileApp\AccessControl\AccessControl.iOS\AccessControl.iOS.csproj", "{709374D3-6AA7-4D75-9B8C-C2F4547BE218}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl", "src\MobileApp\AccessControl\AccessControl\AccessControl.csproj", "{15A4C24E-3A9F-4E07-A474-2EA60319A986}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl", "src\MobileApp\AccessControl\AccessControl\AccessControl.csproj", "{15A4C24E-3A9F-4E07-A474-2EA60319A986}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MobileApp", "MobileApp", "{F8A6F13F-EAAD-4537-8830-8C740132FF07}"
 EndProject
@@ -32,11 +32,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		README.md = README.md
+		tye.yaml = tye.yaml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Messages", "src\AccessControl.Messages\AccessControl.Messages.csproj", "{C842771A-3675-465B-8811-F5A46D5F306A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.WebPortal", "src\AccessControl.WebPortal\AccessControl.WebPortal.csproj", "{EFE0F124-B6EE-4CBA-AD85-AC37B606CD87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.WebPortal", "src\AccessControl.WebPortal\AccessControl.WebPortal.csproj", "{EFE0F124-B6EE-4CBA-AD85-AC37B606CD87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppService.Domain", "src\AppService.Domain\AppService.Domain.csproj", "{22C23188-0F0C-4EAC-A476-CE2EA6ED14A2}"
 EndProject
@@ -45,6 +46,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppService.Infrastructure", "src\AppService.Infrastructure\AppService.Infrastructure.csproj", "{B6533507-E36B-444E-B661-35CBC452D365}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppService", "AppService", "{79DF4256-FAC5-43CC-B0C3-57854FE17142}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "src\Portal\Portal.csproj", "{A6298B62-6B00-4039-8D41-0D88E30B7E7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -229,6 +232,18 @@ Global
 		{B6533507-E36B-444E-B661-35CBC452D365}.Release|iPhone.Build.0 = Release|Any CPU
 		{B6533507-E36B-444E-B661-35CBC452D365}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{B6533507-E36B-444E-B661-35CBC452D365}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Release|iPhone.Build.0 = Release|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -250,6 +265,7 @@ Global
 		{8CD88162-5F79-4B34-9E8C-1CF1592F7268} = {79DF4256-FAC5-43CC-B0C3-57854FE17142}
 		{B6533507-E36B-444E-B661-35CBC452D365} = {79DF4256-FAC5-43CC-B0C3-57854FE17142}
 		{79DF4256-FAC5-43CC-B0C3-57854FE17142} = {828F1202-D420-46FD-918A-64F11C9A1AAF}
+		{A6298B62-6B00-4039-8D41-0D88E30B7E7D} = {828F1202-D420-46FD-918A-64F11C9A1AAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0738F95-BE87-4581-BF1C-F0A2F2866DF3}

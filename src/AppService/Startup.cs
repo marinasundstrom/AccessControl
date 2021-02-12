@@ -26,6 +26,8 @@ using AppService.Application.Alarm;
 using AppService.Application.AccessLog;
 using AppService.Application.Alarm.Hubs;
 using AppService.Application.AccessLog.Hubs;
+using Microsoft.AspNetCore.ResponseCompression;
+using System.Linq;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 
@@ -47,21 +49,29 @@ namespace AppService
                 .AddControllers()
                 .AddNewtonsoftJson();
 
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
+
             services.AddDbContext<AccessControlContext>
                 (options => {
-                    options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"],
-                    options2 => options2.MigrationsAssembly(typeof(AccessControlContext).AssemblyQualifiedName));
+                    options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]);
+                    //options2 => options2.MigrationsAssembly(typeof(AccessControlContext).AssemblyQualifiedName));
                     options.EnableSensitiveDataLogging();
                 })
                 .AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<AccessControlContext>();
+               .AddEntityFrameworkStores<AccessControlContext>()
+               .AddDefaultTokenProviders();
 
             services.AddCors(options => 
             {
-                options.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-
-                // options.AddPolicy("AllowSpecificOrigin",
-                //   builder => builder.WithOrigins("https://localhost:44387"));
+                options.AddPolicy("AllowAnyOrigin",
+                          builder => builder
+                          .AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
             });
 
             services.AddAuthorization(options =>
@@ -97,22 +107,12 @@ namespace AppService
                     {
                         OnMessageReceived = context =>
                         {
-                            Microsoft.Extensions.Primitives.StringValues accessToken = context.Request.Query["access_token"];
+                            var accessToken = context.Request.Query["access_token"];
 
-                            //if (!string.IsNullOrEmpty(accessToken) &&
-                            //    (context.HttpContext.WebSockets.IsWebSocketRequest || context.Request.Headers["Accept"] == "text/event-stream"))
-                            //{
-                            //    context.Token = context.Request.Query["access_token"];
-                            //}
-                            // If the request is for our hub...
-
-                            PathString path = context.HttpContext.Request.Path;
-                            if (!string.IsNullOrEmpty(accessToken))
+                            if (!string.IsNullOrEmpty(accessToken) &&
+                                (context.HttpContext.WebSockets.IsWebSocketRequest || context.Request.Headers["Accept"] == "text/event-stream"))
                             {
-
-                                //(path.StartsWithSegments("/alarms-notifications-hub"))
-                                // Read the token out of the query string
-                                context.Token = accessToken;
+                                context.Token = context.Request.Query["access_token"];
                             }
                             return Task.CompletedTask;
                         }
@@ -143,6 +143,8 @@ namespace AppService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseResponseCompression();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -153,14 +155,13 @@ namespace AppService
                 app.UseHsts();
             }
 
-            // TODO: Re-enable !
-            //app.UseHttpsRedirection();
-
-            app.UseCors();
-
+            app.UseHttpsRedirection();
             app.UseAuthentication();
-
             app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseCors("AllowAnyOrigin");
 
             app.UseOpenApi();
             app.UseSwaggerUi3();

@@ -25,7 +25,7 @@ namespace AppService.Application.Registration.Commands
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Compare(nameof(Password))]
+        //[Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
 
         public sealed class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegistrationResult>

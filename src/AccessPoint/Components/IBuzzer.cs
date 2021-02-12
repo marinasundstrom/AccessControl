@@ -6,7 +6,7 @@ namespace AccessPoint.Components
 {
     public interface IBuzzer : IDisposable
     {
-        int OutPin { get; }
+        int Channel { get; }
         int ToneFrequency { get; set; }
 
         Task BuzzAsync(CancellationToken cancellationToken = default);

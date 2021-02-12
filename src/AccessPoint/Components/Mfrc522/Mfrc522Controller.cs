@@ -8,7 +8,7 @@ using System.Device.Gpio;
 using System.Device.Spi;
 using System.Diagnostics;
 
-namespace Iot.Device.Mfrc522
+namespace AccessPoint.Components.Mfrc522
 {
     using static Command;
     using static Register;

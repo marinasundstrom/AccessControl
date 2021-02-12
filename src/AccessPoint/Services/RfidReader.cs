@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
-using Iot.Device.Mfrc522;
+using AccessPoint.Components.Mfrc522;
 using Microsoft.Extensions.Logging;
 
 namespace AccessPoint.Services

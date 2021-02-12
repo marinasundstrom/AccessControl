@@ -10,9 +10,9 @@ namespace AccessPoint.Services
     {
         private readonly Buzzer buzzer;
 
-        public BuzzerService(GpioController gpioController, PwmController pwmController)
+        public BuzzerService(GpioController gpioController)
         {
-            buzzer = new Buzzer(gpioController, pwmController, 13);
+            buzzer = new Buzzer(0);
         }
 
         public Task BuzzAsync(TimeSpan duration) => buzzer.BuzzAsync(duration);

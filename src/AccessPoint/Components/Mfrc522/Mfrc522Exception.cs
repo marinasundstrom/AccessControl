@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Iot.Device.Mfrc522
+namespace AccessPoint.Components.Mfrc522
 {
     public class Mfrc522Exception : Exception
     {

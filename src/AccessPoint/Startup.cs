@@ -3,21 +3,23 @@ using System.Device.Gpio;
 using System.Device.Pwm;
 using System.Device.Pwm.Drivers;
 using System.Device.Spi;
-using System.Device.Spi.Drivers;
 using System.Net.Http;
 using System.Threading;
 using AccessControl.AppService;
 using AccessPoint.Components;
+using AccessPoint.Components.Mfrc522;
 using AccessPoint.HostedServices;
 using AccessPoint.Models;
 using AccessPoint.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Devices.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace AccessPoint
@@ -34,7 +36,9 @@ namespace AccessPoint
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddControllers()
+                .AddNewtonsoftJson();
 
             services.AddDbContext<AccessPointContext>
                 (options => {
@@ -42,13 +46,12 @@ namespace AccessPoint
                     options2 => options2.MigrationsAssembly(typeof(AccessPointContext).AssemblyQualifiedName));
                     options.EnableSensitiveDataLogging();
                 })
-                .AddDefaultIdentity<User>()
+                .AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AccessPointContext>();
 
             services.AddSingleton(sp => DeviceClient.CreateFromConnectionString(Configuration["Hub:ConnectionString"]));
 
             services.AddSingleton(sp => new GpioController());
-            services.AddSingleton(sp => new PwmController(new SoftPwm()));
 
             System.Net.ServicePointManager.ServerCertificateValidationCallback += (o, cert, chain, errors) => true;
 
@@ -65,7 +68,7 @@ namespace AccessPoint
             {
                 var connection = new SpiConnectionSettings(0, 0);
                 connection.ClockFrequency = 500000;
-                var spi = new UnixSpiDevice(connection);
+                var spi = SpiDevice.Create(connection);
                 var logger = sp.GetService<ILogger<RfidReader>>();
                 return new RfidReader(logger, spi);
             });
@@ -75,7 +78,7 @@ namespace AccessPoint
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -88,7 +91,12 @@ namespace AccessPoint
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoint =>
+            {
+                endpoint.MapControllers();
+            });
         }
     }
 }

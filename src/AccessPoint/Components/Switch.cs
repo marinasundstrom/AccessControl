@@ -6,7 +6,7 @@ namespace AccessPoint.Components
 {
     public sealed class Switch : ISwitch
     {
-        private IGpioController gpioController;
+        private GpioController gpioController;
         private DateTime _pressedLastInterrupt;
         private DateTime _releasedLastInterrupt;
 

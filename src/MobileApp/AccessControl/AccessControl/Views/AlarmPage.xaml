@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ViewModels="clr-namespace:AccessControl.ViewModels"
+             mc:Ignorable="d"
+             x:Class="AccessControl.Views.AlarmPage"
+             Title="{Binding Title}"
+             x:Name="BrowseItemsPage"
+             BindingContext="{x:Static ViewModels:ViewModelLocator.Alarm}">
+    <ContentPage.Content>
+            <StackLayout Margin="10" VerticalOptions="StartAndExpand">
+            <StackLayout>
+                <Button Command="{Binding ArmCommand}" Text="Arm" IsVisible="{Binding IsDisarmed}"></Button>
+                <Button Command="{Binding DisarmCommand}" Text="Disarm" IsVisible="{Binding IsArmed}"></Button>
+            </StackLayout>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Access Time"></Label>
+                    <Label Text="{Binding AccessTime, StringFormat='{}{0:mm\\:ss}'}" />
+                </StackLayout>
+                <Slider Value="{Binding AccessTimeValue, Mode=TwoWay}" Minimum="0" Maximum="300" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Lock when door is closed"
+                       HorizontalOptions="StartAndExpand"
+                       HorizontalTextAlignment="Start" />
+                <Switch IsToggled="{Binding LockOnClose, Mode=TwoWay}"
+                        VerticalOptions="StartAndExpand" 
+                        HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Arm when door is closed"
+                        HorizontalOptions="StartAndExpand"
+                        HorizontalTextAlignment="Start" />
+                <Switch IsToggled="{Binding ArmOnClose, Mode=TwoWay}" 
+                        VerticalOptions="StartAndExpand" 
+                        HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+            <Button Command="{Binding ConfigureCommand}" Text="Configure"></Button>
+            <Label Text="{Binding State}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

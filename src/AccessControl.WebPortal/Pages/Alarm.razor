@@ -1,0 +1,113 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using AccessControl.AppService
+@using AccessControl.AppService.Contracts
+@using Newtonsoft.Json.Linq
+@attribute [Authorize]
+@page "/alarm"
+@inject IAlarmClient AlarmClient
+@inject IAlarmNotificationClient AlarmNotificationClient
+@implements IDisposable
+
+<h1>Alarm</h1>
+
+<p>Hello test</p>
+
+@if (configuration == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <input type="range" min="0" max="1500" value="@slider" @onchange=@(async (ev) => slider = int.Parse(ev.Value.ToString())) class="slider" />
+
+    @TimeSpan.FromSeconds(slider)
+
+    @if (isArmed)
+    {
+        <button @onclick="@(async () => await AlarmClient.DisarmAsync(DeviceId))">Disarm</button>
+    }
+    else
+    {
+        <button @onclick="@(async () => await AlarmClient.ArmAsync(DeviceId))">Arm</button>
+    }
+
+    <input type="checkbox" @bind="@configuration.LockOnClose" />
+    <input type="checkbox" @bind="@configuration.ArmOnClose" />
+
+    <button @onclick="@Configure">Configure</button>
+}
+
+@code {
+    private const string DeviceId = "AccessPoint1";
+
+    AlarmConfiguration configuration = null;
+    IDisposable subscription = null;
+    string state;
+    int slider;
+    bool isArmed;
+
+    protected override async Task OnInitAsync()
+    {
+        await Task.WhenAll(
+            GetConfiguration(),
+            GetAlarmState());
+
+        slider = (int)configuration.AccessTime.TotalSeconds;
+
+        subscription = this.AlarmNotificationClient.WhenMessageReceived.Subscribe(notification =>
+        {
+            var obj = JObject.Parse(notification.Title);
+            if (obj.Value<string>("Event") == "AlarmEvent")
+            {
+                var alarmState = obj.Value<string>("AlarmState");
+                SetState((AlarmState)Enum.Parse(typeof(AlarmState), alarmState));
+            }
+        });
+
+        await AlarmNotificationClient.StartAsync();
+    }
+
+    private async Task GetAlarmState()
+    {
+        var stateResult = await AlarmClient.GetStateAsync(DeviceId);
+        SetState(stateResult.AlarmState);
+    }
+
+    private async Task GetConfiguration()
+    {
+        configuration = await AlarmClient.GetConfigurationAsync(DeviceId);
+    }
+
+    private void SetState(AlarmState alarmState)
+    {
+        switch (alarmState)
+        {
+            case AlarmState.Armed:
+                isArmed = true;
+                break;
+
+            case AlarmState.Disarmed:
+                isArmed = false;
+                break;
+        }
+
+        StateHasChanged();
+    }
+
+    public async Task Configure()
+    {
+        await AlarmClient.ConfigureAsync(DeviceId, new SetAlarmConfigurationCommand()
+        {
+            DeviceId = DeviceId,
+            AccessTime = TimeSpan.FromSeconds(slider),
+            LockOnClose = configuration.LockOnClose,
+            ArmOnClose = configuration.ArmOnClose
+        });
+    }
+
+    public async void Dispose()
+    {
+        subscription.Dispose();
+        await AlarmNotificationClient.StopAsync();
+    }
+}

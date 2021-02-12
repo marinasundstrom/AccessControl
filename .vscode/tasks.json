@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Foobiq.AccessControl.AppService/Foobiq.AccessControl.AppService.csproj"
+                "${workspaceFolder}/src/AccessControl.AppService/AccessControl.AppService.csproj"
             ],
             "problemMatcher": "$tsc"
         },
@@ -17,13 +17,13 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Foobiq.AccessControl.AppService/Foobiq.AccessControl.AppService.csproj"
+                "${workspaceFolder}/src/AccessControl.AppService/AccessControl.AppService.csproj"
             ],
             "windows": {
-                "command": "${workspaceFolder}\\src\\Foobiq.AccessControl.AppService\\publish.bat"
+                "command": "${workspaceFolder}\\src\\AccessControl.AppService\\publish.bat"
             },
             "osx": {
-                "command": "${workspaceFolder}/src/Foobiq.AccessControl.AppService/publish.sh"
+                "command": "${workspaceFolder}/src/AccessControl.AppService/publish.sh"
             },
             "problemMatcher": "$tsc"
         },
@@ -34,7 +34,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/Foobiq.AccessControl.AppService/Foobiq.AccessControl.AppService.csproj"
+                "${workspaceFolder}/src/AccessControl.AppService/AccessControl.AppService.csproj"
             ],
             "problemMatcher": "$tsc"
         }

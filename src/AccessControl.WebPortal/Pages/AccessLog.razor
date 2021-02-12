@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using AccessControl.AppService
+@using AccessControl.AppService.Contracts
+@attribute [Authorize]
+@page "/accesslog"
+@inject IAccessLogClient AccessLogClient
+@inject IAccessLogNotifier AccessLogNotifier
+@inject DomHelpers DomHelpers
+@implements IDisposable
+
+<h1>Access Log</h1>
+
+<p>Hello test</p>
+
+@if (items == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Event</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in items)
+            {
+                <tr @key="item.AccessLogEntryId">
+                    <td>@item.Timestamp</td>
+                    <td>@item.Event</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+List<AccessLogEntry> items;
+IDisposable subscription;
+
+protected override async Task OnInitAsync()
+{
+        var list = (await AccessLogClient.GetAllAsync()).ToList();
+        list.Reverse();
+        items = list;
+
+    subscription = this.AccessLogNotifier.WhenLogAppended.Subscribe(async entry =>
+    {
+        items.Insert(0, entry);
+        StateHasChanged();
+
+        //await DomHelpers.ScrollToBottom(true, 0);
+    });
+
+    await AccessLogNotifier.StartAsync();
+}
+
+public async void Dispose()
+{
+    subscription.Dispose();
+    await AccessLogNotifier.StopAsync();
+}
+}

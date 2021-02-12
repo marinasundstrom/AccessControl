@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Foobiq.AccessPoint/bin/Debug/netcoreapp2.2/Foobiq.AccessPoint.dll",
+            "program": "${workspaceFolder}/src/AccessPoint/bin/Debug/netcoreapp2.2/AccessPoint.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Foobiq.AccessPoint",
+            "cwd": "${workspaceFolder}/src/AccessPoint",
             "stopAtEntry": false,
             "launchBrowser": {
                 "enabled": true
@@ -21,7 +21,7 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/src/Foobiq.AccessPoint/Views"
+                "/Views": "${workspaceFolder}/src/AccessPoint/Views"
             },
         },
         {
@@ -30,7 +30,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "dotnet",
-            "args": ["/home/pi/AccessPoint/Foobiq.AccessPoint.dll"],
+            "args": ["/home/pi/AccessPoint/AccessPoint.dll"],
             "cwd": "/home/pi/AccessPoint",
             "stopAtEntry": false,
             "launchBrowser": {
@@ -42,7 +42,7 @@
                 "ASPNETCORE_HTTPS_PORT": "44349",
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/src/Foobiq.AccessPoint/Views"
+                "/Views": "${workspaceFolder}/src/AccessPoint/Views"
             },
             "pipeTransport": {
                 "pipeCwd": "${workspaceFolder}",

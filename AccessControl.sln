@@ -7,27 +7,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{828F1202-D42
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3D915078-E806-4E67-ADF1-0E887A9E0680}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.AppService", "src\Foobiq.AccessControl.AppService\Foobiq.AccessControl.AppService.csproj", "{F5A76666-B800-4ED8-BAAC-51E6ACFF13D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.AppService", "src\AccessControl.AppService\AccessControl.AppService.csproj", "{F5A76666-B800-4ED8-BAAC-51E6ACFF13D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.AppService.Client", "src\Foobiq.AccessControl.AppService.Client\Foobiq.AccessControl.AppService.Client.csproj", "{11119153-C54A-4AEE-B400-FCC5AC8920E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.AppService.Client", "src\AccessControl.AppService.Client\AccessControl.AppService.Client.csproj", "{11119153-C54A-4AEE-B400-FCC5AC8920E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.AppService.Tests", "tests\Foobiq.AccessControl.AppService.Tests\Foobiq.AccessControl.AppService.Tests.csproj", "{A127A7A3-7828-47C4-A359-7799F93E8C0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.AppService.Tests", "tests\AccessControl.AppService.Tests\AccessControl.AppService.Tests.csproj", "{A127A7A3-7828-47C4-A359-7799F93E8C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foobiq.AccessControl.Android", "src\MobileApp\Foobiq.AccessControl\Foobiq.AccessControl.Android\Foobiq.AccessControl.Android.csproj", "{406950D9-BE51-4361-A675-3F57BB73E458}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.Android", "src\MobileApp\AccessControl\AccessControl.Android\AccessControl.Android.csproj", "{406950D9-BE51-4361-A675-3F57BB73E458}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foobiq.AccessControl.iOS", "src\MobileApp\Foobiq.AccessControl\Foobiq.AccessControl.iOS\Foobiq.AccessControl.iOS.csproj", "{709374D3-6AA7-4D75-9B8C-C2F4547BE218}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.iOS", "src\MobileApp\AccessControl\AccessControl.iOS\AccessControl.iOS.csproj", "{709374D3-6AA7-4D75-9B8C-C2F4547BE218}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl", "src\MobileApp\Foobiq.AccessControl\Foobiq.AccessControl\Foobiq.AccessControl.csproj", "{15A4C24E-3A9F-4E07-A474-2EA60319A986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl", "src\MobileApp\AccessControl\AccessControl\AccessControl.csproj", "{15A4C24E-3A9F-4E07-A474-2EA60319A986}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MobileApp", "MobileApp", "{F8A6F13F-EAAD-4537-8830-8C740132FF07}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MobileApp", "MobileApp", "{19E241C1-97DC-41EE-8929-8643307D8519}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.Tests", "tests\MobileApp\Foobiq.AccessControl.Tests\Foobiq.AccessControl.Tests.csproj", "{6EA8A02C-F85E-45CE-9317-5A8FCFF72C0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Tests", "tests\MobileApp\AccessControl.Tests\AccessControl.Tests.csproj", "{6EA8A02C-F85E-45CE-9317-5A8FCFF72C0D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.AppService.Core", "src\Foobiq.AccessControl.AppService.Core\Foobiq.AccessControl.AppService.Core.csproj", "{D5231B37-C48F-454B-A331-C6D3E230DF73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.AppService.Core", "src\AccessControl.AppService.Core\AccessControl.AppService.Core.csproj", "{D5231B37-C48F-454B-A331-C6D3E230DF73}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessPoint", "src\Foobiq.AccessPoint\Foobiq.AccessPoint.csproj", "{E39A8B5E-3165-44B3-A594-8C8B828449D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessPoint", "src\AccessPoint\AccessPoint.csproj", "{E39A8B5E-3165-44B3-A594-8C8B828449D4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventListenerTest", "src\EventListenerTest\EventListenerTest.csproj", "{B4AEABC7-B8F3-486D-8389-53ECCC45CFA9}"
 EndProject
@@ -38,19 +38,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.Events", "src\Foobiq.AccessControl.Events\Foobiq.AccessControl.Events.csproj", "{AA860099-DED5-4479-80AC-80DA1FF443BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Events", "src\AccessControl.Events\AccessControl.Events.csproj", "{AA860099-DED5-4479-80AC-80DA1FF443BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.Commands", "src\Foobiq.AccessControl.Commands\Foobiq.AccessControl.Commands.csproj", "{C842771A-3675-465B-8811-F5A46D5F306A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Commands", "src\AccessControl.Commands\AccessControl.Commands.csproj", "{C842771A-3675-465B-8811-F5A46D5F306A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.WebPortal", "src\Foobiq.AccessControl.WebPortal\Foobiq.AccessControl.WebPortal.csproj", "{EFE0F124-B6EE-4CBA-AD85-AC37B606CD87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.WebPortal", "src\AccessControl.WebPortal\AccessControl.WebPortal.csproj", "{EFE0F124-B6EE-4CBA-AD85-AC37B606CD87}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.AppService.Common", "src\Foobiq.AccessControl.AppService.Common\Foobiq.AccessControl.AppService.Common.csproj", "{A16E2715-9AF3-4D66-B799-4DD6E11371E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.AppService.Common", "src\AccessControl.AppService.Common\AccessControl.AppService.Common.csproj", "{A16E2715-9AF3-4D66-B799-4DD6E11371E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.AppService.Domain", "src\Foobiq.AccessControl.AppService.Domain\Foobiq.AccessControl.AppService.Domain.csproj", "{22C23188-0F0C-4EAC-A476-CE2EA6ED14A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.AppService.Domain", "src\AccessControl.AppService.Domain\AccessControl.AppService.Domain.csproj", "{22C23188-0F0C-4EAC-A476-CE2EA6ED14A2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.AppService.Application", "src\Foobiq.AccessControl.AppService.Application\Foobiq.AccessControl.AppService.Application.csproj", "{8CD88162-5F79-4B34-9E8C-1CF1592F7268}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.AppService.Application", "src\AccessControl.AppService.Application\AccessControl.AppService.Application.csproj", "{8CD88162-5F79-4B34-9E8C-1CF1592F7268}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foobiq.AccessControl.AppService.Persistence", "src\Foobiq.AccessControl.AppService.Persistence\Foobiq.AccessControl.AppService.Persistence.csproj", "{B6533507-E36B-444E-B661-35CBC452D365}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.AppService.Persistence", "src\AccessControl.AppService.Persistence\AccessControl.AppService.Persistence.csproj", "{B6533507-E36B-444E-B661-35CBC452D365}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppService", "AppService", "{79DF4256-FAC5-43CC-B0C3-57854FE17142}"
 EndProject

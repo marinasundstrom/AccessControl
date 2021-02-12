@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using AccessControl.AppService.Contracts
+@attribute [Authorize]
+@page "/items"
+@inject IItemsClient ItemsClient
+
+<h1>Items</h1>
+
+<p>Hello test</p>
+
+@if (items == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Text</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in items)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Text</td>
+                    <td>@item.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+Item[] items;
+
+protected override async Task OnInitAsync()
+{
+    items = (await ItemsClient.GetAllAsync()).ToArray();
+}
+}

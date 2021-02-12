@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AccessControl.Commands
+namespace AccessControl.Messages.Commands
 {
     public class ConfigureCommand : Command
     {

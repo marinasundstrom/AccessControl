@@ -1,4 +1,4 @@
-﻿namespace AccessControl.Events
+﻿namespace AccessControl.Messages.Events
 {
     public enum LockState
     {

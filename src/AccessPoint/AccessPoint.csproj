@@ -17,8 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AppService.Client\AppService.Client.csproj" />
-    <ProjectReference Include="..\AccessControl.Commands\AccessControl.Commands.csproj" />
-    <ProjectReference Include="..\AccessControl.Events\AccessControl.Events.csproj" />
+    <ProjectReference Include="..\AccessControl.Messages\AccessControl.Messages.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

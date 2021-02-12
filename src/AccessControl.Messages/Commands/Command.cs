@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace AccessControl.Commands
+namespace AccessControl.Messages.Commands
 {
     public class Command
     {

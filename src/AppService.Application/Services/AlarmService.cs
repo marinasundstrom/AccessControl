@@ -1,5 +1,5 @@
 ﻿using AppService.Application.Hubs;
-using AccessControl.Events;
+using AccessControl.Messages.Events;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.EventHubs;
@@ -91,7 +91,7 @@ namespace AppService.Application.Services
 
                     Domain.Entities.AccessEvent e = Domain.Entities.AccessEvent.Undefined;
 
-                    if(ev is AccessControl.Events.LockEvent f)
+                    if(ev is AccessControl.Messages.Events.LockEvent f)
                     {
                         if(f.LockState == LockState.Locked)
                         {
@@ -102,7 +102,7 @@ namespace AppService.Application.Services
                         }
                        
                     }
-                    if (ev is AccessControl.Events.AlarmEvent g)
+                    if (ev is AccessControl.Messages.Events.AlarmEvent g)
                     {
                         if (g.AlarmState == AlarmState.Armed)
                         {
@@ -114,11 +114,11 @@ namespace AppService.Application.Services
                         }
 
                     }
-                    else if (ev is AccessControl.Events.AccessEvent)
+                    else if (ev is AccessControl.Messages.Events.AccessEvent)
                     {
                         e = Domain.Entities.AccessEvent.Access;
                     }
-                    else if (ev is AccessControl.Events.UnauthorizedAccessEvent)
+                    else if (ev is AccessControl.Messages.Events.UnauthorizedAccessEvent)
                     {
                         e = Domain.Entities.AccessEvent.UnauthorizedAccess;
                     }

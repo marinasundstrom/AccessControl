@@ -1,4 +1,4 @@
-﻿namespace AccessControl.Commands
+﻿namespace AccessControl.Messages.Commands
 {
     public enum AlarmState
     {

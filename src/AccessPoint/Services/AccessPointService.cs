@@ -1,5 +1,5 @@
-﻿using AccessControl.Commands;
-using AccessControl.Events;
+﻿using AccessControl.Messages.Commands;
+using AccessControl.Messages.Events;
 using AccessPoint.Components;
 using AccessPoint.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +14,7 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AccessEvent = AccessControl.Events.AccessEvent;
+using AccessEvent = AccessControl.Messages.Events.AccessEvent;
 
 namespace AccessPoint.Services
 {
@@ -213,8 +213,8 @@ namespace AccessPoint.Services
         private object GetAlarmStatus()
         {
             return new GetAlarmStateResponse(authenticated ?
-                 AccessControl.Commands.AlarmState.Armed
-                 : AccessControl.Commands.AlarmState.Disarmed);
+                 AccessControl.Messages.Commands.AlarmState.Armed
+                 : AccessControl.Messages.Commands.AlarmState.Disarmed);
         }
 
         private async Task<string> GetParam(string key)
@@ -250,7 +250,7 @@ namespace AccessPoint.Services
             await _relayControlService.SetRelayStateAsync(LockRelay, false);
 
             await _serviceEventClient.SendEventAsync(new LockEvent(LockState.Locked));
-            await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Events.AlarmState.Armed));
+            await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Messages.Events.AlarmState.Armed));
 
             await ToggleAllLedsOff();
         }
@@ -295,7 +295,7 @@ namespace AccessPoint.Services
 
                 if(_armWhenShut)
                 {
-                    await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Events.AlarmState.Armed));
+                    await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Messages.Events.AlarmState.Armed));
 
                     await ToggleAllLedsOff();
                 }
@@ -317,7 +317,7 @@ namespace AccessPoint.Services
                 {
                     _unlocked = true;
 
-                    await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Events.AlarmState.Disarmed));
+                    await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Messages.Events.AlarmState.Disarmed));
                     await _serviceEventClient.SendEventAsync(new LockEvent(LockState.Unlocked));
 
                     await ToggleGreenLedOn();
@@ -336,7 +336,7 @@ namespace AccessPoint.Services
                             await _relayControlService.SetRelayStateAsync(LockRelay, false);
 
                             await _serviceEventClient.SendEventAsync(new LockEvent(LockState.Locked));
-                            await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Events.AlarmState.Armed));
+                            await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Messages.Events.AlarmState.Armed));
 
                             await ToggleAllLedsOff();
                         }, null, (int)_accessTime.TotalMilliseconds, 0);

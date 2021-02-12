@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace AccessControl.Events
+namespace AccessControl.Messages.Events
 {
     public class AlarmEvent : Event
     {

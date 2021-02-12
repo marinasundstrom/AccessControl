@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AccessControl.Events;
+using AccessControl.Messages.Events;
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

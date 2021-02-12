@@ -1,4 +1,4 @@
-﻿using AccessControl.Commands;
+﻿using AccessControl.Messages.Commands;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.NotificationHubs;

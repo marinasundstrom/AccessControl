@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using AccessControl.Events;
+using AccessControl.Messages.Events;
 
 namespace AccessPoint.Services
 {

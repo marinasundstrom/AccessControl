@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AccessControl.Commands
+namespace AccessControl.Messages.Commands
 {
     public class GetConfigurationResponse
     {

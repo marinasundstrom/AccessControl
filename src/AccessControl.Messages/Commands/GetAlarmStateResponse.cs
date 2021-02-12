@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace AccessControl.Commands
+namespace AccessControl.Messages.Commands
 {
     public class GetAlarmStateResponse
     {

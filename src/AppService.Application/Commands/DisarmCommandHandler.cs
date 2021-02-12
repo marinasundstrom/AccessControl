@@ -10,23 +10,23 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
-namespace AppService.Application.AccessControl
+namespace AppService.Application.Commands
 {
-    public sealed class AlarmCommandHandler : IRequestHandler<ArmCommand, AlarmResult>
+    public sealed class DisarmCommandHandler : IRequestHandler<DisarmCommand, AlarmResult>
     {
         private readonly DeviceController _deviceController;
 
-        public AlarmCommandHandler(
+        public DisarmCommandHandler(
             DeviceController deviceController)
         {
             _deviceController = deviceController;
         }
 
-        public async Task<AlarmResult> Handle(ArmCommand request, CancellationToken cancellationToken)
+        public async Task<AlarmResult> Handle(DisarmCommand request, CancellationToken cancellationToken)
         {
-            await _deviceController.Arm(request.DeviceId);
+            await _deviceController.Disarm(request.DeviceId);
             return new AlarmResult {
-                AlarmState = (await _deviceController.GetState(request.DeviceId)).AlarmState == Commands.AlarmState.Armed ? AlarmState.Armed : AlarmState.Disarmed
+                AlarmState = (await _deviceController.GetState(request.DeviceId)).AlarmState == AccessControl.Commands.AlarmState.Armed ? AlarmState.Armed : AlarmState.Disarmed
             };
         }
     }

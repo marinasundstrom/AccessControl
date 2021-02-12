@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace AppService.Application.AccessControl
+namespace AppService.Application.Commands
 {
-    public class GetAlarmStateQuery : IRequest<AlarmResult>
+    public class GetAlarmConfigurationQuery : IRequest<AlarmConfiguration>
     {
         [Required]
         public string DeviceId { get; set; }

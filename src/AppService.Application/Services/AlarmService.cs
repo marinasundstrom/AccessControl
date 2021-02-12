@@ -91,7 +91,7 @@ namespace AppService.Application.Services
 
                     Domain.Models.AccessEvent e = Domain.Models.AccessEvent.Undefined;
 
-                    if(ev is Events.LockEvent f)
+                    if(ev is AccessControl.Events.LockEvent f)
                     {
                         if(f.LockState == LockState.Locked)
                         {
@@ -102,7 +102,7 @@ namespace AppService.Application.Services
                         }
                        
                     }
-                    if (ev is Events.AlarmEvent g)
+                    if (ev is AccessControl.Events.AlarmEvent g)
                     {
                         if (g.AlarmState == AlarmState.Armed)
                         {
@@ -114,11 +114,11 @@ namespace AppService.Application.Services
                         }
 
                     }
-                    else if (ev is Events.AccessEvent)
+                    else if (ev is AccessControl.Events.AccessEvent)
                     {
                         e = Domain.Models.AccessEvent.Access;
                     }
-                    else if (ev is Events.UnauthorizedAccessEvent)
+                    else if (ev is AccessControl.Events.UnauthorizedAccessEvent)
                     {
                         e = Domain.Models.AccessEvent.UnauthorizedAccess;
                     }

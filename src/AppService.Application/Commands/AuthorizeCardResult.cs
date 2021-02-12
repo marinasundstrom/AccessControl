@@ -1,4 +1,4 @@
-﻿namespace AppService.Application.AccessControl
+﻿namespace AppService.Application.Commands
 {
     public class AuthorizeCardResult
     {

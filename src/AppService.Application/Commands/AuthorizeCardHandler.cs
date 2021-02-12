@@ -6,7 +6,7 @@ using AppService.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppService.Application.AccessControl
+namespace AppService.Application.Commands
 {
     public sealed class AuthorizeCardHandler : IRequestHandler<AuthorizeCardCommand, AuthorizeCardResult>
     {

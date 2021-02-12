@@ -10,7 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
-namespace AppService.Application.AccessControl
+namespace AppService.Application.Commands
 {
     public sealed class GetAlarmConfigurationQueryHandler : IRequestHandler<GetAlarmConfigurationQuery, AlarmConfiguration>
     {

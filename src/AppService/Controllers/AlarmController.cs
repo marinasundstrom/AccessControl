@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using AppService.Application.AccessControl;
+using AppService.Application.Commands;
 using AppService.Application.Services;
 using AppService.Domain.Models;
 using MediatR;

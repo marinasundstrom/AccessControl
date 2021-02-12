@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using MediatR;
 
-namespace AppService.Application.AccessControl
+namespace AppService.Application.Commands
 {
     public class SetAlarmConfigurationCommand : IRequest, IAlarmConfiguration
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppService.Application.AccessControl
+namespace AppService.Application.Commands
 {
     public interface IAlarmConfiguration
     {

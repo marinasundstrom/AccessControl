@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AppService.Application.Services;
 using MediatR;
 
-namespace AppService.Application.AccessControl
+namespace AppService.Application.Commands
 {
     public sealed class SetAlarmConfigurationCommandHandler : IRequestHandler<SetAlarmConfigurationCommand>
     {

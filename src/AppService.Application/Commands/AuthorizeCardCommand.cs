@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MediatR;
 
-namespace AppService.Application.AccessControl
+namespace AppService.Application.Commands
 {
     public class AuthorizeCardCommand : IRequest<AuthorizeCardResult>
     {

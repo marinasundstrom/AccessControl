@@ -1,7 +1,7 @@
 ﻿using System;
 using AppService.Domain.Models;
 
-namespace AppService.Application.AccessControl
+namespace AppService.Application.Commands
 {
     public class AlarmConfiguration : AlarmResult, IAlarmConfiguration
     {

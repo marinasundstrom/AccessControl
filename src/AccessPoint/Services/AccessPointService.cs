@@ -2,6 +2,7 @@
 using AccessControl.Messages.Events;
 using AccessPoint.Components;
 using AccessPoint.Models;
+using AppService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Devices.Client;
 using Microsoft.Extensions.Logging;
@@ -35,7 +36,7 @@ namespace AccessPoint.Services
         private readonly IServiceEventClient _serviceEventClient;
         private readonly IRfidReader _rfidReader;
 
-        private readonly AppService.Contracts.IAuthorizationClient _authorizationClient;
+        private readonly IAuthorizationClient _authorizationClient;
 
         private const int RedLED = 0;
         private const int GreenLED = 1;
@@ -63,7 +64,7 @@ namespace AccessPoint.Services
             ICommandReceiver commandReceiver,
             IServiceEventClient serviceEventClient,
             IRfidReader rfidReader,
-            AppService.Contracts.IAuthorizationClient authorizationClient)
+            IAuthorizationClient authorizationClient)
         {
             this.logger = logger;
 
@@ -128,7 +129,7 @@ namespace AccessPoint.Services
             {
                 _ = BlinkBlue(ct.Token);
 
-                var result = await _authorizationClient.AuthorizeAsync(new AppService.Contracts.AuthorizeCardCommand()
+                var result = await _authorizationClient.AuthorizeAsync(new AuthorizeCardCommand()
                 {
                     DeviceId = "AccessPoint1",
                     CardNo = cardData.UID,

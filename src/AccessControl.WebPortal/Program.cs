@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace AccessControl.WebPortal
 {
@@ -28,49 +29,61 @@ namespace AccessControl.WebPortal
 
             builder.Services.AddSingleton<DomHelpers>();
 
-            builder.Services.AddScoped(sp =>
-            {
-                var serviceEndpoint = sp.GetRequiredService<NavigationManager>().BaseUri;
-                return ClientFactory.CreateTokenClient(serviceEndpoint, sp.GetRequiredService<HttpClient>(), () => Task.FromResult(string.Empty));
-            });
+            var serviceEndpoint = builder.Configuration["ServiceEndpoint"];
 
-            builder.Services.AddScoped(sp =>
-            {
-                var serviceEndpoint = sp.GetRequiredService<NavigationManager>().BaseUri;
-                return ClientFactory.CreateRegistrationClient(serviceEndpoint, sp.GetRequiredService<HttpClient>(), () => Task.FromResult(string.Empty));
-            });
+            async Task<string> RetrieveAuthorizationToken(IServiceProvider sp)
+            {         
+                return await sp.GetRequiredService<TokenAuthenticationStateProvider>().GetTokenAsync();
+            }
 
-            builder.Services.AddScoped(sp =>
-            {
-                var serviceEndpoint = sp.GetRequiredService<NavigationManager>().BaseUri;
-                return ClientFactory.CreateUserClient(serviceEndpoint, sp.GetRequiredService<HttpClient>(), async () => await sp.GetService<ILocalStorageService>().GetItemAsync<string>("authToken"));
-            });
+            builder.Services.AddHttpClient<ITokenClient>(client =>
+                client.BaseAddress = new Uri(serviceEndpoint))
+                .AddTypedClient<ITokenClient>((http, sp) => new TokenClient(http)
+                {
+                    RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
+                });
 
-            builder.Services.AddScoped(sp =>
-            {
-                var serviceEndpoint = sp.GetRequiredService<NavigationManager>().BaseUri;
-                return ClientFactory.CreateItemsClient(serviceEndpoint, sp.GetRequiredService<HttpClient>(), async () => await sp.GetService<ILocalStorageService>().GetItemAsync<string>("authToken"));
-            });
+            builder.Services.AddHttpClient<IRegistrationClient>(client =>
+                        client.BaseAddress = new Uri(serviceEndpoint))
+                        .AddTypedClient<IRegistrationClient>((http, sp) => new RegistrationClient(http)
+                        {
+                            RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
+                        });
 
-            builder.Services.AddScoped(sp =>
-            {
-                var serviceEndpoint = sp.GetRequiredService<NavigationManager>().BaseUri;
-                return ClientFactory.CreateAlarmClient(serviceEndpoint, sp.GetRequiredService<HttpClient>(), async () => await sp.GetService<ILocalStorageService>().GetItemAsync<string>("authToken"));
-            });
+            builder.Services.AddHttpClient<IUserClient>(client =>
+                      client.BaseAddress = new Uri(serviceEndpoint))
+                      .AddTypedClient<IUserClient>((http, sp) => new UserClient(http)
+                      {
+                          RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
+                      });
 
-            builder.Services.AddScoped(sp =>
-            {
-                var serviceEndpoint = sp.GetRequiredService<NavigationManager>().BaseUri;
-                return ClientFactory.CreateAccessLogClient(serviceEndpoint, sp.GetRequiredService<HttpClient>(), async () => await sp.GetService<ILocalStorageService>().GetItemAsync<string>("authToken"));
-            });
+            builder.Services.AddHttpClient<IItemsClient>(client =>
+                      client.BaseAddress = new Uri(serviceEndpoint))
+                      .AddTypedClient<IItemsClient>((http, sp) => new ItemsClient(http)
+                      {
+                          RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
+                      });
 
+            builder.Services.AddHttpClient<IAlarmClient>(client =>
+                      client.BaseAddress = new Uri(serviceEndpoint))
+                      .AddTypedClient<IAlarmClient>((http, sp) => new AlarmClient(http)
+                      {
+                          RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
+                      });
 
-            builder.Services.AddScoped(sp =>
-            {
-                var serviceEndpoint = sp.GetRequiredService<NavigationManager>().BaseUri;
-                return ClientFactory.CreateIdentitiesClient(serviceEndpoint, sp.GetRequiredService<HttpClient>(), async () => await sp.GetService<ILocalStorageService>().GetItemAsync<string>("authToken"));
-            });
+            builder.Services.AddHttpClient<IAccessLogClient>(client =>
+                         client.BaseAddress = new Uri(serviceEndpoint))
+                         .AddTypedClient<IAccessLogClient>((http, sp) => new AccessLogClient(http)
+                         {
+                             RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
+                         });
 
+            builder.Services.AddHttpClient<IIdentitiesClient>(client =>
+                         client.BaseAddress = new Uri(serviceEndpoint))
+                         .AddTypedClient<IIdentitiesClient>((http, sp) => new IdentitiesClient(http)
+                         {
+                             RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
+                         });
 
             // Add auth services
             builder.Services.AddAuthorizationCore();

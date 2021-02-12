@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 
+
 namespace AccessControl
 {
     public static class Startup
@@ -62,35 +63,44 @@ namespace AccessControl
 
             services.AddSingleton<IResourceContainer, ResourceContainer>();
 
-
             System.Net.ServicePointManager.ServerCertificateValidationCallback += (o, cert, chain, errors) => true;
 
-            services.AddSingleton(sp => {
-                var client = new HttpClient(new HttpClientHandler());
-                return ClientFactory.CreateTokenClient(serviceEndpoint, client, () => Task.FromResult(string.Empty));
-            });
+            async Task<string> RetrieveAuthorizationToken()
+            {
+                return await SecureStorage.GetAsync("jwt_token");
+            }
 
-            services.AddSingleton(sp => {
-                var client = new HttpClient(new HttpClientHandler());
-                return ClientFactory.CreateRegistrationClient(serviceEndpoint, client, () => Task.FromResult(string.Empty));
-            });
+            services.AddHttpClient<ITokenClient>(client =>
+                client.BaseAddress = new Uri(serviceEndpoint))
+                .AddTypedClient<ITokenClient>((http, sp) => new TokenClient(http)
+                {
+                    RetrieveAuthorizationToken = RetrieveAuthorizationToken
+                });
 
-            services.AddSingleton(sp => {
-                var client = new HttpClient(new HttpClientHandler());
-                return ClientFactory.CreateItemsClient(serviceEndpoint, client, GetTokenAsync);
-            });
+            services.AddHttpClient<IRegistrationClient>(client =>
+              client.BaseAddress = new Uri(serviceEndpoint))
+              .AddTypedClient<IRegistrationClient>((http, sp) => new RegistrationClient(http)
+              {
+                  RetrieveAuthorizationToken = RetrieveAuthorizationToken
+              });
 
-            services.AddSingleton(sp => {
-                var client = new HttpClient(new HttpClientHandler());
-                return ClientFactory.CreateAlarmClient(serviceEndpoint, client, GetTokenAsync);
-            });
+            services.AddHttpClient<IItemsClient>(client =>
+              client.BaseAddress = new Uri(serviceEndpoint))
+              .AddTypedClient<IItemsClient>((http, sp) => new ItemsClient(http)
+              {
+                  RetrieveAuthorizationToken = RetrieveAuthorizationToken
+              });
+
+            services.AddHttpClient<IAlarmClient>(client =>
+              client.BaseAddress = new Uri(serviceEndpoint))
+              .AddTypedClient<AlarmClient>();
 
             services.AddSingleton<IAlarmNotificationClient, AlarmNotificationClient>(sp => 
                 new AlarmNotificationClient(
                     new HubConnectionBuilder().WithUrl($"{serviceEndpoint}alarms-notifications-hub", opt =>
                     {
                         //opt.Transports = HttpTransportType.WebSockets;
-                        opt.AccessTokenProvider = async () => await GetTokenAsync();
+                        opt.AccessTokenProvider = RetrieveAuthorizationToken;
                     }).Build()));
 
             services.AddTransient<INavigationService, NavigationService>();
@@ -114,7 +124,5 @@ namespace AccessControl
             services.AddTransient<AppShell>();
             services.AddSingleton<App>();
         }
-
-        private static async Task<string> GetTokenAsync() => await SecureStorage.GetAsync("jwt_token");
     }
 }

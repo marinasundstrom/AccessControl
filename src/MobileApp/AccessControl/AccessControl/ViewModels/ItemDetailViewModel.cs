@@ -1,5 +1,5 @@
 ﻿using System;
-using AppService.Contracts;
+using AppService;
 
 namespace AccessControl.ViewModels
 {

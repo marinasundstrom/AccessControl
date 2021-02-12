@@ -15,7 +15,6 @@ namespace AppService.Controllers
     [Authorize]
     public class AlarmController : ControllerBase
     {
-        private const string DeviceId = "AccessPoint1";
         private readonly IMediator _mediator;
 
         public AlarmController(

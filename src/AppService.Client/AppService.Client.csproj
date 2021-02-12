@@ -14,14 +14,14 @@
     <PackageLicenseExpression></PackageLicenseExpression>
     <Owners>Robert Sundström</Owners>
     <PackageProjectUrl>https://github.com/robertsundstrom/IotWebApi</PackageProjectUrl>
-    <Title>IotWebApi</Title>
+    <Title>AppService.Client</Title>
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="OpenAPIs\swagger.json" Namespace="App1.Client" Options="/GenerateClientInterfaces:true /UseBaseUrl:false /disposeHttpClient:true /ClientBaseClass:ClientBase /UseHttpRequestMessageCreationMethod:true" CodeGenerator="NSwagCSharp">
+    <OpenApiReference Include="OpenAPIs\swagger.json" Namespace="AppService" Options="/GenerateClientInterfaces:true /UseBaseUrl:false /disposeHttpClient:true /ClientBaseClass:ClientBase /UseHttpRequestMessageCreationMethod:true" CodeGenerator="NSwagCSharp">
       <SourceUri>http://localhost:49898/swagger/v1/swagger.json</SourceUri>
       <ClassName>{controller}Client</ClassName>
-      <OutputPath>App1.Client/Clients.cs</OutputPath>
+      <OutputPath>AppService/Clients.cs</OutputPath>
     </OpenApiReference>
   </ItemGroup>
 

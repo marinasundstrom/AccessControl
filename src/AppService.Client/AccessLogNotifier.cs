@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
-using AppService.Contracts;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace AppService

@@ -55,7 +55,9 @@ namespace AccessPoint
 
             System.Net.ServicePointManager.ServerCertificateValidationCallback += (o, cert, chain, errors) => true;
 
-            services.AddSingleton(sp => ClientFactory.CreateAuthorizationClient("http://192.168.1.139:5000", new HttpClient(new HttpClientHandler()) { Timeout = TimeSpan.FromSeconds(5) }, async () => string.Empty));
+            services.AddHttpClient<IAuthorizationClient>(client =>
+                client.BaseAddress = new Uri("https://localhost:5021/"))
+                .AddTypedClient<IAuthorizationClient>((http, sp) => new AuthorizationClient(http));
 
             services.AddSingleton<IBuzzerService, BuzzerService>();
             services.AddSingleton<ILEDService, LEDService>();

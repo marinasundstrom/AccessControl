@@ -1,5 +1,5 @@
 ﻿using AppService;
-using AppService.Contracts;
+using AppService;
 using AccessControl.Services;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;

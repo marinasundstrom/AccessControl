@@ -1,7 +1,8 @@
-﻿using AppService.Contracts;
+﻿
 using AccessControl.Services;
 using AccessControl.Validation;
 using AccessControl.Views;
+using AppService;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
@@ -30,7 +31,7 @@ namespace AccessControl.ViewModels
         {
             try
             {
-                await _registrationClient.RegisterAsync(new AppService.Contracts.RegisterCommand()
+                await _registrationClient.RegisterAsync(new RegisterCommand()
                 {
                     Email = Email,
                     Password = Password

@@ -1,6 +1,6 @@
 ﻿@page "/Register"
 @using System.ComponentModel.DataAnnotations
-@using AppService.Contracts
+
 @using AccessControl.WebPortal.Utils
 @inject NavigationManager NavigationManager
 @inject IRegistrationClient TokenClient
@@ -65,7 +65,7 @@
 
     async Task SubmitForm()
     {
-        await TokenClient.RegisterAsync(new AppService.Contracts.RegisterCommand()
+        await TokenClient.RegisterAsync(new RegisterCommand()
         {
             FirstName = registerForm.FirstName,
             LastName = registerForm.LastName,

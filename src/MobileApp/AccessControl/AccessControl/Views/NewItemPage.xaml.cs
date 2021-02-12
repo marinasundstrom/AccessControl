@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using AppService;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using AppService.Contracts;
+
 
 namespace AccessControl.Views
 {

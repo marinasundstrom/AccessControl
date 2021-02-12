@@ -8,10 +8,8 @@ namespace AppService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
     public class AuthorizationController : ControllerBase
     {
-        private const string DeviceId = "AccessPoint1";
         private readonly IMediator _mediator;
 
         public AuthorizationController(

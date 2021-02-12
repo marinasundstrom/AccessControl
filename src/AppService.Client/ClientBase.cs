@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AppService
 {
-    internal abstract class ClientBase
+    public abstract class ClientBase
     {
         public Func<Task<string>> RetrieveAuthorizationToken { get; set; }
 

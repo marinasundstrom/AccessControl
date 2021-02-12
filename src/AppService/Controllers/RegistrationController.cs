@@ -10,6 +10,7 @@ using AppService.Domain.Entities;
 using AppService.Application.Services;
 using MediatR;
 using AppService.Application.Registration;
+using AppService.Application.Registration.Commands;
 
 namespace AppService.Controllers
 {

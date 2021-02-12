@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using AppService.Application.Commands;
+using AppService.Application.Authorization.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

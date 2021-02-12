@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
-using AppService.Application.Commands;
+using AppService.Application.Alarm;
+using AppService.Application.Alarm.Commands;
+using AppService.Application.Alarm.Queries;
 using AppService.Application.Services;
 using AppService.Domain.Entities;
 using MediatR;

@@ -18,11 +18,14 @@ using Microsoft.IdentityModel.Tokens;
 using AppService.Infrastructure;
 using AppService.Application.Login;
 using AppService.Application.Services;
-using FluentValidation;
-using AppService.Application.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
 using AppService.Infrastructure.Persistence;
+using AppService.Application.Devices;
+using AppService.Application.Alarm;
+using AppService.Application.AccessLog;
+using AppService.Application.Alarm.Hubs;
+using AppService.Application.AccessLog.Hubs;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 

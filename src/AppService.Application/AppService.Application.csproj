@@ -23,4 +23,16 @@
     <ProjectReference Include="..\AccessControl.Messages\AccessControl.Messages.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Alarm\" />
+    <Folder Include="Authorization\" />
+    <Folder Include="AccessLog\" />
+    <Folder Include="Alarm\Hubs\" />
+    <Folder Include="AccessLog\Hubs\" />
+    <Folder Include="Devices\" />
+    <Folder Include="Alarm\Commands\" />
+    <Folder Include="Alarm\Queries\" />
+    <Folder Include="Authorization\Commands\" />
+    <Folder Include="Registration\Commands\" />
+  </ItemGroup>
 </Project>

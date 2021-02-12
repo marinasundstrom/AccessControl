@@ -1,4 +1,5 @@
 ﻿using System;
+using AppService.Domain.Enums;
 
 namespace AppService.Domain.Entities
 {

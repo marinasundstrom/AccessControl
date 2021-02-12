@@ -1,4 +1,6 @@
-﻿namespace AppService.Domain.Entities
+﻿using AppService.Domain.Enums;
+
+namespace AppService.Domain.Entities
 {
     public class CardCredential : Credential
     {

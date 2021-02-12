@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AppService.Domain.Entities;
+using AppService.Domain.Enums;
 
 namespace AppService.Application.AccessLog
 {

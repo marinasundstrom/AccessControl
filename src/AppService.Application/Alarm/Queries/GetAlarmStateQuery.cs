@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AppService.Application.Devices;
 using AppService.Domain.Entities;
+using AppService.Domain.Enums;
 using MediatR;
 
 namespace AppService.Application.Alarm.Queries

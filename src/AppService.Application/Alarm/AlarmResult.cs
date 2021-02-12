@@ -1,4 +1,5 @@
 ﻿using AppService.Domain.Entities;
+using AppService.Domain.Enums;
 
 namespace AppService.Application.Alarm
 {

@@ -90,16 +90,16 @@ namespace AppService.Application.Alarm
                         Title = data
                     });
 
-                    Domain.Entities.AccessEvent e = Domain.Entities.AccessEvent.Undefined;
+                    Domain.Enums.AccessEvent e = Domain.Enums.AccessEvent.Undefined;
 
                     if(ev is AccessControl.Messages.Events.LockEvent f)
                     {
                         if(f.LockState == LockState.Locked)
                         {
-                            e = Domain.Entities.AccessEvent.Locked;
+                            e = Domain.Enums.AccessEvent.Locked;
                         } else
                         {
-                            e = Domain.Entities.AccessEvent.Unlocked;
+                            e = Domain.Enums.AccessEvent.Unlocked;
                         }
                        
                     }
@@ -107,21 +107,21 @@ namespace AppService.Application.Alarm
                     {
                         if (g.AlarmState == AlarmState.Armed)
                         {
-                            e = Domain.Entities.AccessEvent.Armed;
+                            e = Domain.Enums.AccessEvent.Armed;
                         }
                         else
                         {
-                            e = Domain.Entities.AccessEvent.Disarmed;
+                            e = Domain.Enums.AccessEvent.Disarmed;
                         }
 
                     }
                     else if (ev is AccessControl.Messages.Events.AccessEvent)
                     {
-                        e = Domain.Entities.AccessEvent.Access;
+                        e = Domain.Enums.AccessEvent.Access;
                     }
                     else if (ev is AccessControl.Messages.Events.UnauthorizedAccessEvent)
                     {
-                        e = Domain.Entities.AccessEvent.UnauthorizedAccess;
+                        e = Domain.Enums.AccessEvent.UnauthorizedAccess;
                     }
 
                     await _accessLogger.LogAsync(null, e, null, string.Empty);

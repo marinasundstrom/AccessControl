@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AppService.Domain.Entities;
+using AppService.Domain.Enums;
 using AppService.Infrastructure;
 using AppService.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;

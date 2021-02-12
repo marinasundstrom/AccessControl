@@ -1,4 +1,4 @@
-﻿namespace AppService.Domain.Entities
+﻿namespace AppService.Domain.Enums
 {
     public enum AccessEvent
     {

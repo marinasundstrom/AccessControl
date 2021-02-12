@@ -1,4 +1,4 @@
-﻿using AppService.Domain.Models;
+﻿using AppService.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;

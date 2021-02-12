@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using AppService.Domain.Models;
+using AppService.Domain.Entities;
 
 namespace AppService.Application.Services
 {

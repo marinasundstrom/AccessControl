@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AppService.Domain.Models;
+using AppService.Domain.Entities;
 using Microsoft.AspNetCore.SignalR;
 using AppService.Application.Hubs;
 

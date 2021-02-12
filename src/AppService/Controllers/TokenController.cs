@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http;
-using AppService.Domain.Models;
+using AppService.Domain.Entities;
 using AppService.Application.Login;
 using MediatR;
 using Microsoft.Extensions.Configuration;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AppService.Domain.Models
+namespace AppService.Domain.Entities
 {
     public class Identity
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using AppService.Domain.Models;
+using AppService.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 
 namespace AppService.Controllers

@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using AppService.Domain.Models;
+using AppService.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

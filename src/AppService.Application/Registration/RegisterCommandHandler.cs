@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AppService.Domain.Models;
+using AppService.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 

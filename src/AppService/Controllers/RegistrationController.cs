@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
-using AppService.Domain.Models;
+using AppService.Domain.Entities;
 using AppService.Application.Services;
 using MediatR;
 using AppService.Application.Registration;

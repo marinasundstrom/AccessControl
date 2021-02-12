@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace AppService.Domain.Models
+namespace AppService.Domain.Entities
 {
     public class Credential
     {

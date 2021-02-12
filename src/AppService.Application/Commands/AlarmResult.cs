@@ -1,4 +1,4 @@
-﻿using AppService.Domain.Models;
+﻿using AppService.Domain.Entities;
 
 namespace AppService.Application.Commands
 {

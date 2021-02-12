@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AppService.Application.Commands;
 using AppService.Application.Services;
-using AppService.Domain.Models;
+using AppService.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

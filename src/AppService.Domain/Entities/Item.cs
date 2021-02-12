@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AppService.Domain.Models
+namespace AppService.Domain.Entities
 {
     public class Item
     {

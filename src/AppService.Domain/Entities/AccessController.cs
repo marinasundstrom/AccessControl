@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace AppService.Domain.Models
+namespace AppService.Domain.Entities
 {
 
     public class AccessController

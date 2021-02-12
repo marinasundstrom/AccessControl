@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppService.Domain.Models
+namespace AppService.Domain.Entities
 {
     public class IdentityAccessList
     {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AppService.Persistence.Migrations
+namespace AppService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AccessControlContext))]
     partial class AccessControlContextModelSnapshot : ModelSnapshot

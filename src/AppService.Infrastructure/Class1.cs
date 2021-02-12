@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AppService.Persistence
+namespace AppService.Infrastructure
 {
     public class Class1
     {

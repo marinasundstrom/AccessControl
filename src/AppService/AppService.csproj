@@ -22,7 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AppService.Application\AppService.Application.csproj" />
     <ProjectReference Include="..\AppService.Domain\AppService.Domain.csproj" />
-    <ProjectReference Include="..\AppService.Persistence\AppService.Persistence.csproj" />
+    <ProjectReference Include="..\AppService.Infrastructure\AppService.Infrastructure.csproj" />
     <ProjectReference Include="..\AccessControl.Messages\AccessControl.Messages.csproj" />
   </ItemGroup>
 

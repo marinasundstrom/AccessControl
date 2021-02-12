@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AppService.Persistence.Migrations
+namespace AppService.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AccessControlContext))]
     [Migration("20190713220906_AddItemEntity")]

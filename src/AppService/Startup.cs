@@ -15,13 +15,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using AppService.Persistence;
+using AppService.Infrastructure;
 using AppService.Application.Login;
 using AppService.Application.Services;
 using FluentValidation;
 using AppService.Application.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
+using AppService.Infrastructure.Persistence;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 

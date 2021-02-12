@@ -2,7 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AppService.Application.Services;
-using AppService.Persistence;
+using AppService.Infrastructure;
+using AppService.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

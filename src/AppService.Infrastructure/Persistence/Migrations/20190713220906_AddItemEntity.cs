@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AppService.Persistence.Migrations
+namespace AppService.Infrastructure.Persistence.Migrations
 {
     public partial class AddItemEntity : Migration
     {

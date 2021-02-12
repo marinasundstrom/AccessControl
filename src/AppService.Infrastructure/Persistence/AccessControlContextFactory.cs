@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AppService.Persistence
+namespace AppService.Infrastructure.Persistence
 {
     public class AccessControlContextFactory : IDesignTimeDbContextFactory<AccessControlContext>
     {

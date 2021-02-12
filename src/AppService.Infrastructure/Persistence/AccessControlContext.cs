@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace AppService.Persistence
+namespace AppService.Infrastructure.Persistence
 {
     public class AccessControlContext : IdentityDbContext<User>
     {

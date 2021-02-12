@@ -1,4 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Threading;
+using System.Threading.Tasks;
+using AppService.Application.Devices;
+using AppService.Domain.Entities;
 using MediatR;
 
 namespace AppService.Application.Alarm.Queries
@@ -7,5 +11,25 @@ namespace AppService.Application.Alarm.Queries
     {
         [Required]
         public string DeviceId { get; set; }
+
+        public sealed class GetAlarmStateQueryHandler : IRequestHandler<GetAlarmStateQuery, AlarmResult>
+        {
+            private readonly DeviceController _deviceController;
+
+            public GetAlarmStateQueryHandler(
+                DeviceController deviceController)
+            {
+                _deviceController = deviceController;
+            }
+
+            public async Task<AlarmResult> Handle(GetAlarmStateQuery request, CancellationToken cancellationToken)
+            {
+                await _deviceController.Arm(request.DeviceId);
+                return new AlarmResult
+                {
+                    AlarmState = (await _deviceController.GetState(request.DeviceId)).AlarmState == AccessControl.Messages.Commands.AlarmState.Armed ? AlarmState.Armed : AlarmState.Disarmed
+                };
+            }
+        }
     }
 }

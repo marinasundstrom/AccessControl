@@ -68,7 +68,7 @@ namespace AppService.Controllers
         {
             var identity = db.Identitiets
                 .Include(x => x.Credentials)
-                .First(x => x.IdentityId == identityId);
+                .First(x => x.Id == identityId);
 
             return identity.Credentials?.OfType<CardCredential>();
         }

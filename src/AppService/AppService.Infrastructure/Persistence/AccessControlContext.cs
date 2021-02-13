@@ -17,16 +17,15 @@ namespace AppService.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<IdentityAccessList>()
+            modelBuilder.Entity<AccessListMembership>()
                 .HasKey(bc => new { bc.IdentityId, bc.AccessListId });
-            modelBuilder.Entity<IdentityAccessList>()
-                .HasOne(bc => bc.Identity)
-                .WithMany(b => b.IdentityAccessList)
-                .HasForeignKey(bc => bc.IdentityId);
-            modelBuilder.Entity<IdentityAccessList>()
-                .HasOne(bc => bc.AccessList)
-                .WithMany(c => c.IdentityAccessList)
-                .HasForeignKey(bc => bc.AccessListId);
+
+            modelBuilder.Entity<AccessList>()
+                .HasMany(al => al.Members)
+                .WithMany(i => i.AccessLists)
+                .UsingEntity<AccessListMembership>(
+                    j => j.HasOne(m => m.Identity).WithMany(x => x.Memberships),
+                    j => j.HasOne(m => m.AccessList).WithMany(x => x.Memberships));
         }
 
         public DbSet<Item> Items { get; set; }
@@ -42,6 +41,8 @@ namespace AppService.Infrastructure.Persistence
         public DbSet<AccessPoint> AccessPoints { get; set; }
 
         public DbSet<AccessList> AccessLists { get; set; }
+
+        public DbSet<AccessListMembership> AccessListMemberships { get; set; }
 
         public DbSet<AccessLog> AccessLogs { get; set; }
 

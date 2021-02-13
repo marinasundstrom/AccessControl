@@ -32,10 +32,10 @@ namespace AppService.Application.AccessLog
                 var dataContext = scope.ServiceProvider.GetService<AccessControlContext>();
                 var logEntry = new AccessLogEntry()
                 {
-                    AccessPoint = accessPoint != null ? await dataContext.AccessPoints.FindAsync(accessPoint.AccessPointId) : null,
+                    AccessPoint = accessPoint != null ? await dataContext.AccessPoints.FindAsync(accessPoint.Id) : null,
                     Event = accessEvent,
                     Timestamp = DateTime.UtcNow,
-                    Identity = identity != null ? await dataContext.Identitiets.FindAsync(identity.IdentityId) : null,
+                    Identity = identity != null ? await dataContext.Identitiets.FindAsync(identity.Id) : null,
                     Message = message,
                     AccessLog = null
                 };

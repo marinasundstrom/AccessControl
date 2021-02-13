@@ -5,7 +5,7 @@ namespace AppService.Domain.Entities
 {
     public class Identity
     {
-        public Guid IdentityId { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -17,6 +17,8 @@ namespace AppService.Domain.Entities
 
         public ICollection<Credential> Credentials { get; set; }
 
-        public virtual ICollection<IdentityAccessList> IdentityAccessList { get; set; }
+        public ICollection<AccessList> AccessLists { get; set; } = new List<AccessList>();
+
+        public ICollection<AccessListMembership> Memberships { get; set; } = new List<AccessListMembership>();
     }
 }

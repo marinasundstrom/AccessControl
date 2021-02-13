@@ -22,7 +22,7 @@ namespace AppService
             {
                 var context = scope.ServiceProvider.GetRequiredService<AccessControlContext>();
 
-                await context.Database.EnsureCreatedAsync();
+                await context.SeedDataAsync();
             }
 
             await app.RunAsync();

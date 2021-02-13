@@ -27,7 +27,7 @@ else
         <tbody>
             @foreach (var item in items)
             {
-                <tr @key="item.AccessLogEntryId">
+                <tr @key="item.Id">
                     <td>@item.Timestamp</td>
                     <td>@item.Event</td>
                 </tr>

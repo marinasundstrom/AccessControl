@@ -5,12 +5,12 @@ namespace AppService.Domain.Entities
 {
     public class AccessZone
     {
-        public Guid AccessZoneId { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
-        public virtual ICollection<AccessPoint> AccessPoints { get; set; }
+        public ICollection<AccessPoint> AccessPoints { get; set; } = new List<AccessPoint>();
 
-        public virtual AccessLog AccessLog { get; set; }
+        public AccessLog AccessLog { get; set; }
     }
 }

@@ -1135,7 +1135,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "accessLogEntryId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -1190,7 +1190,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "accessLogId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -1224,7 +1224,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "accessZoneId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -1253,7 +1253,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "accessPointId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -1283,7 +1283,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "accessListId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -1291,42 +1291,19 @@
             "type": "string",
             "nullable": true
           },
-          "identityAccessList": {
+          "members": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/IdentityAccessList"
+              "$ref": "#/components/schemas/Identity"
             }
-          }
-        }
-      },
-      "IdentityAccessList": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "identityId": {
-            "type": "string",
-            "format": "guid"
           },
-          "accessListId": {
-            "type": "string",
-            "format": "guid"
-          },
-          "identity": {
+          "memberships": {
+            "type": "array",
             "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/Identity"
-              }
-            ]
-          },
-          "accessList": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/AccessList"
-              }
-            ]
+            "items": {
+              "$ref": "#/components/schemas/AccessListMembership"
+            }
           }
         }
       },
@@ -1334,7 +1311,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "identityId": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
@@ -1362,11 +1339,18 @@
               "$ref": "#/components/schemas/Credential"
             }
           },
-          "identityAccessList": {
+          "accessLists": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/IdentityAccessList"
+              "$ref": "#/components/schemas/AccessList"
+            }
+          },
+          "memberships": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AccessListMembership"
             }
           }
         }
@@ -1375,9 +1359,48 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "credentialId": {
+          "id": {
             "type": "string",
             "format": "guid"
+          }
+        }
+      },
+      "AccessListMembership": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accessListId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "accessList": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AccessList"
+              }
+            ]
+          },
+          "identity": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Identity"
+              }
+            ]
+          },
+          "identityId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "addedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "removedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
       },

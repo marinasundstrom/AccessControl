@@ -5,9 +5,9 @@ namespace AppService.Domain.Entities
 {
     public class Credential
     {
-        public Guid CredentialId { get; set; }
+        public Guid Id { get; set; }
 
         [JsonIgnore]
-        public virtual Identity Identity { get; set; }
+        public Identity Identity { get; set; }
     }
 }

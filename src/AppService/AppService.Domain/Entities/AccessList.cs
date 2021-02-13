@@ -5,10 +5,12 @@ namespace AppService.Domain.Entities
 {
     public class AccessList
     {
-        public Guid AccessListId { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
-        public virtual ICollection<IdentityAccessList> IdentityAccessList { get; set; }
+        public ICollection<Identity> Members { get; set; } = new List<Identity>();
+
+        public ICollection<AccessListMembership> Memberships { get; set; } = new List<AccessListMembership>();
     }
 }

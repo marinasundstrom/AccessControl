@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://localhost:5021"
+      "url": "https://localhost:5031"
     }
   ],
   "paths": {
@@ -982,6 +982,30 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Test": {
+      "post": {
+        "tags": [
+          "Test"
+        ],
+        "operationId": "Test_SendPushNotification",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
           }
         }
       }

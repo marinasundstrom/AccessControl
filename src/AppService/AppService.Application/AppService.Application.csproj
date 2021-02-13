@@ -34,5 +34,6 @@
     <Folder Include="Alarm\Queries\" />
     <Folder Include="Authorization\Commands\" />
     <Folder Include="Registration\Commands\" />
+    <Folder Include="Test\" />
   </ItemGroup>
 </Project>

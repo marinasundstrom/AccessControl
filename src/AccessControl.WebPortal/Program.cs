@@ -85,6 +85,13 @@ namespace AccessControl.WebPortal
                              RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
                          });
 
+            builder.Services.AddHttpClient<ITestClient>(client =>
+                         client.BaseAddress = new Uri(serviceEndpoint))
+                         .AddTypedClient<ITestClient>((http, sp) => new TestClient(http)
+                         {
+                             RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
+                         });
+
             // Add auth services
             builder.Services.AddAuthorizationCore();
             builder.Services.AddTokenAuthenticationStateProvider();

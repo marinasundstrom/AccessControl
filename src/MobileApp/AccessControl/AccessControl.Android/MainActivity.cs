@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using AccessControl.Services;
 using AccessControl.Android.Services;
+using WindowsAzure.Messaging.NotificationHubs;
 
 namespace AccessControl.Droid
 {
@@ -28,20 +29,11 @@ namespace AccessControl.Droid
 
             base.OnCreate(savedInstanceState);
 
-            if (Intent.Extras != null)
-            {
-                foreach (var key in Intent.Extras.KeySet())
-                {
-                    if (key != null)
-                    {
-                        var value = Intent.Extras.GetString(key);
-                        Log.Debug(TAG, "Key: {0} Value: {1}", key, value);
-                    }
-                }
-            }
+            // Listen for push notifications
+            NotificationHub.SetListener(new AzureListener());
 
-            IsPlayServicesAvailable();
-            CreateNotificationChannel();
+            // Start the SDK
+            NotificationHub.Start(this.Application, Constants.NotificationHubName, Constants.ListenConnectionString);
 
             global::Xamarin.Forms.Forms.SetFlags("Shell_Experimental", "Visual_Experimental", "CollectionView_Experimental", "FastRenderers_Experimental");
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -60,46 +52,6 @@ namespace AccessControl.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        public bool IsPlayServicesAvailable()
-        {
-            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
-            if (resultCode != ConnectionResult.Success)
-            {
-                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
-                    Log.Debug(TAG, GoogleApiAvailability.Instance.GetErrorString(resultCode));
-                else
-                {
-                    Log.Debug(TAG, "This device is not supported");
-                    Finish();
-                }
-                return false;
-            }
-
-            Log.Debug(TAG, "Google Play Services is available.");
-            return true;
-        }
-
-        private void CreateNotificationChannel()
-        {
-            if (Build.VERSION.SdkInt < BuildVersionCodes.O)
-            {
-                // Notification channels are new in API 26 (and not a part of the
-                // support library). There is no need to create a notification
-                // channel on older versions of Android.
-                return;
-            }
-
-            var channelName = CHANNEL_ID;
-            var channelDescription = string.Empty;
-            var channel = new NotificationChannel(CHANNEL_ID, channelName, NotificationImportance.Default)
-            {
-                Description = channelDescription
-            };
-
-            var notificationManager = (NotificationManager)GetSystemService(NotificationService);
-            notificationManager.CreateNotificationChannel(channel);
         }
     }
 }

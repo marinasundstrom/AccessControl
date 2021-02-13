@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+@page "/test"
+@inject ITestClient TestClient
+
+<h1>Items</h1>
+
+<button class="btn btn-primary" @onclick="SendNotification">Send notification</button>
+
+@code {
+
+    async Task SendNotification()
+    {
+        await TestClient.SendPushNotificationAsync("Hello World!");
+    }
+}

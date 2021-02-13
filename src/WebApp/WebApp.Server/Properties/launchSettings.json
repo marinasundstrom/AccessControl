@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Portal": {
+    "WebApp.Server": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:51802;http://localhost:30142",

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
-namespace AccessControl.WebPortal
+namespace WebApp.Client
 {
     public class DomHelpers
     {

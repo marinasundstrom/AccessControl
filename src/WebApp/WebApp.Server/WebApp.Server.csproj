@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AccessControl.WebPortal\AccessControl.WebPortal.csproj">
+    <ProjectReference Include="..\WebApp.Client\WebApp.Client.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

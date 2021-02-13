@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using AppService;
-using AccessControl.WebPortal.Utils;
+using WebApp.Client.Utils;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.SignalR.Client;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace AccessControl.WebPortal
+namespace WebApp.Client
 {
     public class Program
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
 
-namespace AccessControl.WebPortal.Shared
+namespace WebApp.Client.Shared
 {
     public class RedirectToLogin : ComponentBase
     {

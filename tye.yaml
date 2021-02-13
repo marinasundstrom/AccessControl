@@ -11,8 +11,8 @@ services:
   bindings:
   - protocol: https
     port: 5031
-- name: portal
-  project: src/Portal/Portal.csproj
+- name: WebApp
+  project: src/WebApp/WebApp.Server/WebApp.Server.csproj
   bindings:
   - protocol: https
     port: 5032

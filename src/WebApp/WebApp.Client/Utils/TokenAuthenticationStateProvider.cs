@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 
-namespace AccessControl.WebPortal.Utils
+namespace WebApp.Client.Utils
 {
     public class TokenAuthenticationStateProvider : AuthenticationStateProvider
     {

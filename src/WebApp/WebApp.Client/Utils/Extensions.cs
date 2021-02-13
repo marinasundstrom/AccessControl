@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AccessControl.WebPortal.Utils
+namespace WebApp.Client.Utils
 {
     public static class ServiceExtensions
     {

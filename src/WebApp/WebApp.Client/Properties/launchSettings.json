@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "AccessControl.WebPortal": {
+    "WebApp.Client": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

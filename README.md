@@ -24,7 +24,7 @@ Since publishing this project, I have been updating everything to .NET 5, from a
 
 There has been some drastic restructuring going on since then.
 
-My goal is to recreate my original Raspberry PI set up, and to create guides on how to set up everything.
+My goal is to recreate my original Raspberry PI set up, and to create guides on how to set everything up.
 
 ## Todo
 Here is a list of what is to be dones:
@@ -51,6 +51,14 @@ Here is a list of what is to be dones:
 * Clean architecture, CQRS with Mediator-pattern.
 * Azure Services - IoT Hub, Event Bus, Notification Hub
 
+## Developer Requirements
+
+* .NET 5.0.* SDK for building
+
+Addional tools:
+
+* Project "Tye" - to simplify launching and running multiple services in parallel when developing.
+
 ## Running the project
 
 You can run services separately but that requires some configuration. Instead, Project Tye is strongly recommended.
@@ -70,14 +78,14 @@ tye run
 ### AppService
 Responsible for handling requests and granting access to an AccessPoint.
 
-It is controlled through a Web API, which the Web UI and Mobile App uses.
+It is controlled through a Web API, which both the Web App and Mobile App uses.
 
 Communicates with AccessPoint through IoT Hub and Event Hub.
 
-It also sends Push Notifications to phones that have the Mobile App installed.
+The service also sends Push Notifications to phones that have the Mobile App installed.
 
 ### AccessPoint
-Represents a physical AccessPoint. (The can be multiple)
+Represents a physical AccessPoint. (There can be multiple AccessPoints)
 
 It controls the hardware on behalf of the App Service.
 

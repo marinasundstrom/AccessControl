@@ -20,6 +20,9 @@
     <ProjectReference Include="..\AccessControl.Messages\AccessControl.Messages.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\AccessPoint.Application\AccessPoint.Application.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

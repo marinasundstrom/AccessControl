@@ -6,11 +6,7 @@ using System.Device.Spi;
 using System.Net.Http;
 using System.Threading;
 using AppService;
-using AccessPoint.Components;
-using AccessPoint.Components.Mfrc522;
 using AccessPoint.HostedServices;
-using AccessPoint.Models;
-using AccessPoint.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +17,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using AccessPoint.Application.Services;
+using AccessPoint.Application.Models;
 
 namespace AccessPoint
 {

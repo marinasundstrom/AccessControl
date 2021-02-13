@@ -7,9 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{828F1202-D42
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3D915078-E806-4E67-ADF1-0E887A9E0680}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppService", "src\AppService\AppService.csproj", "{F5A76666-B800-4ED8-BAAC-51E6ACFF13D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppService", "src\AppService\AppService\AppService.csproj", "{F5A76666-B800-4ED8-BAAC-51E6ACFF13D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppService.Client", "src\AppService.Client\AppService.Client.csproj", "{11119153-C54A-4AEE-B400-FCC5AC8920E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppService.Client", "src\AppService\AppService.Client\AppService.Client.csproj", "{11119153-C54A-4AEE-B400-FCC5AC8920E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppService.Tests", "tests\AppService.Tests\AppService.Tests.csproj", "{A127A7A3-7828-47C4-A359-7799F93E8C0D}"
 EndProject
@@ -39,11 +39,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Messages", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessControl.WebPortal", "src\AccessControl.WebPortal\AccessControl.WebPortal.csproj", "{EFE0F124-B6EE-4CBA-AD85-AC37B606CD87}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppService.Domain", "src\AppService.Domain\AppService.Domain.csproj", "{22C23188-0F0C-4EAC-A476-CE2EA6ED14A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppService.Domain", "src\AppService\AppService.Domain\AppService.Domain.csproj", "{22C23188-0F0C-4EAC-A476-CE2EA6ED14A2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppService.Application", "src\AppService.Application\AppService.Application.csproj", "{8CD88162-5F79-4B34-9E8C-1CF1592F7268}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppService.Application", "src\AppService\AppService.Application\AppService.Application.csproj", "{8CD88162-5F79-4B34-9E8C-1CF1592F7268}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppService.Infrastructure", "src\AppService.Infrastructure\AppService.Infrastructure.csproj", "{B6533507-E36B-444E-B661-35CBC452D365}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppService.Infrastructure", "src\AppService\AppService.Infrastructure\AppService.Infrastructure.csproj", "{B6533507-E36B-444E-B661-35CBC452D365}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppService", "AppService", "{79DF4256-FAC5-43CC-B0C3-57854FE17142}"
 EndProject

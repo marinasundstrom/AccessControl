@@ -21,7 +21,7 @@
     <OpenApiReference Include="OpenAPIs\swagger.json" Namespace="AppService" Options="/GenerateClientInterfaces:true /UseBaseUrl:false /disposeHttpClient:true /ClientBaseClass:ClientBase /UseHttpRequestMessageCreationMethod:true" CodeGenerator="NSwagCSharp">
       <SourceUri>http://localhost:49898/swagger/v1/swagger.json</SourceUri>
       <ClassName>{controller}Client</ClassName>
-      <OutputPath>AppService/Clients.cs</OutputPath>
+      <OutputPath>AppService/AppService/Clients.cs</OutputPath>
     </OpenApiReference>
   </ItemGroup>
 

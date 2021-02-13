@@ -7,7 +7,7 @@
 name: accesscontrol
 services:
 - name: appservice
-  project: src/AppService/AppService.csproj
+  project: src/AppService/AppService/AppService.csproj
   bindings:
   - protocol: https
     port: 5031

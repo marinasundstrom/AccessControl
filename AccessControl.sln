@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MobileApp", "MobileApp", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessControl.Tests", "tests\MobileApp\AccessControl.Tests\AccessControl.Tests.csproj", "{6EA8A02C-F85E-45CE-9317-5A8FCFF72C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessPoint", "src\AccessPoint\AccessPoint.csproj", "{E39A8B5E-3165-44B3-A594-8C8B828449D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessPoint", "src\AccessPoint\AccessPoint\AccessPoint.csproj", "{E39A8B5E-3165-44B3-A594-8C8B828449D4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventListenerTest", "src\EventListenerTest\EventListenerTest.csproj", "{B4AEABC7-B8F3-486D-8389-53ECCC45CFA9}"
 EndProject

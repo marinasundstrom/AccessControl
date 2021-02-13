@@ -19,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AccessPoint.Application.Services;
 using AccessPoint.Application.Models;
+using MediatR;
 
 namespace AccessPoint
 {
@@ -37,6 +38,8 @@ namespace AccessPoint
             services
                 .AddControllers()
                 .AddNewtonsoftJson();
+
+            services.AddMediatR(typeof(Application.Alarm.Commands.ArmCommand));
 
             services.AddDbContext<AccessPointContext>
                 (options => {
@@ -63,6 +66,8 @@ namespace AccessPoint
             services.AddSingleton<ISwitchService, SwitchService>();
             services.AddSingleton<ICommandReceiver, CommandReceiver>();
             services.AddSingleton<IServiceEventClient, ServiceEventClient>();
+
+            services.AddSingleton<State>();
 
             services.AddSingleton<IRfidReader>(sp =>
             {

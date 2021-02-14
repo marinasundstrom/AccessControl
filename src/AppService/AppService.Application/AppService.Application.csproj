@@ -35,5 +35,6 @@
     <Folder Include="Authorization\Commands\" />
     <Folder Include="Registration\Commands\" />
     <Folder Include="Test\" />
+    <Folder Include="AccessLog\Queries\" />
   </ItemGroup>
 </Project>

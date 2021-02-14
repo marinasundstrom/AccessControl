@@ -43,7 +43,7 @@ namespace AccessPoint.Application.Authorization.Notifications
 
             public async Task Handle(CardReadNotification notification, CancellationToken cancellationToken)
             {
-                // Console.WriteLine(string.Join(", ", cardData.UID));
+                Console.WriteLine(string.Join(", ", notification.CardDate.UID));
 
                 var ct = new CancellationTokenSource();
 

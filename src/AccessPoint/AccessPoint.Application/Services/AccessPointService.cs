@@ -98,7 +98,7 @@ namespace AccessPoint.Application.Services
             switch (command.CommandName)
             {
                 case AccessControl.Messages.Commands.ArmCommand.ArmCommandConstant:
-                    var result = await _mediator.Send(new AccessControl.Messages.Commands.ArmCommand());
+                    var result = await _mediator.Send(new Alarm.Commands.ArmCommand());
                     return GetAlarmStatus();
 
                 case AccessControl.Messages.Commands.DisarmCommand.DisarmCommandConstant:

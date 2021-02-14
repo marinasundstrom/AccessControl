@@ -29,15 +29,11 @@ namespace AccessPoint.Application.Components
         {
             cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-            pwmChannel = PwmChannel.Create(0, Channel, 0);
+            pwmChannel = PwmChannel.Create(0, Channel, ToneFrequency, 0.5);
             pwmChannel.Start();
-
-            pwmChannel.Frequency = ToneFrequency;
-            pwmChannel.DutyCycle = 1;
             
             try
             {
-                pwmChannel.DutyCycle = 50;
                 await Task.Delay(time, cts.Token);
             }
             catch (TaskCanceledException)
@@ -46,7 +42,6 @@ namespace AccessPoint.Application.Components
             }
             finally
             {
-                pwmChannel.DutyCycle = 50;
                 pwmChannel.Stop();
 
                 cts = null;

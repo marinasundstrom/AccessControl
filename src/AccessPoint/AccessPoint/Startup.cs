@@ -67,7 +67,7 @@ namespace AccessPoint
             services.AddSingleton<ICommandReceiver, CommandReceiver>();
             services.AddSingleton<IServiceEventClient, ServiceEventClient>();
 
-            services.AddSingleton<State>();
+            services.AddSingleton<AccessPointState>();
 
             services.AddSingleton<IRfidReader>(sp =>
             {

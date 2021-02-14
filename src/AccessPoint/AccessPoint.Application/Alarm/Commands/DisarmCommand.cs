@@ -15,14 +15,14 @@ namespace AccessPoint.Application.Alarm.Commands
         {
             private readonly IMediator _mediator;
             private readonly ILogger<DisarmCommand> _logger;
-            private readonly State _state;
+            private readonly AccessPointState _state;
             private readonly ILEDService _ledService;
             private readonly IRelayControlService _relayControlService;
             private readonly IServiceEventClient _serviceEventClient;
 
             public DisarmCommandHandler(
                 IMediator mediator,
-                State state,
+                AccessPointState state,
                 IRelayControlService relayControlService,
                 IServiceEventClient serviceEventClient,
                 ILEDService ledService,

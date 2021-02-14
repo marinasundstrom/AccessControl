@@ -12,13 +12,13 @@ namespace AccessPoint.Application.Sensors.Notifications
     {
         public class DoorOpenedNotificationHandler : INotificationHandler<DoorOpenedNotification>
         {
-            private readonly State _state;
+            private readonly AccessPointState _state;
             private readonly ILEDService _ledService;
             private readonly IBuzzerService _buzzerService;
             private readonly IServiceEventClient _serviceEventClient;
 
             public DoorOpenedNotificationHandler(
-                State state,
+                AccessPointState state,
                 ILEDService ledService,
                 IBuzzerService buzzerService,
                 IServiceEventClient serviceEventClient)

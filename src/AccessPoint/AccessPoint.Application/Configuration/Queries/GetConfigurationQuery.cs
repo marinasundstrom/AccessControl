@@ -10,9 +10,9 @@ namespace AccessPoint.Application.Configuration.Queries
     {
         public class GetConfigurationQueryHandler : IRequestHandler<GetConfigurationQuery, ConfigurationDto>
         {
-            private readonly State _state;
+            private readonly AccessPointState _state;
 
-            public GetConfigurationQueryHandler(State state)
+            public GetConfigurationQueryHandler(AccessPointState state)
             {
                 _state = state;
             }

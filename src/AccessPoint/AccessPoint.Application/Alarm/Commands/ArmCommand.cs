@@ -13,14 +13,14 @@ namespace AccessPoint.Application.Alarm.Commands
         public class ArmCommandHandler : IRequestHandler<ArmCommand, AlarmStateDto>
         {
             private readonly IMediator _mediator;
-            private readonly State _state;
+            private readonly AccessPointState _state;
             private readonly ILEDService _ledService;
             private readonly IRelayControlService _relayControlService;
             private readonly IServiceEventClient _serviceEventClient;
 
             public ArmCommandHandler(
                 IMediator mediator,
-                State state,
+                AccessPointState state,
                 IRelayControlService relayControlService,
                 IServiceEventClient serviceEventClient,
                 ILEDService ledService)

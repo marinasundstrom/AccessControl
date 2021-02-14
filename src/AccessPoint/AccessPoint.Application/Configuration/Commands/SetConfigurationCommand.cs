@@ -22,14 +22,14 @@ namespace AccessPoint.Application.Configuration.Commands
         { 
             private readonly IMediator _mediator;
             private readonly AccessPointContext _accessPointContext;
-            private readonly State _state;
+            private readonly AccessPointState _state;
             private readonly ILEDService _ledService;
             private readonly IRelayControlService _relayControlService;
             private readonly IServiceEventClient _serviceEventClient;
 
             public SetConfigurationCommandHandler(
                 IMediator mediator,
-                State state,
+                AccessPointState state,
                 AccessPointContext accessPointContext,
                 IRelayControlService relayControlService,
                 IServiceEventClient serviceEventClient,

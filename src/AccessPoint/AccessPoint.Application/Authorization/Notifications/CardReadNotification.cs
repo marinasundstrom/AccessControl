@@ -22,14 +22,14 @@ namespace AccessPoint.Application.Authorization.Notifications
             private const string DeviceId = "AccessPoint1";
 
             private readonly IMediator _mediator;
-            private readonly State _state;
+            private readonly AccessPointState _state;
             private readonly ILEDService _ledService;
             private readonly IBuzzerService _buzzerService;
             private readonly IAuthorizationClient _authorizationClient;
 
             public CardReadNotificationHandler(
                 IMediator mediator,
-                State state,
+                AccessPointState state,
                 ILEDService ledService,
                 IBuzzerService buzzerService,
                 IAuthorizationClient authorizationClient)

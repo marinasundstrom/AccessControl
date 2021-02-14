@@ -26,7 +26,7 @@ namespace AccessPoint.Application.Services
         private readonly ISwitchService _switchService;
         private readonly IRfidReader _rfidReader;
         private readonly IRelayControlService _relayControlService;
-        private readonly State _state;
+        private readonly AccessPointState _state;
 
         private IDisposable whenSwitchClosedSubscription;
         private IDisposable whenSwitchOpenedSubscription;
@@ -38,7 +38,7 @@ namespace AccessPoint.Application.Services
             ISwitchService switchService,
             IRfidReader rfidReader,
             IRelayControlService relayControlService,
-            State state,
+            AccessPointState state,
             ICommandReceiver commandReceiver,
             IServiceEventClient serviceEventClient)
         {

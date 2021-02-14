@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace AccessPoint.Application.Services
 {
-    public class State
+    public class AccessPointState
     {
         public bool Authenticated;
         public bool Unlocked;

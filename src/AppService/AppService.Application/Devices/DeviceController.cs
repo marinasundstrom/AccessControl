@@ -22,7 +22,8 @@ namespace AppService.Application.Devices
 
         public async Task<GetAlarmStateResponse> GetState(string deviceId)
         {
-            return await SendCommand<GetAlarmStateResponse>(deviceId, new GetAlarmStateCommand());
+            var response = await SendCommand<GetAlarmStateResponse>(deviceId, new GetAlarmStateCommand());
+            return response;
         }
 
         public async Task Arm(string deviceId)

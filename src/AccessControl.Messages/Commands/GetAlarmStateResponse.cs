@@ -14,7 +14,6 @@ namespace AccessControl.Messages.Commands
             AlarmState = alarmState;
         }
 
-        [JsonConverter(typeof(StringEnumConverter))]
-        public AlarmState AlarmState { get; }
+        public AlarmState AlarmState { get; set; }
     }
 }

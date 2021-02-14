@@ -5,6 +5,6 @@ namespace AccessPoint.Application.Services
 {
     public interface IServiceEventClient
     {
-        Task SendEventAsync(Event ev);
+        Task PublishEvent(Event ev);
     }
 }

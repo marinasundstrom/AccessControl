@@ -126,7 +126,7 @@ namespace AccessPoint.Application.Services
 
         private object GetAlarmStatus()
         {
-            return new GetAlarmStateResponse(_state.Authenticated ?
+            return new GetAlarmStateResponse(_state.Armed ?
                  AccessControl.Messages.Commands.AlarmState.Armed
                  : AccessControl.Messages.Commands.AlarmState.Disarmed);
         }

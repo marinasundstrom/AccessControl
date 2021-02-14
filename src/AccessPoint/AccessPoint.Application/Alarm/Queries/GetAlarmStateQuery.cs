@@ -19,7 +19,7 @@ namespace AccessPoint.Application.Alarm.Queries
 
             public Task<AlarmStateDto> Handle(GetAlarmStateQuery request, CancellationToken cancellationToken)
             {
-                return Task.FromResult(new AlarmStateDto(_state.Authenticated ?
+                return Task.FromResult(new AlarmStateDto(_state.Armed ?
                                  AccessControl.Messages.Commands.AlarmState.Armed
                                  : AccessControl.Messages.Commands.AlarmState.Disarmed));
             }

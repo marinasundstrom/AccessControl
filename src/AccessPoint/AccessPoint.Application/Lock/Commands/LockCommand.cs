@@ -2,16 +2,15 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AccessControl.Messages.Events;
-using AccessPoint.Application.Alarm.Queries;
-using AccessPoint.Application.Lock.Commands;
+using AccessPoint.Application.Lock.Queries;
 using AccessPoint.Application.Services;
 using MediatR;
 
-namespace AccessPoint.Application.Alarm.Commands
+namespace AccessPoint.Application.Lock.Commands
 {
-    public class ArmCommand : IRequest<AlarmStateDto>
+    public class LockCommand : IRequest<LockStateDto>
     {
-        public class ArmCommandHandler : IRequestHandler<ArmCommand, AlarmStateDto>
+        public class LockCommandHandler : IRequestHandler<LockCommand, LockStateDto>
         {
             private readonly IMediator _mediator;
             private readonly AccessPointState _state;
@@ -19,7 +18,7 @@ namespace AccessPoint.Application.Alarm.Commands
             private readonly IRelayControlService _relayControlService;
             private readonly IServiceEventClient _serviceEventClient;
 
-            public ArmCommandHandler(
+            public LockCommandHandler(
                 IMediator mediator,
                 AccessPointState state,
                 IRelayControlService relayControlService,
@@ -33,20 +32,18 @@ namespace AccessPoint.Application.Alarm.Commands
                 _ledService = ledService;
             }
 
-            public async Task<AlarmStateDto> Handle(ArmCommand request, CancellationToken cancellationToken)
+            public async Task<LockStateDto> Handle(LockCommand request, CancellationToken cancellationToken)
             {
-                if (!_state.Armed)
+                if (!_state.Locked)
                 {
-                    var lockState = await _mediator.Send(new LockCommand());
+                    await _relayControlService.SetRelayStateAsync(_state.LockRelay, true);
 
-                    _state.Armed = true;
+                    _state.Locked = true;
 
-                    await _serviceEventClient.PublishEvent(new AlarmEvent(AlarmState.Armed));
-
-                    await _ledService.ToggleAllLedsOff();
+                    await _serviceEventClient.PublishEvent(new LockEvent(LockState.Locked));
                 }
 
-                return await _mediator.Send(new GetAlarmStateQuery());
+                return await _mediator.Send(new GetLockStateQuery());
             }
         }
     }

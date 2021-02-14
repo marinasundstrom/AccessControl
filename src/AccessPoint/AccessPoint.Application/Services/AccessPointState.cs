@@ -5,9 +5,6 @@ namespace AccessPoint.Application.Services
 {
     public class AccessPointState
     {
-        public bool Authenticated;
-        public bool Unlocked;
-
         public int LockRelay = 0;
 
         public bool LockWhenShut = true;
@@ -17,5 +14,8 @@ namespace AccessPoint.Application.Services
         public TimeSpan BuzzTime = TimeSpan.FromSeconds(5);
 
         public Timer Timer;
+
+        public bool Armed = true;
+        public bool Locked = true;
     }
 }

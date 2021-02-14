@@ -31,15 +31,13 @@ namespace AccessPoint.Application.Sensors.Notifications
 
             public async Task Handle(DoorOpenedNotification notification, CancellationToken cancellationToken)
             {
-                Console.WriteLine(_state.Unlocked);
-
-                if (!_state.Unlocked) //_cardOK
+                if (_state.Armed || _state.Locked)
                 {
-                    _state.Unlocked = false;
-
-                    await _serviceEventClient.SendEventAsync(new UnauthorizedAccessEvent());
+                    await _serviceEventClient.PublishEvent(new UnauthorizedAccessEvent());
 
                     await _ledService.ToggleRedLedOn();
+
+                    // In a real-world scenario, this would be going on until manually stopped.
 
                     await _buzzerService
                         .BuzzAsync(_state.BuzzTime)
@@ -50,7 +48,7 @@ namespace AccessPoint.Application.Sensors.Notifications
                     return;
                 }
 
-                await _serviceEventClient.SendEventAsync(new AccessControl.Messages.Events.AccessEvent());
+                await _serviceEventClient.PublishEvent(new AccessControl.Messages.Events.AccessEvent());
             }
         }
     }

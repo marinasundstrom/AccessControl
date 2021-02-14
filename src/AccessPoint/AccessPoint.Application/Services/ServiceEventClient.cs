@@ -23,7 +23,7 @@ namespace AccessPoint.Application.Services
             _deviceClient = deviceClient;
         }
 
-        public async Task SendEventAsync(Event ev)
+        public async Task PublishEvent(Event ev)
         {
             var data = JsonConvert.SerializeObject(ev);
             await _deviceClient.SendEventAsync(new Message(Encoding.UTF8.GetBytes(data)));

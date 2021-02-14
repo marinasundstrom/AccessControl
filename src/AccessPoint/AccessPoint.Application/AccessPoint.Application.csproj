@@ -22,5 +22,8 @@
   <ItemGroup>
     <Folder Include="Rfid\" />
     <Folder Include="Rfid\Notifications\" />
+    <Folder Include="Lock\" />
+    <Folder Include="Lock\Commands\" />
+    <Folder Include="Lock\Queries\" />
   </ItemGroup>
 </Project>

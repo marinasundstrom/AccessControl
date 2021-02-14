@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AccessControl.Messages.Events;
+using AccessPoint.Application.Alarm.Commands;
+using AccessPoint.Application.Lock.Commands;
 using AccessPoint.Application.Services;
 using AppService;
 using MediatR;
@@ -12,17 +14,20 @@ namespace AccessPoint.Application.Sensors.Notifications
     {
         public class DoorClosedNotificationHandler : INotificationHandler<DoorClosedNotification>
         {
+            private readonly IMediator _mediator;
             private readonly AccessPointState _state;
             private readonly ILEDService _ledService;
             private readonly IRelayControlService _relayControlService;
             private readonly IServiceEventClient _serviceEventClient;
 
             public DoorClosedNotificationHandler(
+                IMediator mediator,
                 AccessPointState state,
                 ILEDService ledService,
                 IRelayControlService relayControlService,
                 IServiceEventClient serviceEventClient)
             {
+                _mediator = mediator;
                 _state = state;
                 _ledService = ledService;
                 _relayControlService = relayControlService;
@@ -31,28 +36,21 @@ namespace AccessPoint.Application.Sensors.Notifications
 
             public async Task Handle(DoorClosedNotification notification, CancellationToken cancellationToken)
             {
-                if (_state.Authenticated)
-                {
                     if (_state.LockWhenShut)
                     {
-                        await _serviceEventClient.SendEventAsync(new LockEvent(LockState.Locked));
-                        await _relayControlService.SetRelayStateAsync(_state.LockRelay, false);
-
-                        _state.Unlocked = false;
+                        await _mediator.Send(new LockCommand());
 
                         await _ledService.ToggleAllLedsOff();
                     }
 
                     if (_state.ArmWhenShut)
                     {
-                        await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Messages.Events.AlarmState.Armed));
+                        await _mediator.Send(new ArmCommand());
 
                         await _ledService.ToggleAllLedsOff();
                     }
 
                     _state.Timer?.Dispose();
-                    _state.Authenticated = false;
-                }
             }
         }
     }

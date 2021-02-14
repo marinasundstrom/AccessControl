@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AccessPoint.Application.Alarm.Commands;
 using AccessPoint.Application.Services;
 using AppService;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace AccessPoint.Application.Rfid.Notifications
 {
@@ -26,26 +28,29 @@ namespace AccessPoint.Application.Rfid.Notifications
             private readonly ILEDService _ledService;
             private readonly IBuzzerService _buzzerService;
             private readonly IAuthorizationClient _authorizationClient;
+            private readonly ILogger<OnTagReadNotificationHandler> _logger;
 
             public OnTagReadNotificationHandler(
                 IMediator mediator,
                 AccessPointState state,
                 ILEDService ledService,
                 IBuzzerService buzzerService,
-                IAuthorizationClient authorizationClient)
+                IAuthorizationClient authorizationClient,
+                ILogger<OnTagReadNotificationHandler> logger)
             {
                 _mediator = mediator;
                 _state = state;
                 _ledService = ledService;
                 _buzzerService = buzzerService;
                 _authorizationClient = authorizationClient;
+                _logger = logger;
             }
 
             public async Task Handle(OnTagReadNotification notification, CancellationToken cancellationToken)
             {
-                Console.WriteLine(string.Join(", ", notification.TagData.UID));
+                _logger.LogInformation("Read tag:"+ string.Join(", ", notification.TagData.UID.Select(x => x.ToString("X"))));
 
-                var ct = new CancellationTokenSource();
+                var ct = new CancellationTokenSource(); 
 
                 try
                 {

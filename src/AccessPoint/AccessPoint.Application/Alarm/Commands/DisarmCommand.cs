@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AccessControl.Messages.Events;
 using AccessPoint.Application.Alarm.Queries;
+using AccessPoint.Application.Lock.Commands;
 using AccessPoint.Application.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@ namespace AccessPoint.Application.Alarm.Commands
         public class DisarmCommandHandler : IRequestHandler<DisarmCommand, AlarmStateDto>
         {
             private readonly IMediator _mediator;
-            private readonly ILogger<DisarmCommand> _logger;
+            private readonly ILogger<DisarmCommandHandler> _logger;
             private readonly AccessPointState _state;
             private readonly ILEDService _ledService;
             private readonly IRelayControlService _relayControlService;
@@ -26,7 +27,7 @@ namespace AccessPoint.Application.Alarm.Commands
                 IRelayControlService relayControlService,
                 IServiceEventClient serviceEventClient,
                 ILEDService ledService,
-                ILogger<DisarmCommand> logger)
+                ILogger<DisarmCommandHandler> logger)
             {
                 _mediator = mediator;
                 _state = state;
@@ -40,16 +41,13 @@ namespace AccessPoint.Application.Alarm.Commands
             {
                 try
                 {
-                    //if (_unlocked) return;
-
-                    _state.Authenticated = true; //await CheckCardAsync(cardData);
-
-                    if (_state.Authenticated)
+                    if (_state.Armed)
                     {
-                        _state.Unlocked = true;
+                        _state.Armed = false;
 
-                        await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Messages.Events.AlarmState.Disarmed));
-                        await _serviceEventClient.SendEventAsync(new LockEvent(LockState.Unlocked));
+                        await _serviceEventClient.PublishEvent(new AlarmEvent(AlarmState.Disarmed));
+
+                        var lockState = await _mediator.Send(new UnlockCommand());
 
                         await _ledService.ToggleGreenLedOn();
 
@@ -62,33 +60,17 @@ namespace AccessPoint.Application.Alarm.Commands
                                 _state.Timer?.Dispose();
                                 _state.Timer = null;
 
-                                _state.Authenticated = false;
-                                _state.Unlocked = false;
+                                var lockState = await _mediator.Send(new LockCommand());
 
-                                await _relayControlService.SetRelayStateAsync(_state.LockRelay, false);
+                                _state.Armed = true;
 
-                                await _serviceEventClient.SendEventAsync(new LockEvent(LockState.Locked));
-                                await _serviceEventClient.SendEventAsync(new AlarmEvent(AccessControl.Messages.Events.AlarmState.Armed));
+                                await _serviceEventClient.PublishEvent(new AlarmEvent(AlarmState.Armed));
 
                                 await _ledService.ToggleAllLedsOff();
+
                             }, null, (int)_state.AccessTime.TotalMilliseconds, 0);
                         }
                     }
-                    //else
-                    //{
-                    //    //await ToggleRedLedOn();
-
-                    //    //await _relayControlService.SetRelayStateAsync(LockRelay, false);
-
-                    //    //_timer = new Timer(async _ =>
-                    //    //{
-                    //    //    _timer?.Dispose();
-                    //    //    _timer = null;
-                    //    //    _cardOK = false;
-                    //    //    _unlocked = false;
-                    //    //    await ToggleAllLedsOff();
-                    //    //}, null, (int)_buzzTime.TotalMilliseconds, 0);
-                    //}
 
                     return await _mediator.Send(new GetAlarmStateQuery());
                 }

@@ -83,7 +83,28 @@ namespace AppService.Application.Alarm
                     }
 
                     string deviceId = d.SystemProperties["iothub-connection-device-id"].ToString();
-                    await notificationHubClient.SendFcmNativeNotificationAsync("{\"data\":{\"message\":\"" + $"{deviceId}: {ev.EventName}" + "\"}}", string.Empty);
+
+                    var message = $"{deviceId}: {ev.EventName}";
+
+                    var payload = JsonConvert.SerializeObject(new
+                    {
+                        notification = new
+                        {
+                            title = "AccessControl",
+                            body = message,
+                            priority = "10",
+                            sound = "default",
+                            time_to_live = "600"
+                        },
+                        data = new
+                        {
+                            title = "AccessControl",
+                            body = message,
+                            url = "https://example.com"
+                        }
+                    });
+
+                    await notificationHubClient.SendFcmNativeNotificationAsync(payload, string.Empty);
 
                     await hubContext.Clients.All.ReceiveAlarmNotification(new AlarmNotification()
                     {

@@ -1,6 +1,6 @@
 # Access Control
 
-For Fun Physical Access Control system (door lock and alarm) - built with .NET 5 and ASP.NET Core.
+For Fun Physical Access Control system (door lock and alarm) - Raspberry Pi, .NET 5, ASP.NET, Azure IoT Hub.
 
 Originally, built in 2018-2019. Code refactored in February 2021.
 

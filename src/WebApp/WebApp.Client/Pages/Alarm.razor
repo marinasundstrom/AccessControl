@@ -9,31 +9,50 @@
 
 <h1>Alarm</h1>
 
-<p>Hello test</p>
-
 @if (configuration == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <input type="range" min="0" max="1500" value="@slider" @onchange=@(async (ev) => slider = int.Parse(ev.Value.ToString())) class="slider" />
+<div class="form">
+    <div class="form-group">
+        @if (isArmed)
+        {
+            <button class="btn btn-primary" @onclick="@(async () => await AlarmClient.DisarmAsync(DeviceId))">Disarm</button>
+        }
+        else
+        {
+            <button class="btn btn-primary" @onclick="@(async () => await AlarmClient.ArmAsync(DeviceId))">Arm</button>
+        }
+    </div>
 
-    @TimeSpan.FromSeconds(slider)
+    <h2 class="mt-2">Configuration</h2>
 
-    @if (isArmed)
-    {
-        <button @onclick="@(async () => await AlarmClient.DisarmAsync(DeviceId))">Disarm</button>
-    }
-    else
-    {
-        <button @onclick="@(async () => await AlarmClient.ArmAsync(DeviceId))">Arm</button>
-    }
+    <div class="form-group">
+        <label for="customRange1">Access Time</label>
+        <input type="range" class="custom-range" id="customRange1" min="0" max="1500" value="@slider" @onchange=@(async (ev) => slider = int.Parse(ev.Value.ToString())) />
 
-    <input type="checkbox" @bind="@configuration.LockOnClose" />
-    <input type="checkbox" @bind="@configuration.ArmOnClose" />
+        @TimeSpan.FromSeconds(slider)
+    </div>
 
-    <button @onclick="@Configure">Configure</button>
+    <div class="form-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" @bind="@configuration.LockOnClose" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+                Lock on close
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" @bind="@configuration.ArmOnClose" id="defaultCheck2">
+            <label class="form-check-label" for="defaultCheck2">
+                Arm on close
+            </label>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" @onclick="@Configure">Configure</button>
+</div>
 }
 
 @code {

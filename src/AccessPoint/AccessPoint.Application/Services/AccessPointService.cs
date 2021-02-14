@@ -79,16 +79,16 @@ namespace AccessPoint.Application.Services
             await _commandReceiver.SetCommandHandler<Command, object>(CommandHandler);
 
             whenSwitchClosedSubscription = WhenSwitchClosed.Subscribe(async _ =>
-                await _mediator.Send(new DoorClosedNotification()));
+                await _mediator.Publish(new DoorClosedNotification()));
 
             whenSwitchOpenedSubscription = WhenSwitchOpened.Subscribe(async _ =>
-                await _mediator.Send(new DoorOpenedNotification()));
+                await _mediator.Publish(new DoorOpenedNotification()));
 
             whenCardDataReceivedSubscription = _rfidReader
                 .WhenCardDetected
                 .Throttle(TimeSpan.FromMilliseconds(800))
                 .Subscribe(async cardData =>
-                await _mediator.Send(new CardReadNotification(cardData)));
+                await _mediator.Publish(new CardReadNotification(cardData)));
 
             await _rfidReader.StartAsync();
         }

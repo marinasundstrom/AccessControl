@@ -9,7 +9,6 @@ In order to get going you need to set up the following external services:
 
 * Azure IoT Hub
 * Azure Notification Hub
-* Azure Event Hub
 
 ## Development environment 
 

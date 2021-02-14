@@ -25,7 +25,6 @@ namespace AppService.Application.Alarm.Queries
 
             public async Task<AlarmResult> Handle(GetAlarmStateQuery request, CancellationToken cancellationToken)
             {
-                await _deviceController.Arm(request.DeviceId);
                 return new AlarmResult
                 {
                     AlarmState = (await _deviceController.GetState(request.DeviceId)).AlarmState == AccessControl.Messages.Commands.AlarmState.Armed ? AlarmState.Armed : AlarmState.Disarmed

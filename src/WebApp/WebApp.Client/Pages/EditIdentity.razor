@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using AppService
 @inject IIdentitiesClient IdentitiesClient
+@inject IRfidClient RfidClient
 @inject NavigationManager NavigationManager
 
 <h1>Edit identity</h1>
@@ -17,7 +18,7 @@
             <input type="text" class="form-control" id="Name" aria-describedby="NameHelp" placeholder="Name" @bind="@Identity.Name" />
             <small id="NameHelp" class="form-text text-muted">Enter a name for this identity.</small>
         </div>
-        
+
         <div>
             <button class="btn btn-primary" @onclick="@OnCreateButtonClicked">Create</button>
         </div>
@@ -37,7 +38,7 @@
                 {
                     <tr>
                         <td>@identity.CardType</td>
-                        <td>@string.Join(",", identity.Data)</td>
+                        <td>@string.Join(",", identity.Data.Select(x => x.ToString("X")))</td>
                     </tr>
                 }
             }
@@ -46,12 +47,13 @@
 
     <div>
         <div class="form-group">
-            <label for="Name">Card No</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="CardNo" aria-describedby="CardNoHelp" placeholder="Card No" @bind="@CardNo" />
-            </div>
-            <small id="CardNoHelp" class="form-text text-muted">Enter an card number for this identity.</small>
 
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Card No" aria-label="Recipient's username" aria-describedby="basic-addon2" @bind="@CardNo">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" @onclick="ReadTag">Read tag</button>
+                </div>
+            </div>
         </div>
         <button class="btn btn-primary" @onclick="@OnAddCredentialClicked">Add Credential</button>
     </div>
@@ -95,12 +97,18 @@
             Data = CardNo
             .Split(',')
             .Select(x => x.Trim())
-            .Select(x => byte.Parse(x))
+            .Select(x => byte.Parse(x, System.Globalization.NumberStyles.HexNumber))
             .ToArray()
         };
         credentials.Add(credential);
         CardNo = null;
 
         await IdentitiesClient.AddCredentialAsync(Guid.Parse(Id), credential);
+    }
+
+    private async Task ReadTag()
+    {
+        var result = await RfidClient.ReadTagAsync();
+        CardNo = string.Join(", ", result.Uid.Select(x => x.ToString("X")));
     }
 }

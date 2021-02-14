@@ -4,7 +4,7 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AccessControl.Messages.Commands;
-using AccessPoint.Application.Authorization.Notifications;
+using AccessPoint.Application.Rfid.Notifications;
 using AccessPoint.Application.Models;
 using AccessPoint.Application.Sensors.Notifications;
 using AppService;
@@ -88,7 +88,7 @@ namespace AccessPoint.Application.Services
                 .WhenCardDetected
                 .Throttle(TimeSpan.FromMilliseconds(800))
                 .Subscribe(async cardData =>
-                await _mediator.Publish(new CardReadNotification(cardData)));
+                await _mediator.Publish(new OnTagReadNotification(cardData)));
 
             await _rfidReader.StartAsync();
         }
@@ -116,6 +116,9 @@ namespace AccessPoint.Application.Services
                 case GetAlarmStateCommand.GetAlarmStateCommandConstant:
                     var result5 = await _mediator.Send(new Alarm.Queries.GetAlarmStateQuery());
                     return GetAlarmStatus();
+
+                case ReadTagCommand.ReadTagCommandConstant:
+                    return await _mediator.Send(new Rfid.Commands.ReadTagCommand());
             }
 
             return string.Empty;

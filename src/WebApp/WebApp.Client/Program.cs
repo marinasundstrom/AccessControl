@@ -92,6 +92,13 @@ namespace WebApp.Client
                              RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
                          });
 
+            builder.Services.AddHttpClient<IRfidClient>(client =>
+                         client.BaseAddress = new Uri(serviceEndpoint))
+                         .AddTypedClient<IRfidClient>((http, sp) => new RfidClient(http)
+                         {
+                             RetrieveAuthorizationToken = () => RetrieveAuthorizationToken(sp)
+                         });
+
             // Add auth services
             builder.Services.AddAuthorizationCore();
             builder.Services.AddTokenAuthenticationStateProvider();

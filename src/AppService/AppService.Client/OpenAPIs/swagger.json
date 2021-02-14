@@ -986,6 +986,26 @@
         }
       }
     },
+    "/Rfid/ReadTag": {
+      "get": {
+        "tags": [
+          "Rfid"
+        ],
+        "operationId": "Rfid_ReadTag",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagDataDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Test": {
       "post": {
         "tags": [
@@ -1674,6 +1694,17 @@
           },
           "confirmPassword": {
             "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TagDataDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "uid": {
+            "type": "string",
+            "format": "byte",
             "nullable": true
           }
         }

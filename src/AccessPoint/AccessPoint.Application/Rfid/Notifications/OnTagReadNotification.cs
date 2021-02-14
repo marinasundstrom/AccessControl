@@ -6,18 +6,18 @@ using AccessPoint.Application.Services;
 using AppService;
 using MediatR;
 
-namespace AccessPoint.Application.Authorization.Notifications
+namespace AccessPoint.Application.Rfid.Notifications
 {
-    public class CardReadNotification : INotification
+    public class OnTagReadNotification : INotification
     {
-        public CardData CardDate { get; private set; }
+        public CardData TagData { get; private set; }
 
-        public CardReadNotification(CardData cardDate)
+        public OnTagReadNotification(CardData tagData)
         {
-            CardDate = cardDate;
+            TagData = tagData;
         }
 
-        public class CardReadNotificationHandler : INotificationHandler<CardReadNotification>
+        public class OnTagReadNotificationHandler : INotificationHandler<OnTagReadNotification>
         {
             private const string DeviceId = "AccessPoint1";
 
@@ -27,7 +27,7 @@ namespace AccessPoint.Application.Authorization.Notifications
             private readonly IBuzzerService _buzzerService;
             private readonly IAuthorizationClient _authorizationClient;
 
-            public CardReadNotificationHandler(
+            public OnTagReadNotificationHandler(
                 IMediator mediator,
                 AccessPointState state,
                 ILEDService ledService,
@@ -41,9 +41,9 @@ namespace AccessPoint.Application.Authorization.Notifications
                 _authorizationClient = authorizationClient;
             }
 
-            public async Task Handle(CardReadNotification notification, CancellationToken cancellationToken)
+            public async Task Handle(OnTagReadNotification notification, CancellationToken cancellationToken)
             {
-                Console.WriteLine(string.Join(", ", notification.CardDate.UID));
+                Console.WriteLine(string.Join(", ", notification.TagData.UID));
 
                 var ct = new CancellationTokenSource();
 
@@ -54,7 +54,7 @@ namespace AccessPoint.Application.Authorization.Notifications
                     var result = await _authorizationClient.AuthorizeAsync(new AuthorizeCardCommand()
                     {
                         DeviceId = DeviceId,
-                        CardNo = notification.CardDate.UID,
+                        CardNo = notification.TagData.UID,
                         Pin = null
                     });
 

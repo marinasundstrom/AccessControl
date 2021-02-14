@@ -45,6 +45,11 @@ namespace AppService.Application.Devices
             return await SendCommand<GetConfigurationResponse>(deviceId, new GetConfigurationCommand());
         }
 
+        public async Task<TagData> ReadRfidTag(string deviceId)
+        {
+            return await SendCommand<TagData>(deviceId, new ReadTagCommand());
+        }
+
         private async Task<T> SendCommand<T>(string deviceId, Command command)
         {
             var response = await SendCommand(deviceId, command);

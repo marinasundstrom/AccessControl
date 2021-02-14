@@ -36,5 +36,7 @@
     <Folder Include="Registration\Commands\" />
     <Folder Include="Test\" />
     <Folder Include="AccessLog\Queries\" />
+    <Folder Include="Rfid\" />
+    <Folder Include="Rfid\Commands\" />
   </ItemGroup>
 </Project>

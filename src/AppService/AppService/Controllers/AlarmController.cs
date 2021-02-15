@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppService.Controllers
 {
-    [Route("api/[controller]/{deviceId}")]
+    [Route("api/AccessPoints/{deviceId}/[controller]")]
     [ApiController]
     [Authorize]
     public class AlarmController : ControllerBase

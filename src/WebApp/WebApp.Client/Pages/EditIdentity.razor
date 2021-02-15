@@ -108,7 +108,7 @@
 
     private async Task ReadTag()
     {
-        var result = await RfidClient.ReadTagAsync();
+        var result = await RfidClient.ReadTagAsync("AccessPoint1");
         CardNo = string.Join(", ", result.Uid.Select(x => x.ToString("X")));
     }
 }

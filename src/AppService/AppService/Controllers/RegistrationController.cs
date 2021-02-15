@@ -29,7 +29,7 @@ namespace AppService.Controllers
 
         // Registration method to create new Identity users
         [HttpPost]
-        [Route("Registration")]
+        [Route("Register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(IEnumerable<IdentityError>), StatusCodes.Status500InternalServerError)]

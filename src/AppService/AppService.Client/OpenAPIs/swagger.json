@@ -129,7 +129,7 @@
         }
       }
     },
-    "/api/Alarm/{deviceId}": {
+    "/api/AccessPoints/{deviceId}/Alarm": {
       "get": {
         "tags": [
           "Alarm"
@@ -181,7 +181,7 @@
         }
       }
     },
-    "/api/Alarm/{deviceId}/Arm": {
+    "/api/AccessPoints/{deviceId}/Alarm/Arm": {
       "post": {
         "tags": [
           "Alarm"
@@ -206,7 +206,7 @@
         }
       }
     },
-    "/api/Alarm/{deviceId}/Disarm": {
+    "/api/AccessPoints/{deviceId}/Alarm/Disarm": {
       "post": {
         "tags": [
           "Alarm"
@@ -231,7 +231,7 @@
         }
       }
     },
-    "/api/Alarm/{deviceId}/GetConfiguration": {
+    "/api/AccessPoints/{deviceId}/Alarm/GetConfiguration": {
       "get": {
         "tags": [
           "Alarm"
@@ -283,7 +283,7 @@
         }
       }
     },
-    "/api/Alarm/{deviceId}/SetConfiguration": {
+    "/api/AccessPoints/{deviceId}/Alarm/SetConfiguration": {
       "post": {
         "tags": [
           "Alarm"
@@ -986,12 +986,56 @@
         }
       }
     },
-    "/Rfid/ReadTag": {
+    "/api/AccessPoints/{deviceId}/Rfid/ReadTag": {
       "get": {
         "tags": [
           "Rfid"
         ],
         "operationId": "Rfid_ReadTag",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagDataDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Rfid/ReadTag": {
+      "get": {
+        "tags": [
+          "Rfid"
+        ],
+        "operationId": "Rfid_ReadTag2",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",

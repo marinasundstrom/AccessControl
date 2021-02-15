@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AppService.Controllers
 {
-    [Produces("application/json")]
+    [Route("api/AccessPoints/{deviceId}/[controller]")]
     [Route("[controller]")]
     [ApiController]
     public class RfidController : Controller
@@ -18,11 +18,11 @@ namespace AppService.Controllers
         }
 
         [HttpGet("ReadTag")]
-        public async Task<ActionResult<TagDataDto>> ReadTag()
+        public async Task<ActionResult<TagDataDto>> ReadTag(string deviceId)
         {
             return await mediator.Send(new ReadTagCommand()
             {
-                DeviceId = "AccessPoint1"
+                DeviceId = deviceId
             });
         }
     }

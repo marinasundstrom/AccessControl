@@ -5,6 +5,7 @@ using AccessControl.Messages.Events;
 using AccessPoint.Application.Services;
 using AppService;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace AccessPoint.Application.Sensors.Notifications
 {
@@ -16,21 +17,26 @@ namespace AccessPoint.Application.Sensors.Notifications
             private readonly ILEDService _ledService;
             private readonly IBuzzerService _buzzerService;
             private readonly IServiceEventClient _serviceEventClient;
+            private readonly ILogger<DoorOpenedNotificationHandler> _logger;
 
             public DoorOpenedNotificationHandler(
                 AccessPointState state,
                 ILEDService ledService,
                 IBuzzerService buzzerService,
-                IServiceEventClient serviceEventClient)
+                IServiceEventClient serviceEventClient,
+                ILogger<DoorOpenedNotificationHandler> logger)
             {
                 _state = state;
                 _ledService = ledService;
                 _buzzerService = buzzerService;
                 _serviceEventClient = serviceEventClient;
+                _logger = logger;
             }
 
             public async Task Handle(DoorOpenedNotification notification, CancellationToken cancellationToken)
             {
+                _logger.LogInformation("Door opened");
+
                 if (_state.Armed || _state.Locked)
                 {
                     await _serviceEventClient.PublishEvent(new UnauthorizedAccessEvent());

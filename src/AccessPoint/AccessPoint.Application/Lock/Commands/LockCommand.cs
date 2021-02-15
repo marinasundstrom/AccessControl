@@ -5,6 +5,7 @@ using AccessControl.Messages.Events;
 using AccessPoint.Application.Lock.Queries;
 using AccessPoint.Application.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace AccessPoint.Application.Lock.Commands
 {
@@ -15,6 +16,7 @@ namespace AccessPoint.Application.Lock.Commands
             private readonly IMediator _mediator;
             private readonly AccessPointState _state;
             private readonly ILEDService _ledService;
+            private readonly ILogger<LockCommandHandler> _logger;
             private readonly IRelayControlService _relayControlService;
             private readonly IServiceEventClient _serviceEventClient;
 
@@ -23,13 +25,15 @@ namespace AccessPoint.Application.Lock.Commands
                 AccessPointState state,
                 IRelayControlService relayControlService,
                 IServiceEventClient serviceEventClient,
-                ILEDService ledService)
+                ILEDService ledService,
+                ILogger<LockCommandHandler> logger)
             {
                 _mediator = mediator;
                 _state = state;
                 _relayControlService = relayControlService;
                 _serviceEventClient = serviceEventClient;
                 _ledService = ledService;
+                _logger = logger;
             }
 
             public async Task<LockStateDto> Handle(LockCommand request, CancellationToken cancellationToken)
@@ -39,6 +43,8 @@ namespace AccessPoint.Application.Lock.Commands
                     await _relayControlService.SetRelayStateAsync(_state.LockRelay, true);
 
                     _state.Locked = true;
+
+                    _logger.LogInformation("Locked");
 
                     await _serviceEventClient.PublishEvent(new LockEvent(LockState.Locked));
                 }

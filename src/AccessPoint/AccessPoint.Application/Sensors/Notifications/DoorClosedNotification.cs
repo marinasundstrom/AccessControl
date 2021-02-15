@@ -7,6 +7,7 @@ using AccessPoint.Application.Lock.Commands;
 using AccessPoint.Application.Services;
 using AppService;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace AccessPoint.Application.Sensors.Notifications
 {
@@ -19,24 +20,29 @@ namespace AccessPoint.Application.Sensors.Notifications
             private readonly ILEDService _ledService;
             private readonly IRelayControlService _relayControlService;
             private readonly IServiceEventClient _serviceEventClient;
+            private readonly ILogger<DoorClosedNotificationHandler> _logger;
 
             public DoorClosedNotificationHandler(
                 IMediator mediator,
                 AccessPointState state,
                 ILEDService ledService,
                 IRelayControlService relayControlService,
-                IServiceEventClient serviceEventClient)
+                IServiceEventClient serviceEventClient,
+                ILogger<DoorClosedNotificationHandler> logger)
             {
                 _mediator = mediator;
                 _state = state;
                 _ledService = ledService;
                 _relayControlService = relayControlService;
                 _serviceEventClient = serviceEventClient;
+                _logger = logger;
             }
 
             public async Task Handle(DoorClosedNotification notification, CancellationToken cancellationToken)
             {
-                    if (_state.LockWhenShut)
+                _logger.LogInformation("Door closed");
+
+                if (_state.LockWhenShut)
                     {
                         await _mediator.Send(new LockCommand());
 

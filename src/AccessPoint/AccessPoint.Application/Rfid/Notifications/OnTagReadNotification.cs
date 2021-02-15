@@ -48,7 +48,7 @@ namespace AccessPoint.Application.Rfid.Notifications
 
             public async Task Handle(OnTagReadNotification notification, CancellationToken cancellationToken)
             {
-                _logger.LogInformation("Read tag:"+ string.Join(", ", notification.TagData.UID.Select(x => x.ToString("X"))));
+                _logger.LogInformation("RFID Reader read tag:"+ string.Join(", ", notification.TagData.UID.Select(x => x.ToString("X"))));
 
                 var ct = new CancellationTokenSource(); 
 

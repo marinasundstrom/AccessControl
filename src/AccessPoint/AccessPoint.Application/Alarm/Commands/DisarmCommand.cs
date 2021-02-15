@@ -45,6 +45,8 @@ namespace AccessPoint.Application.Alarm.Commands
                     {
                         _state.Armed = false;
 
+                        _logger.LogInformation("Disarmed");
+
                         await _serviceEventClient.PublishEvent(new AlarmEvent(AlarmState.Disarmed));
 
                         var lockState = await _mediator.Send(new UnlockCommand());
@@ -60,13 +62,7 @@ namespace AccessPoint.Application.Alarm.Commands
                                 _state.Timer?.Dispose();
                                 _state.Timer = null;
 
-                                var lockState = await _mediator.Send(new LockCommand());
-
-                                _state.Armed = true;
-
-                                await _serviceEventClient.PublishEvent(new AlarmEvent(AlarmState.Armed));
-
-                                await _ledService.ToggleAllLedsOff();
+                                await _mediator.Send(new ArmCommand());
 
                             }, null, (int)_state.AccessTime.TotalMilliseconds, 0);
                         }

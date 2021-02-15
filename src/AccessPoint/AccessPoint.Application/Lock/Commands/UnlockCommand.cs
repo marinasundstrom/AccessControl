@@ -46,6 +46,8 @@ namespace AccessPoint.Application.Lock.Commands
 
                         _state.Locked = false;
 
+                        _logger.LogInformation("Unlocked");
+
                         await _serviceEventClient.PublishEvent(new LockEvent(LockState.Unlocked));
                     }
 

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AccessPoint.Application.Alarm.Commands;
+using AccessPoint.Application.Authorization.Commands;
 using AccessPoint.Application.Services;
 using AppService;
 using MediatR;
@@ -56,12 +57,7 @@ namespace AccessPoint.Application.Rfid.Notifications
                 {
                     _ = _ledService.BlinkBlue(_buzzerService, ct.Token);
 
-                    var result = await _authorizationClient.AuthorizeAsync(new AuthorizeCardCommand()
-                    {
-                        DeviceId = DeviceId,
-                        CardNo = notification.TagData.UID,
-                        Pin = null
-                    });
+                    var result = await _mediator.Send(new AuthorizeCommand(DeviceId, notification.TagData.UID));
 
                     ct.Cancel();
 

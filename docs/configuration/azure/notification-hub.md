@@ -1,4 +1,4 @@
-# Push Notifications
+# Notifications Hub
 
 ## Setup Guide
 

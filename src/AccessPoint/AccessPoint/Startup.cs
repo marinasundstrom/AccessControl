@@ -5,8 +5,11 @@ using System.Device.Pwm.Drivers;
 using System.Device.Spi;
 using System.Net.Http;
 using System.Threading;
-using AppService;
+using AccessPoint.Application.Models;
+using AccessPoint.Application.Services;
 using AccessPoint.HostedServices;
+using AppService;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -17,9 +20,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using AccessPoint.Application.Services;
-using AccessPoint.Application.Models;
-using MediatR;
 
 namespace AccessPoint
 {
@@ -42,7 +42,8 @@ namespace AccessPoint
             services.AddMediatR(typeof(Application.Alarm.Commands.ArmCommand));
 
             services.AddDbContext<AccessPointContext>
-                (options => {
+                (options =>
+                {
                     options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"],
                     options2 => options2.MigrationsAssembly(typeof(AccessPointContext).AssemblyQualifiedName));
                     options.EnableSensitiveDataLogging();

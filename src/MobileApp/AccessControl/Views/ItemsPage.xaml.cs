@@ -1,15 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AccessControl.ViewModels;
+using AccessControl.Views;
+using AppService;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
-using AccessControl.Views;
-using AccessControl.ViewModels;
-using AppService;
 
 namespace AccessControl.Views
 {

@@ -1,11 +1,11 @@
 ﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using Xamarin.Forms.Internals;
-using AccessControl.Views;
-using Xamarin.Essentials;
 using System.Reflection;
+using AccessControl.Views;
 using Microsoft.Extensions.Logging;
+using Xamarin.Essentials;
+using Xamarin.Forms;
+using Xamarin.Forms.Internals;
+using Xamarin.Forms.Xaml;
 
 namespace AccessControl
 {
@@ -35,7 +35,7 @@ namespace AccessControl
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
             {
                 var logger = ServiceProvider.GetService<ILogger<App>>();
-                logger.LogCritical((Exception)args.ExceptionObject, "Fatal error");              
+                logger.LogCritical((Exception)args.ExceptionObject, "Fatal error");
             };
         }
 

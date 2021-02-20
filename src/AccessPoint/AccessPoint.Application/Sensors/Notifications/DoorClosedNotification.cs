@@ -43,20 +43,20 @@ namespace AccessPoint.Application.Sensors.Notifications
                 _logger.LogInformation("Door closed");
 
                 if (_state.LockWhenShut)
-                    {
-                        await _mediator.Send(new LockCommand());
+                {
+                    await _mediator.Send(new LockCommand());
 
-                        await _ledService.ToggleAllLedsOff();
-                    }
+                    await _ledService.ToggleAllLedsOff();
+                }
 
-                    if (_state.ArmWhenShut)
-                    {
-                        await _mediator.Send(new ArmCommand());
+                if (_state.ArmWhenShut)
+                {
+                    await _mediator.Send(new ArmCommand());
 
-                        await _ledService.ToggleAllLedsOff();
-                    }
+                    await _ledService.ToggleAllLedsOff();
+                }
 
-                    _state.Timer?.Dispose();
+                _state.Timer?.Dispose();
             }
         }
     }

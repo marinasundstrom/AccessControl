@@ -1,13 +1,13 @@
-﻿using AppService;
-using AppService;
-using AccessControl.Services;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using AccessControl.Services;
+using AppService;
+using AppService;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -30,8 +30,8 @@ namespace AccessControl.ViewModels
         private bool isDisarmed;
 
         public AlarmViewModel(
-            IAlarmClient alarmClient, 
-            IAlarmNotificationClient alarmNotificationClient, 
+            IAlarmClient alarmClient,
+            IAlarmNotificationClient alarmNotificationClient,
             INavigationService navigationService)
         {
             this.alarmClient = alarmClient;
@@ -57,7 +57,7 @@ namespace AccessControl.ViewModels
             try
             {
                 await Task.WhenAll(
-                    GetConfiguration(), 
+                    GetConfiguration(),
                     GetAlarmState());
 
                 subscription = this.alarmNotificationClient.WhenMessageReceived.Subscribe(notification =>

@@ -54,7 +54,8 @@ namespace AppService.Controllers
         [HttpGet("GetConfiguration")]
         public async Task<ActionResult<AlarmConfiguration>> GetConfiguration(string deviceId)
         {
-            return Ok(await _mediator.Send(new GetAlarmConfigurationQuery {
+            return Ok(await _mediator.Send(new GetAlarmConfigurationQuery
+            {
                 DeviceId = deviceId
             }));
         }

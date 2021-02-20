@@ -10,7 +10,7 @@ namespace AppService.Domain.Entities
         public AccessLog AccessLog { get; set; }
 
         public DateTime Timestamp { get; set; }
-        
+
         public Guid? AccessPointId { get; set; }
 
         public AccessPoint AccessPoint { get; set; }

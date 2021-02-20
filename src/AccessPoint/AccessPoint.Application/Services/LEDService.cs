@@ -16,7 +16,7 @@ namespace AccessPoint.Application.Services
         {
             this.gpioController = gpioController;
 
-            foreach(var led in leds)
+            foreach (var led in leds)
             {
                 gpioController.OpenPin(led);
                 gpioController.SetPinMode(led, PinMode.Output);

@@ -1,10 +1,10 @@
 ﻿namespace ReadDeviceToCloudMessages
 {
     using System;
-    using System.Threading.Tasks;
+    using System.Linq;
     using System.Text;
     using System.Threading;
-    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs;
 
     public class Program
@@ -21,7 +21,7 @@
                 var eventData = await eventHubReceiver.ReceiveAsync(1);
                 if (eventData == null) continue;
 
-                foreach(var d in eventData)
+                foreach (var d in eventData)
                 {
                     var data = Encoding.UTF8.GetString(d.Body);
                     Console.WriteLine($"{d.SystemProperties["iothub-connection-device-id"]}: {data}");

@@ -1,8 +1,8 @@
-﻿using AccessPoint.Application.Components;
-using System;
+﻿using System;
 using System.Device.Gpio;
 using System.Device.Pwm;
 using System.Threading.Tasks;
+using AccessPoint.Application.Components;
 
 namespace AccessPoint.Application.Services
 {

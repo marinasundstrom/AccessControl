@@ -1,4 +1,9 @@
-﻿using AccessControl.Messages.Events;
+﻿using System;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using AccessControl.Messages.Events;
 using AppService.Application.AccessLog;
 using AppService.Application.Alarm.Hubs;
 using Microsoft.AspNetCore.SignalR;
@@ -8,11 +13,6 @@ using Microsoft.Azure.NotificationHubs;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AppService.Application.Alarm
 {
@@ -63,10 +63,10 @@ namespace AppService.Application.Alarm
                 {
                     var data = Encoding.UTF8.GetString(d.Body.ToArray());
                     Event ev = JsonConvert.DeserializeObject<Event>(data); ;
-                    switch(ev.EventName)
+                    switch (ev.EventName)
                     {
                         case LockEvent.EventNameConstant:
-                           ev = JsonConvert.DeserializeObject<LockEvent>(data);
+                            ev = JsonConvert.DeserializeObject<LockEvent>(data);
                             break;
 
                         case AccessEvent.EventNameConstant:
@@ -113,16 +113,17 @@ namespace AppService.Application.Alarm
 
                     Domain.Enums.AccessEvent e = Domain.Enums.AccessEvent.Undefined;
 
-                    if(ev is AccessControl.Messages.Events.LockEvent f)
+                    if (ev is AccessControl.Messages.Events.LockEvent f)
                     {
-                        if(f.LockState == LockState.Locked)
+                        if (f.LockState == LockState.Locked)
                         {
                             e = Domain.Enums.AccessEvent.Locked;
-                        } else
+                        }
+                        else
                         {
                             e = Domain.Enums.AccessEvent.Unlocked;
                         }
-                       
+
                     }
                     if (ev is AccessControl.Messages.Events.AlarmEvent g)
                     {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AppService.Application.AccessLog.Queries
 {
-    public class GetLogEntriesQuery 
+    public class GetLogEntriesQuery
     {
     }
 }

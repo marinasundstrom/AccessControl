@@ -1,33 +1,33 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AppService.Application.AccessLog;
+using AppService.Application.AccessLog.Hubs;
+using AppService.Application.Alarm;
+using AppService.Application.Alarm.Hubs;
+using AppService.Application.Devices;
+using AppService.Application.Login;
+using AppService.Application.Services;
 using AppService.Domain.Entities;
+using AppService.Infrastructure;
+using AppService.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using AppService.Infrastructure;
-using AppService.Application.Login;
-using AppService.Application.Services;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Identity;
-using AppService.Infrastructure.Persistence;
-using AppService.Application.Devices;
-using AppService.Application.Alarm;
-using AppService.Application.AccessLog;
-using AppService.Application.Alarm.Hubs;
-using AppService.Application.AccessLog.Hubs;
-using Microsoft.AspNetCore.ResponseCompression;
-using System.Linq;
+using Microsoft.IdentityModel.Tokens;
 
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
 
@@ -56,7 +56,8 @@ namespace AppService
             });
 
             services.AddDbContext<AccessControlContext>
-                (options => {
+                (options =>
+                {
                     options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]);
                     //options2 => options2.MigrationsAssembly(typeof(AccessControlContext).AssemblyQualifiedName));
                     options.EnableSensitiveDataLogging();
@@ -65,7 +66,7 @@ namespace AppService
                .AddEntityFrameworkStores<AccessControlContext>()
                .AddDefaultTokenProviders();
 
-            services.AddCors(options => 
+            services.AddCors(options =>
             {
                 options.AddPolicy("AllowAnyOrigin",
                           builder => builder

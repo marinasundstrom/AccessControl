@@ -20,7 +20,8 @@ namespace AccessControl.Markup
 
         public TranslateExtension()
         {
-            _initialized = true;        }
+            _initialized = true;
+        }
 
         public string Text { get; set; }
 

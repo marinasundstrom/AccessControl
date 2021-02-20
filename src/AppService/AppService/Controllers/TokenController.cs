@@ -1,14 +1,14 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Http;
-using AppService.Domain.Entities;
 using AppService.Application.Login;
-using MediatR;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Identity;
 using AppService.Application.Services;
+using AppService.Domain.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AppService.Controllers
 {

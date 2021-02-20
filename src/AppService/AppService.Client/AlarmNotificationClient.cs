@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace AppService
 {
@@ -25,9 +25,9 @@ namespace AppService
 
         public void Dispose()
         {
-            if(whenMessageReceivedSubscription != null)
+            if (whenMessageReceivedSubscription != null)
             {
-               StopAsync().GetAwaiter().GetResult();
+                StopAsync().GetAwaiter().GetResult();
             }
         }
 

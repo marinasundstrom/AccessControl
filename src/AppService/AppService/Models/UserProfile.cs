@@ -4,7 +4,7 @@
     {
         public UserProfile()
         {
-            
+
         }
 
         public UserProfile(string name)

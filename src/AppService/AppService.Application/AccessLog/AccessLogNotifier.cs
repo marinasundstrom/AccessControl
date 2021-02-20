@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppService.Application.AccessLog.Hubs;
 using AppService.Domain.Entities;
 using Microsoft.AspNetCore.SignalR;
-using AppService.Application.AccessLog.Hubs;
 
 namespace AppService.Application.AccessLog
 {

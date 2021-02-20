@@ -30,7 +30,7 @@ namespace AccessPoint.Application.Components
             InterruptTime = interruptTime;
         }
 
-        public int InPin { get; }   
+        public int InPin { get; }
 
         public ulong InterruptTime { get; }
 

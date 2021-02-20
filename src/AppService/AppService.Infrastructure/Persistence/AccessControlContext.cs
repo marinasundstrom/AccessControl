@@ -1,7 +1,7 @@
-﻿using AppService.Domain.Entities;
+﻿using System;
+using AppService.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace AppService.Infrastructure.Persistence
 {

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
 using AccessControl.ViewModels;
 using AppService;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace AccessControl.Views
 {

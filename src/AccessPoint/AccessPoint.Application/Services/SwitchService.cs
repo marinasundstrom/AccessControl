@@ -36,8 +36,8 @@ namespace AccessPoint.Application.Services
         public event EventHandler Opened;
 
         private void OnPinChanged(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
-        {     
-            if(pinValueChangedEventArgs.ChangeType == PinEventTypes.Rising)
+        {
+            if (pinValueChangedEventArgs.ChangeType == PinEventTypes.Rising)
             {
                 HandleCircuitClosed();
             }
@@ -67,8 +67,8 @@ namespace AccessPoint.Application.Services
 
         public void Dispose()
         {
-           gpioController.UnregisterCallbackForPinValueChangedEvent(InPinNumber, OnPinChanged);
-           gpioController.ClosePin(InPinNumber);
+            gpioController.UnregisterCallbackForPinValueChangedEvent(InPinNumber, OnPinChanged);
+            gpioController.ClosePin(InPinNumber);
         }
     }
 }

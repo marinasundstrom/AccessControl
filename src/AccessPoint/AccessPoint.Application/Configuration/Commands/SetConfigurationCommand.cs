@@ -19,7 +19,7 @@ namespace AccessPoint.Application.Configuration.Commands
         }
 
         public class SetConfigurationCommandHandler : IRequestHandler<SetConfigurationCommand, ConfigurationDto>
-        { 
+        {
             private readonly IMediator _mediator;
             private readonly AccessPointContext _accessPointContext;
             private readonly AccessPointState _state;

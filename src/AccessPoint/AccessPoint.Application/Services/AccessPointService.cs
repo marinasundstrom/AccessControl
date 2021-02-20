@@ -4,8 +4,8 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AccessControl.Messages.Commands;
-using AccessPoint.Application.Rfid.Notifications;
 using AccessPoint.Application.Models;
+using AccessPoint.Application.Rfid.Notifications;
 using AccessPoint.Application.Sensors.Notifications;
 using AppService;
 using MediatR;
@@ -103,7 +103,7 @@ namespace AccessPoint.Application.Services
 
                 case AccessControl.Messages.Commands.DisarmCommand.DisarmCommandConstant:
                     var result2 = await _mediator.Send(new Alarm.Commands.DisarmCommand());
-                    return GetAlarmStatus(); 
+                    return GetAlarmStatus();
 
                 case ConfigureCommand.ConfigureCommandConstant:
                     var result3 = await _mediator.Send(new Configuration.Commands.SetConfigurationCommand(command.Args));
@@ -133,7 +133,7 @@ namespace AccessPoint.Application.Services
 
         private async Task<string> GetParam(string key)
         {
-            using(var scope = _serviceProvider.CreateScope())
+            using (var scope = _serviceProvider.CreateScope())
             {
                 var param = await scope.ServiceProvider
                     .GetRequiredService<AccessPointContext>()

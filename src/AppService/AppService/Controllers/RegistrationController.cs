@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppService.Application.Registration;
+using AppService.Application.Registration.Commands;
+using AppService.Application.Services;
+using AppService.Domain.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
-using AppService.Domain.Entities;
-using AppService.Application.Services;
-using MediatR;
-using AppService.Application.Registration;
-using AppService.Application.Registration.Commands;
 
 namespace AppService.Controllers
 {

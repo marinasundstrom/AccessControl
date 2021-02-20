@@ -1,9 +1,9 @@
-﻿using AccessPoint.Application.Components;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
 using System.Threading.Tasks;
+using AccessPoint.Application.Components;
 
 namespace AccessPoint.Application.Services
 {
@@ -21,7 +21,7 @@ namespace AccessPoint.Application.Services
 
         public void Dispose()
         {
-            foreach(var relay in relays)
+            foreach (var relay in relays)
             {
                 relay.Dispose();
             }

@@ -9,7 +9,7 @@ namespace AccessPoint.Application.Models
         public virtual AccessLog AccessLog { get; set; }
 
         public DateTime Timestamp { get; set; }
-        
+
         public Guid? AccessPointId { get; set; }
 
         public Guid? IdentityId { get; set; }

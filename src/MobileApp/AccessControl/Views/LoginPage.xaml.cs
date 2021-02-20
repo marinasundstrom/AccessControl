@@ -21,7 +21,7 @@ namespace AccessControl.Views
             BindingContext = loginViewModel;
             _serviceProvider = serviceProvider;
 
-            InitializeComponent();      
+            InitializeComponent();
         }
 
         async void OnSignUpButtonClicked(object sender, EventArgs e)

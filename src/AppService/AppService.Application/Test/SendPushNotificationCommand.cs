@@ -28,8 +28,10 @@ namespace AppService.Application.Test
 
             public async Task<Unit> Handle(SendPushNotificationCommand request, CancellationToken cancellationToken)
             {
-                var payload = JsonSerializer.Serialize(new {
-                    notification = new {
+                var payload = JsonSerializer.Serialize(new
+                {
+                    notification = new
+                    {
                         title = "Test message",
                         body = request.Text,
                         priority = "10",
@@ -40,7 +42,7 @@ namespace AppService.Application.Test
                     {
                         title = "Test message",
                         body = request.Text,
-                        url ="https://example.com"
+                        url = "https://example.com"
                     }
                 });
 

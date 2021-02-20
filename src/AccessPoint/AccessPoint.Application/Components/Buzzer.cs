@@ -31,7 +31,7 @@ namespace AccessPoint.Application.Components
 
             pwmChannel = PwmChannel.Create(0, Channel, ToneFrequency, 0.5);
             pwmChannel.Start();
-            
+
             try
             {
                 await Task.Delay(time, cts.Token);

@@ -12,8 +12,8 @@ namespace AccessPoint.Application.Components.Mfrc522
 {
     using static Command;
     using static Register;
-    using static Status;
     using static RequestMode;
+    using static Status;
 
     public class Mfrc522Controller : IDisposable
     {
@@ -31,7 +31,7 @@ namespace AccessPoint.Application.Components.Mfrc522
             _spiDevice = spiDevice;
 
             _controller = new GpioController();
-            _controller.OpenPin(_nrstpd, PinMode.Output); 
+            _controller.OpenPin(_nrstpd, PinMode.Output);
 
             Init();
         }

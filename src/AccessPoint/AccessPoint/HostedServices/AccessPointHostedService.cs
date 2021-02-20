@@ -1,10 +1,10 @@
-﻿using AccessPoint.Application.Services;
-using Microsoft.Extensions.Hosting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AccessPoint.Application.Services;
+using Microsoft.Extensions.Hosting;
 
 namespace AccessPoint.HostedServices
 {

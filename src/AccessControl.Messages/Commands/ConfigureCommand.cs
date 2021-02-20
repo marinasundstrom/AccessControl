@@ -13,7 +13,7 @@ namespace AccessControl.Messages.Commands
             { nameof(armOnClose), armOnClose }
         })
         {
-            
+
         }
     }
 }

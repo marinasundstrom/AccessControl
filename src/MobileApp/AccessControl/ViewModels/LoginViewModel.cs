@@ -1,12 +1,12 @@
 ﻿
-using AccessControl.Services;
-using AccessControl.Validation;
-using AccessControl.Views;
-using AppService;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using AccessControl.Services;
+using AccessControl.Validation;
+using AccessControl.Views;
+using AppService;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -22,8 +22,8 @@ namespace AccessControl.ViewModels
         private bool rememberMe;
 
         public LoginViewModel(
-            ITokenClient tokenClient, 
-            IPopupService popupService, 
+            ITokenClient tokenClient,
+            IPopupService popupService,
             INavigationService navigationService)
         {
             _tokenClient = tokenClient;

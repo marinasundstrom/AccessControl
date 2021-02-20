@@ -2,11 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 using AccessControl.Views;
-
-using Microsoft.Extensions.Logging;
 using AppService;
+using Microsoft.Extensions.Logging;
+using Xamarin.Forms;
 
 namespace AccessControl.ViewModels
 {

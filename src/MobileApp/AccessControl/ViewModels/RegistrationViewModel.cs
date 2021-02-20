@@ -1,12 +1,12 @@
 ﻿
-using AccessControl.Services;
-using AccessControl.Validation;
-using AccessControl.Views;
-using AppService;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using AccessControl.Services;
+using AccessControl.Validation;
+using AccessControl.Views;
+using AppService;
 using Xamarin.Forms;
 
 namespace AccessControl.ViewModels

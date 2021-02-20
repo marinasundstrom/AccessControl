@@ -1,19 +1,19 @@
-﻿using AppService;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using AccessControl.Services;
 using AccessControl.ViewModels;
 using AccessControl.Views;
+using AppService;
 using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 
@@ -95,7 +95,7 @@ namespace AccessControl
               client.BaseAddress = new Uri(serviceEndpoint))
               .AddTypedClient<AlarmClient>();
 
-            services.AddSingleton<IAlarmNotificationClient, AlarmNotificationClient>(sp => 
+            services.AddSingleton<IAlarmNotificationClient, AlarmNotificationClient>(sp =>
                 new AlarmNotificationClient(
                     new HubConnectionBuilder().WithUrl($"{serviceEndpoint}alarms-notifications-hub", opt =>
                     {

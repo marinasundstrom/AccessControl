@@ -14,13 +14,23 @@
 
         <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
         <DataAnnotationsValidator />
-        <label for="Email" class="sr-only">Email</label>
-        <InputText class="form-control" placeholder="Email address" @bind-Value="@credentials.Email"></InputText>
-        <ValidationMessage For="@(() => credentials.Email)"></ValidationMessage>
-        <label for="Password" class="sr-only">Password</label>
-        <input type="password" class="form-control" placeholder="Password" @bind="@credentials.Password" />
-        <ValidationMessage For="@(() => credentials.Password)"></ValidationMessage>
-        <button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
+
+        <div class="form-floating mb-3">
+            <InputText class="form-control" id="floatingInput" placeholder="Email address" @bind-Value="@credentials.Email"></InputText>
+            <label for="floatingInput">Email address</label>
+            <ValidationMessage For="@(() => credentials.Email)"></ValidationMessage>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" @bind="@credentials.Password" />
+            <label for="floatingPassword">Password</label>
+            <ValidationMessage For="@(() => credentials.Password)"></ValidationMessage> 
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Log in</button>
+            <a class="btn btn-lg btn-secondary btn-block ml-2" href="/register">Register</a>
+        </div>
+
         <p class="mt-5 mb-3 text-muted">© @DateTime.Now.Year</p>
     </EditForm>
 

@@ -3,12 +3,32 @@
 
 <AuthorizeView>
     <Authorized>
-        <a href="Manage">Hello, @context.User.Identity.Name!</a>
-        <a href="#" @onclick="LogOut" class="ml-md-auto">Log out</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <a href="Manage">Hello, @context.User.Identity.Name!</a>
+                </div>
+                <div class="col-auto">
+                </div>
+                <div class="col-sm">
+                    <a href="#" @onclick="LogOut" class="ml-md-auto">Log out</a>
+                </div>
+            </div>
+        </div>
     </Authorized>
     <NotAuthorized>
-        <a href="Register">Register</a>
-        <a href="Login"class="ml-md-auto">Log in</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <a href="Register">Register</a>
+                </div>
+                <div class="col-auto">
+                </div>
+                <div class="col-sm">
+                    <a href="Login" class="ml-md-auto">Log in</a>
+                </div>
+            </div>
+        </div>
     </NotAuthorized>
 </AuthorizeView>
 

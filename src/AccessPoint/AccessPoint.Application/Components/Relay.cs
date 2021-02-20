@@ -25,7 +25,7 @@ namespace AccessPoint.Application.Components
 
         public int InPin { get; }
 
-        public void SetRelayState(bool value) => gpioController.Write(InPin, !value ? PinValue.High : PinValue.Low);
+        public void SetRelayState(bool value) => gpioController.Write(InPin, value ? PinValue.High : PinValue.Low);
 
         public bool GetRelayState() => gpioController.Read(InPin) != PinValue.High;
 

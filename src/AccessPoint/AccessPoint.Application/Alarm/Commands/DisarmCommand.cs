@@ -53,8 +53,6 @@ namespace AccessPoint.Application.Alarm.Commands
 
                         await _ledService.ToggleGreenLedOn();
 
-                        await _relayControlService.SetRelayStateAsync(_state.LockRelay, true);
-
                         if (_state.AccessTime != TimeSpan.Zero) // Infinite access time
                         {
                             _state.Timer = new Timer(async _ =>

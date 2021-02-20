@@ -17,7 +17,7 @@ namespace AccessPoint.Application.Components
         public Switch(
             GpioController gpioController,
             int inPin,
-            ulong interruptTime = 100)
+            ulong interruptTime = 500)
         {
             this.gpioController = gpioController;
             this.InPin = inPin;

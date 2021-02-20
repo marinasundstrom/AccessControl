@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using AccessControl.Messages.Events;
@@ -45,9 +46,13 @@ namespace AccessPoint.Application.Alarm.Commands
 
                     _state.Armed = true;
 
+                    await _ledService.SetColorAsync(Color.Purple);
+
                     _logger.LogInformation("Armed");
 
                     await _serviceEventClient.PublishEvent(new AlarmEvent(AlarmState.Armed));
+
+                    await Task.Delay(2000);
 
                     await _ledService.ToggleAllLedsOff();
                 }

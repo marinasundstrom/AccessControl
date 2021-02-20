@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AccessPoint.Application.Services
 {
-    public partial interface ILEDService
+    public partial interface ILEDService : IDisposable
     {
-        Task SetAsync(int id, bool state);
-
-        Task<bool> ToggleAsync(int id);
+        Task SetColorAsync(byte r, byte g, byte b);
+        Task SetColorAsync(Color color);
     }
 }

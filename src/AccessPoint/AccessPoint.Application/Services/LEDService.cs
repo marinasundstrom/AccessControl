@@ -1,42 +1,38 @@
 ﻿using System;
 using System.Device.Gpio;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
+using AccessPoint.Application.Components;
 
 namespace AccessPoint.Application.Services
 {
-    public class LEDService : ILEDService, IDisposable
+    public class LEDService : ILEDService
     {
-        private readonly GpioController gpioController;
-        private int[] leds = new int[] {
-                5, 19, 6
-            };
+        private RgbLed rgbLed;
 
-        public LEDService(GpioController gpioController)
+        public LEDService()
         {
-            this.gpioController = gpioController;
-
-            foreach (var led in leds)
-            {
-                gpioController.OpenPin(led);
-                gpioController.SetPinMode(led, PinMode.Output);
-                gpioController.Write(led, PinValue.Low);
-            }
+            this.rgbLed = new RgbLed();
         }
 
         public void Dispose()
         {
-            foreach (var led in leds)
-            {
-                gpioController.ClosePin(led);
-            }
+            rgbLed.Dispose();
         }
 
-        public Task SetAsync(int id, bool state)
+        public Task SetColorAsync(Color color)
         {
-            return Task.Run(() => gpioController.Write(leds[id], state));
+            rgbLed.SetColor(color);
+
+            return Task.CompletedTask;
         }
 
-        public Task<bool> ToggleAsync(int id) => Task.FromResult(gpioController.Read(leds[id]) == PinValue.High);
+        public Task SetColorAsync(byte r, byte g, byte b)
+        {
+            rgbLed.SetColor(r, g, b);
+
+            return Task.CompletedTask;
+        }
     }
 }

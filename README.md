@@ -47,7 +47,7 @@ My goal is to recreate my original Raspberry PI set up, and to create guides on 
 
 ### Raspberry Pi
 
-<img src="/images/photos/pi-accesspoint.jpeg" />
+<img src="/images/photos/pi.jpeg" />
 
 ## Architecture
 * Clean architecture, CQRS with Mediator-pattern.

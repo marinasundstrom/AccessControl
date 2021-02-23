@@ -49,6 +49,8 @@ namespace AppService
                 .AddControllers()
                 .AddNewtonsoftJson();
 
+            services.AddInfrastructure();
+
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
@@ -56,15 +58,15 @@ namespace AppService
             });
 
             services.AddDbContext<AccessControlContext>
-                (options =>
+                ((sp, options) =>
                 {
-                    options.UseSqlite(Configuration["ConnectionStrings:DefaultConnection"]);
-                    //options2 => options2.MigrationsAssembly(typeof(AccessControlContext).AssemblyQualifiedName));
+                    options.UseSqlServer(
+                      sp.GetRequiredService<IConfiguration>().GetConnectionString("appservice-db"));
                     options.EnableSensitiveDataLogging();
                 })
                 .AddIdentity<User, IdentityRole>()
-               .AddEntityFrameworkStores<AccessControlContext>()
-               .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<AccessControlContext>()
+                .AddDefaultTokenProviders();
 
             services.AddCors(options =>
             {

@@ -921,7 +921,7 @@
         }
       }
     },
-    "/api/Registration/Registration": {
+    "/api/Registration/Register": {
       "post": {
         "tags": [
           "Registration"

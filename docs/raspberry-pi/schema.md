@@ -1,5 +1,7 @@
 # Schema
 
+<img src="/docs/raspberry-pi/fritzing/AccessControl_bb.png" />
+
 ## MFRC522
 
 | Connector     | Pin (Logical)  |

@@ -4,6 +4,8 @@ For Fun Physical Access Control system (door lock and alarm) - Raspberry Pi, .NE
 
 Originally, built in 2018-2019. Code refactored in February 2021.
 
+For configuration, see the documentation.
+
 [Video: WebApp](https://www.youtube.com/watch?v=VlSKTeJASYc)
 
 [Video: Push Notifications](https://www.youtube.com/watch?v=9nb2P9FmH2Y)

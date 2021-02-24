@@ -1,8 +1,10 @@
-# Schema
+# Schematics
 
 <img src="/docs/raspberry-pi/fritzing/AccessControl_bb.png" />
 
 ## MFRC522
+
+Requires SPI to be enabled.
 
 | Connector     | Pin (Logical)  |
 | ------------- | --------------:|
@@ -21,7 +23,7 @@
 | +             | 12             |
 | GND           | GND            |
 
-GPIO 21 is configured as Hardware PWM.
+GPIO 12 is configured as Hardware PWM.
 
 ### Configure Hardware PWM
 

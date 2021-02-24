@@ -13,4 +13,4 @@
 
 ## Raspberry Pi
 
-* [Schema](/docs/raspberry-pi/schema.md)
+* [Schema](/docs/raspberry-pi/schematics.md)

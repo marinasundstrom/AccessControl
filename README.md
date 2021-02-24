@@ -2,13 +2,13 @@
 
 For Fun Physical Access Control system (door lock and alarm) - Raspberry Pi, .NET 5, ASP.NET, Azure IoT Hub.
 
-Originally, built in 2018-2019. Code refactored in February 2021.
+Initially, built in 2018-2019. Code refactored in February 2021.
 
-For configuration, see the documentation.
+More info in [docs](/docs).
 
-[Video: WebApp](https://www.youtube.com/watch?v=VlSKTeJASYc)
+* [Video: WebApp](https://www.youtube.com/watch?v=VlSKTeJASYc)
 
-[Video: Push Notifications and Pi](https://www.youtube.com/watch?v=9nb2P9FmH2Y)
+* [Video: Push Notifications and Pi](https://www.youtube.com/watch?v=9nb2P9FmH2Y)
 
 ## Purpose
 
@@ -16,17 +16,7 @@ Learning about building microservices, better structuring code, and some electro
 
 Expressing my creativity - having fun.
 
-## Parts
-
-The project consists of the 2 main services:
-* AppService
-* AccessPoint
-
-It also contains these apps: 
-* Web App (Blazor)
-* Mobile App (Xamarin.Forms)
-
-## Updates
+### Updates
 
 Since publishing this project, I have been updating everything to .NET 5, from an earlier version of .NET Core.
 
@@ -36,22 +26,49 @@ My goal is to recreate my original Raspberry PI set up, and to create guides on 
 
 ## Screenshots
 
-### Web App
+| Alarm         | Access Log    |
+| ------------- | --------------|
+| <img src="/images/screenshots/webapp-alarm.png" style="max-height: 450px"  />             | <img src="/images/screenshots/webapp-accesslog.png" style="max-height: 450px"  />   |
 
-#### Alarm
-<img src="/images/screenshots/webapp-alarm.png" />
+| Raspberry Pi  |
+| ------------- |
+| <img src="/images/photos/pi.jpeg" style="max-height: 450px" />  |
 
-#### Access Log
+## Parts
 
-<img src="/images/screenshots/webapp-accesslog.png" />
+The project consists of the 2 main services:
+* AppService - Cloud service
+* AccessPoint - Running on the Raspberry Pi
 
-### Raspberry Pi
+The services connect to these Azure services:
+* Azure IoT Hub
+* Azure Notification Hub
 
-<img src="/images/photos/pi.jpeg" />
+It also contains these apps: 
+* Web App (Blazor)
+* Mobile App (Xamarin.Forms)
 
-## Architecture
-* Clean architecture, CQRS with Mediator-pattern.
-* Azure Services - IoT Hub, Notification Hub
+The Raspberry Pi uses the following components:
+* Magnet door sensor
+* Buzzer (for signal)
+* Relay (for a door lock)
+* RFID Card Reader (MFRC522) 
+* RGB LED (light with color)
+
+[Schematics](/docs/raspberry-pi/schematics.md) for the setup.
+
+## Development requirements
+
+* .NET 5 SDK
+
+Additional tools:
+
+* Docker
+* Project "Tye" - to simplify launching and running multiple services in parallel when developing.
+
+## Running the project
+
+You can run services separately but that requires some configuration. Instead, Project Tye is strongly recommended.
 
 ### Using Project Tye
 
@@ -62,84 +79,3 @@ To run the projects simply write the following command when in the root director
 ```
 tye run
 ```
-
-## Services
-
-### AppService
-Responsible for handling requests and granting access to an AccessPoint.
-
-It is controlled through a Web API, which both the Web App and Mobile App uses.
-
-Communicates with AccessPoint through IoT Hub and Event Hub.
-
-The service also sends Push Notifications to phones that have the Mobile App installed.
-
-### AccessPoint
-Represents a physical AccessPoint. (There can be multiple AccessPoints)
-
-It controls the hardware on behalf of the App Service.
-
-Runs in Raspberry Pi OS (Raspbian), on a Raspberry Pi. 
-
-It can even run in a Docker container, if desired.
-
-Peripherals:
-* RFID reader
-* Relay
-* LED
-* Button
-
-Uses the ```System.Devices``` package.
-
-## Apps
-
-### Web App
-Basic UI for monitoring the system.
-
-Functionality:
-
-* Request access (Arm and Disarm)
-* Create identities. 
-* View  Live Access Logs
-
-### Mobile App
-
-Functionality:
-
-* Request access (Arm and Disarm)
-* Receive Push Notifications.
-
-Currently only the Android app is working
-
-## Development requirements
-
-* .NET 5.0.* SDK for building
-
-Addional tools:
-
-* Project "Tye" - to simplify launching and running multiple services in parallel when developing.
-
-## Running the project
-
-You can run services separately but that requires some configuration. Instead, Project Tye is strongly recommended.
-
-## Todo
-Here is a list of what is to be dones:
-
-* Refactor code
-
-* Access Point
-    * Introduce Clean Architecture
-
-* Web App
-    * Upgrade to Bootstrap 5
-    * Fix user experience
-
-* Data
-    * Seed initial and test data in database
-
-* Configuration
-    * Improve storing and retrieving settings, including connection strings.
-
-* Docs
-    * Improve docs on configuration

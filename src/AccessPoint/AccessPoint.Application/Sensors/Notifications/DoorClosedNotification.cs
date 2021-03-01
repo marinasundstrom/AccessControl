@@ -46,14 +46,14 @@ namespace AccessPoint.Application.Sensors.Notifications
                 {
                     await _mediator.Send(new LockCommand());
 
-                    await _ledService.ToggleAllLedsOff();
+                    await _ledService.ToggleOff();
                 }
 
                 if (_state.ArmWhenShut)
                 {
                     await _mediator.Send(new ArmCommand());
 
-                    await _ledService.ToggleAllLedsOff();
+                    await _ledService.ToggleOff();
                 }
 
                 _state.Timer?.Dispose();

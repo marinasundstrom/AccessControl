@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,7 +56,11 @@ namespace AccessPoint.Application.Rfid.Notifications
 
                 try
                 {
-                    _ = _ledService.BlinkBlue(_buzzerService, ct.Token);
+                    var blinkTimes = 5;
+
+                    _ = _ledService.Blink(blinkTimes, Color.Blue,
+                        callback: async () => await _buzzerService.BuzzAsync(TimeSpan.FromSeconds(1)),
+                        cancellationToken: ct.Token);
 
                     var result = await _mediator.Send(new AuthorizeCommand(DeviceId, notification.TagData.UID));
 
@@ -67,11 +72,10 @@ namespace AccessPoint.Application.Rfid.Notifications
                     }
                     else
                     {
-                        await _ledService.ToggleRedLedOn();
+                        var errorTime = TimeSpan.FromSeconds(10);
 
-                        await Task.Delay(3000);
-
-                        await _ledService.ToggleAllLedsOff();
+                        _ = _ledService.ToggleTimedColor(Color.Red, errorTime, ct.Token);
+                        _ = _buzzerService.BuzzAsync(errorTime, ct.Token);
                     }
                 }
                 catch

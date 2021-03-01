@@ -54,7 +54,7 @@ namespace AccessPoint.Application.Alarm.Commands
 
                     await Task.Delay(2000);
 
-                    await _ledService.ToggleAllLedsOff();
+                    await _ledService.ToggleOff();
                 }
 
                 return await _mediator.Send(new GetAlarmStateQuery());

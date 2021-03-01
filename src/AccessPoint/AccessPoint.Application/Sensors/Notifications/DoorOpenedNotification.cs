@@ -49,7 +49,7 @@ namespace AccessPoint.Application.Sensors.Notifications
                         .BuzzAsync(_state.BuzzTime)
                         .ConfigureAwait(false);
 
-                    await _ledService.ToggleAllLedsOff();
+                    await _ledService.ToggleOff();
 
                     return;
                 }

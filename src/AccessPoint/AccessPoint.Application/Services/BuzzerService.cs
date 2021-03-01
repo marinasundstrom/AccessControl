@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Device.Gpio;
 using System.Device.Pwm;
+using System.Threading;
 using System.Threading.Tasks;
 using AccessPoint.Application.Components;
 
@@ -15,7 +16,9 @@ namespace AccessPoint.Application.Services
             buzzer = new Buzzer(0);
         }
 
-        public Task BuzzAsync(TimeSpan duration) => buzzer.BuzzAsync(duration);
+        public Task BuzzAsync(TimeSpan duration) => BuzzAsync(duration, default);
+
+        public Task BuzzAsync(TimeSpan duration, CancellationToken cancellationToken = default) => buzzer.BuzzAsync(duration, cancellationToken);
 
         public void Stop() => buzzer.Stop();
     }

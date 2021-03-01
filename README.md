@@ -54,6 +54,7 @@ The Raspberry Pi uses the following components:
 * Relay (for a door lock)
 * RFID Card Reader (MFRC522) 
 * RGB LED (light with color)
+* Motion Sensor (PIR)
 
 [Schematics](/docs/raspberry-pi/schematics.md) for the setup.
 

@@ -21,15 +21,18 @@ namespace AccessPoint.Application.Services
         private readonly IMediator _mediator;
 
         private readonly ICommandReceiver _commandReceiver;
-        private readonly IServiceEventClient _serviceEventClient;
 
         private readonly ISwitchService _switchService;
         private readonly IRfidReader _rfidReader;
         private readonly IRelayControlService _relayControlService;
+        private readonly IPirSensorService _pirSensorService;
+
         private readonly AccessPointState _state;
 
         private IDisposable whenSwitchClosedSubscription;
         private IDisposable whenSwitchOpenedSubscription;
+        private IDisposable whenMotionDetectedSubscription;
+        private IDisposable whenMotionNotDetectedSubscription;
         private IDisposable whenCardDataReceivedSubscription;
 
         public AccessPointService(
@@ -38,6 +41,7 @@ namespace AccessPoint.Application.Services
             ISwitchService switchService,
             IRfidReader rfidReader,
             IRelayControlService relayControlService,
+            IPirSensorService pirSensorService,
             AccessPointState state,
             ICommandReceiver commandReceiver,
             IServiceEventClient serviceEventClient)
@@ -47,9 +51,9 @@ namespace AccessPoint.Application.Services
             _switchService = switchService;
             _rfidReader = rfidReader;
             _relayControlService = relayControlService;
+            _pirSensorService = pirSensorService;
             _state = state;
             _commandReceiver = commandReceiver;
-            _serviceEventClient = serviceEventClient;
 
             WhenSwitchOpened = Observable.FromEventPattern(
                 handler => _switchService.Opened += handler,
@@ -58,10 +62,21 @@ namespace AccessPoint.Application.Services
             WhenSwitchClosed = Observable.FromEventPattern(
                 handler => _switchService.Closed += handler,
                 handler => _switchService.Closed -= handler);
+
+            WhenMotionDetected = Observable.FromEventPattern(
+              handler => _pirSensorService.MotionDetected += handler,
+              handler => _pirSensorService.MotionDetected -= handler);
+
+            WhenMotionNotDetected = Observable.FromEventPattern(
+              handler => _pirSensorService.MotionNotDetected += handler,
+              handler => _pirSensorService.MotionNotDetected -= handler);
         }
 
         private IObservable<EventPattern<object>> WhenSwitchOpened { get; }
         private IObservable<EventPattern<object>> WhenSwitchClosed { get; }
+
+        private IObservable<EventPattern<object>> WhenMotionDetected { get; }
+        private IObservable<EventPattern<object>> WhenMotionNotDetected { get; }
 
         public void Dispose()
         {
@@ -83,6 +98,12 @@ namespace AccessPoint.Application.Services
 
             whenSwitchOpenedSubscription = WhenSwitchOpened.Subscribe(async _ =>
                 await _mediator.Publish(new DoorOpenedNotification()));
+
+            whenMotionDetectedSubscription = WhenMotionDetected.Subscribe(async _ =>
+              await _mediator.Publish(new MotionDetectedNotification()));
+
+            whenMotionNotDetectedSubscription = WhenMotionNotDetected.Subscribe(async _ =>
+              await _mediator.Publish(new MotionNotDetectedNotification()));
 
             whenCardDataReceivedSubscription = _rfidReader
                 .WhenCardDetected
@@ -147,6 +168,9 @@ namespace AccessPoint.Application.Services
         {
             whenSwitchClosedSubscription.Dispose();
             whenSwitchOpenedSubscription.Dispose();
+
+            whenMotionDetectedSubscription.Dispose();
+            whenMotionNotDetectedSubscription.Dispose();
 
             await _rfidReader.StopAsync();
 

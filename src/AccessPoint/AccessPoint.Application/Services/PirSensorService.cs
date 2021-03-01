@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace AccessPoint.Application.Services
 {
-    public sealed class SwitchService : ISwitchService
+    public sealed class PirSensorService : IPirSensorService
     {
         private readonly GpioController gpioController;
-        private const int InPinNumber = 26;
+        private const int InPinNumber = 17;
         private DateTime _pressedLastInterrupt;
         private DateTime _releasedLastInterrupt;
 
-        public SwitchService(GpioController gpioController)
+        public PirSensorService(GpioController gpioController)
         {
             this.gpioController = gpioController;
 
@@ -23,46 +23,46 @@ namespace AccessPoint.Application.Services
             gpioController.RegisterCallbackForPinValueChangedEvent(InPinNumber, PinEventTypes.Rising, OnPinChanged);
         }
 
-        public long InterruptTime { get; } = 500;
+        public long InterruptTime { get; } = 100;
 
         /// <summary>
-        /// Occurs when [closed].
+        /// Occurs when [MotionNotDetected].
         /// </summary>
-        public event EventHandler Closed;
+        public event EventHandler MotionNotDetected;
 
         /// <summary>
-        /// Occurs when [open].
+        /// Occurs when [MotionDetected].
         /// </summary>
-        public event EventHandler Opened;
+        public event EventHandler MotionDetected;
 
         private void OnPinChanged(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
         {
             if (pinValueChangedEventArgs.ChangeType == PinEventTypes.Rising)
             {
-                HandleClosed();
+                HandleCircuitOpen();
             }
             else if (pinValueChangedEventArgs.ChangeType == PinEventTypes.Falling)
             {
-                HandleOpen();
+                HandleCircuitClosed();
             }
         }
 
-        private void HandleClosed()
+        private void HandleCircuitClosed()
         {
             DateTime interruptTime = DateTime.Now;
 
             if ((interruptTime - _pressedLastInterrupt).TotalMilliseconds <= InterruptTime) return;
             _pressedLastInterrupt = interruptTime;
-            Closed?.Invoke(this, EventArgs.Empty);
+            MotionNotDetected?.Invoke(this, EventArgs.Empty);
         }
 
-        private void HandleOpen()
+        private void HandleCircuitOpen()
         {
             DateTime interruptTime = DateTime.Now;
 
             if ((interruptTime - _releasedLastInterrupt).TotalMilliseconds <= InterruptTime) return;
             _releasedLastInterrupt = interruptTime;
-            Opened?.Invoke(this, EventArgs.Empty);
+            MotionDetected?.Invoke(this, EventArgs.Empty);
         }
 
         public void Dispose()

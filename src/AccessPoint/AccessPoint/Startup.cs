@@ -65,6 +65,7 @@ namespace AccessPoint
             services.AddSingleton<ILEDService, LEDService>();
             services.AddSingleton<IRelayControlService, RelayControlService>();
             services.AddSingleton<ISwitchService, SwitchService>();
+            services.AddSingleton<IPirSensorService, PirSensorService>();
             services.AddSingleton<ICommandReceiver, CommandReceiver>();
             services.AddSingleton<IServiceEventClient, ServiceEventClient>();
 

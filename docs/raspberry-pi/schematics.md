@@ -74,3 +74,11 @@ A Solenoid Lock could be attached as *Normally Open (N.O)*.
 | ------------- | --------------:|
 | +             | 3.3v           |
 | GND           | 26             |
+
+## Motion Sensor (PIR)
+
+| Connector     | Pin (Logical)  |
+| ------------- | --------------:|
+| Input         | 17             |
+| + (VCC)       | 5v             |
+| GND           | 20             |

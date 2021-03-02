@@ -37,15 +37,17 @@ namespace AccessPoint.Application.Sensors.Notifications
 
                 await _mediator.Send(new DisarmCommand(true));
 
+                /*
                 for (int i = 0; i < 30; i++)
                 {
                     await _ledService.SetColorAsync(Animation.InterpolateColors(i));
 
-                    await Task.Delay(500);
+                    await Task.Delay(1000);
 
                     if (cancellationToken.IsCancellationRequested)
                         return;
                 }
+                */
             }
         }
     }

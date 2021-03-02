@@ -58,7 +58,10 @@ namespace AccessPoint.Application.Led
             };
 
             var str = ByteArrayToString(bytes);
-            return Color.FromArgb(Convert.ToInt32(str, 16));
+
+            Console.WriteLine(str);
+
+            return Color.FromArgb(bytes[0], bytes[1], bytes[2]);
         }
 
         public static string ByteArrayToString(byte[] ba)

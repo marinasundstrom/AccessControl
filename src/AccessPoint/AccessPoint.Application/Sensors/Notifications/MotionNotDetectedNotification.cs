@@ -29,7 +29,7 @@ namespace AccessPoint.Application.Sensors.Notifications
             {
                 _logger.LogInformation("Motion not detected");
 
-                //await _ledService.ToggleOff();
+                await _ledService.ToggleOff();
             }
         }
     }

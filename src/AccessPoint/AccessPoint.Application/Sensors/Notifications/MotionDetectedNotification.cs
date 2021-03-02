@@ -32,7 +32,7 @@ namespace AccessPoint.Application.Sensors.Notifications
             {
                 _logger.LogInformation("Motion detected");
 
-                //await _ledService.SetColorAsync(Color.Orange);
+                await _ledService.SetColorAsync(Color.Orange);
             }
         }
     }

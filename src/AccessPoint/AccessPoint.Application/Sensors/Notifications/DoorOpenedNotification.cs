@@ -14,6 +14,7 @@ namespace AccessPoint.Application.Sensors.Notifications
         public class DoorOpenedNotificationHandler : INotificationHandler<DoorOpenedNotification>
         {
             private readonly AccessPointState _state;
+            private readonly IAudioPlayerService _audioPlayerService;
             private readonly ILEDService _ledService;
             private readonly IBuzzerService _buzzerService;
             private readonly IServiceEventClient _serviceEventClient;
@@ -21,12 +22,14 @@ namespace AccessPoint.Application.Sensors.Notifications
 
             public DoorOpenedNotificationHandler(
                 AccessPointState state,
+                IAudioPlayerService audioPlayerService,
                 ILEDService ledService,
                 IBuzzerService buzzerService,
                 IServiceEventClient serviceEventClient,
                 ILogger<DoorOpenedNotificationHandler> logger)
             {
                 _state = state;
+                _audioPlayerService = audioPlayerService;
                 _ledService = ledService;
                 _buzzerService = buzzerService;
                 _serviceEventClient = serviceEventClient;
@@ -49,12 +52,23 @@ namespace AccessPoint.Application.Sensors.Notifications
                         .BuzzAsync(_state.BuzzTime)
                         .ConfigureAwait(false);
 
+                    //await PlayAlarm();
+
                     await _ledService.ToggleOff();
 
                     return;
                 }
 
                 await _serviceEventClient.PublishEvent(new AccessControl.Messages.Events.AccessEvent());
+            }
+
+            private async Task PlayAlarm()
+            {
+                try
+                {
+                    await _audioPlayerService.Play("alarm.wav");
+                }
+                catch { };
             }
         }
     }

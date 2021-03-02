@@ -10,8 +10,7 @@ namespace AccessPoint.Application.Services
     {
         private readonly GpioController gpioController;
         private const int InPinNumber = 26;
-        private DateTime _pressedLastInterrupt;
-        private DateTime _releasedLastInterrupt;
+        private DateTime triggerTimestamp;
 
         public SwitchService(GpioController gpioController)
         {
@@ -19,11 +18,10 @@ namespace AccessPoint.Application.Services
 
             gpioController.OpenPin(InPinNumber);
             gpioController.SetPinMode(InPinNumber, PinMode.InputPullDown);
-            gpioController.RegisterCallbackForPinValueChangedEvent(InPinNumber, PinEventTypes.Falling, OnPinChanged);
-            gpioController.RegisterCallbackForPinValueChangedEvent(InPinNumber, PinEventTypes.Rising, OnPinChanged);
+            gpioController.RegisterCallbackForPinValueChangedEvent(InPinNumber, PinEventTypes.Falling | PinEventTypes.Rising, OnPinChanged);
         }
 
-        public long InterruptTime { get; } = 500;
+        public long InterruptTime { get; } = 700;
 
         /// <summary>
         /// Occurs when [closed].
@@ -37,32 +35,24 @@ namespace AccessPoint.Application.Services
 
         private void OnPinChanged(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
         {
-            if (pinValueChangedEventArgs.ChangeType == PinEventTypes.Rising)
+            var value = gpioController.Read(InPinNumber);
+
+            var duration = DateTime.Now - triggerTimestamp;
+            if (duration.TotalMilliseconds < InterruptTime) return;
+
+            if (value == PinValue.Low)
             {
-                HandleClosed();
+                triggerTimestamp = DateTime.Now;
+
+                Opened?.Invoke(this, EventArgs.Empty);
+
             }
-            else if (pinValueChangedEventArgs.ChangeType == PinEventTypes.Falling)
+            else if (value == PinValue.High)
             {
-                HandleOpen();
+                triggerTimestamp = DateTime.Now;
+
+                Closed?.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        private void HandleClosed()
-        {
-            DateTime interruptTime = DateTime.Now;
-
-            if ((interruptTime - _pressedLastInterrupt).TotalMilliseconds <= InterruptTime) return;
-            _pressedLastInterrupt = interruptTime;
-            Closed?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void HandleOpen()
-        {
-            DateTime interruptTime = DateTime.Now;
-
-            if ((interruptTime - _releasedLastInterrupt).TotalMilliseconds <= InterruptTime) return;
-            _releasedLastInterrupt = interruptTime;
-            Opened?.Invoke(this, EventArgs.Empty);
         }
 
         public void Dispose()

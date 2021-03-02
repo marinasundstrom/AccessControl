@@ -12,6 +12,7 @@ namespace AccessPoint.Application.Services
         private const int InPinNumber = 23;
         private DateTime _pressedLastInterrupt;
         private DateTime _releasedLastInterrupt;
+        private DateTime triggerTimestamp;
 
         public ButtonService(GpioController gpioController)
         {
@@ -19,8 +20,7 @@ namespace AccessPoint.Application.Services
 
             gpioController.OpenPin(InPinNumber);
             gpioController.SetPinMode(InPinNumber, PinMode.InputPullDown);
-            gpioController.RegisterCallbackForPinValueChangedEvent(InPinNumber, PinEventTypes.Falling, OnPinChanged);
-            gpioController.RegisterCallbackForPinValueChangedEvent(InPinNumber, PinEventTypes.Rising, OnPinChanged);
+            gpioController.RegisterCallbackForPinValueChangedEvent(InPinNumber, PinEventTypes.Falling | PinEventTypes.Rising, OnPinChanged);
         }
 
         public long InterruptTime { get; } = 500;
@@ -37,32 +37,23 @@ namespace AccessPoint.Application.Services
 
         private void OnPinChanged(object sender, PinValueChangedEventArgs pinValueChangedEventArgs)
         {
-            if (pinValueChangedEventArgs.ChangeType == PinEventTypes.Rising)
+            var value = gpioController.Read(InPinNumber);
+
+            var duration = DateTime.Now - triggerTimestamp;
+            if (duration.TotalMilliseconds < InterruptTime) return;
+
+            if (value == PinValue.Low)
             {
-                HandlePushed();
+                triggerTimestamp = DateTime.Now;
+
+                Released?.Invoke(this, EventArgs.Empty);
             }
-            else if (pinValueChangedEventArgs.ChangeType == PinEventTypes.Falling)
+            else if (value == PinValue.High)
             {
-                HandleReleased();
+                triggerTimestamp = DateTime.Now;
+
+                Pressed?.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        private void HandlePushed()
-        {
-            DateTime interruptTime = DateTime.Now;
-
-            if ((interruptTime - _pressedLastInterrupt).TotalMilliseconds <= InterruptTime) return;
-            _pressedLastInterrupt = interruptTime;
-            Pressed?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void HandleReleased()
-        {
-            DateTime interruptTime = DateTime.Now;
-
-            if ((interruptTime - _releasedLastInterrupt).TotalMilliseconds <= InterruptTime) return;
-            _releasedLastInterrupt = interruptTime;
-            Released?.Invoke(this, EventArgs.Empty);
         }
 
         public void Dispose()

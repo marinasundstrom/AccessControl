@@ -19,7 +19,7 @@ namespace AccessPoint.Application.Services
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IMediator _mediator;
-
+        private readonly IButtonService _buttonService;
         private readonly ICommandReceiver _commandReceiver;
 
         private readonly ISwitchService _switchService;
@@ -34,10 +34,13 @@ namespace AccessPoint.Application.Services
         private IDisposable whenMotionDetectedSubscription;
         private IDisposable whenMotionNotDetectedSubscription;
         private IDisposable whenCardDataReceivedSubscription;
+        private IDisposable whenButtonPressedSubscription;
+        private IDisposable whenButtonReleasedSubscription;
 
         public AccessPointService(
             IServiceProvider ServiceProvider,
             IMediator mediator,
+            IButtonService buttonService,
             ISwitchService switchService,
             IRfidReader rfidReader,
             IRelayControlService relayControlService,
@@ -48,12 +51,21 @@ namespace AccessPoint.Application.Services
         {
             _serviceProvider = ServiceProvider;
             _mediator = mediator;
+            _buttonService = buttonService;
             _switchService = switchService;
             _rfidReader = rfidReader;
             _relayControlService = relayControlService;
             _pirSensorService = pirSensorService;
             _state = state;
             _commandReceiver = commandReceiver;
+
+            WhenButtonPressedOpened = Observable.FromEventPattern(
+                handler => _buttonService.Pressed += handler,
+                handler => _buttonService.Pressed -= handler);
+
+            WhenButtonReleasedClosed = Observable.FromEventPattern(
+                handler => _buttonService.Released += handler,
+                handler => _buttonService.Released -= handler);
 
             WhenSwitchOpened = Observable.FromEventPattern(
                 handler => _switchService.Opened += handler,
@@ -71,6 +83,10 @@ namespace AccessPoint.Application.Services
               handler => _pirSensorService.MotionNotDetected += handler,
               handler => _pirSensorService.MotionNotDetected -= handler);
         }
+
+
+        public IObservable<EventPattern<object>> WhenButtonPressedOpened { get; }
+        public IObservable<EventPattern<object>> WhenButtonReleasedClosed { get; }
 
         private IObservable<EventPattern<object>> WhenSwitchOpened { get; }
         private IObservable<EventPattern<object>> WhenSwitchClosed { get; }
@@ -92,6 +108,12 @@ namespace AccessPoint.Application.Services
             await _relayControlService.SetRelayStateAsync(1, false);
 
             await _commandReceiver.SetCommandHandler<Command, object>(CommandHandler);
+
+            whenButtonPressedSubscription = WhenButtonPressedOpened.Subscribe(async _ =>
+                await _mediator.Publish(new ButtonPressedNotification()));
+
+            whenButtonReleasedSubscription = WhenButtonReleasedClosed.Subscribe(async _ =>
+                await _mediator.Publish(new ButtonReleasedNotification()));
 
             whenSwitchClosedSubscription = WhenSwitchClosed.Subscribe(async _ =>
                 await _mediator.Publish(new DoorClosedNotification()));
@@ -166,6 +188,9 @@ namespace AccessPoint.Application.Services
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
+            whenButtonPressedSubscription.Dispose();
+            whenButtonReleasedSubscription.Dispose();
+            
             whenSwitchClosedSubscription.Dispose();
             whenSwitchOpenedSubscription.Dispose();
 

@@ -27,5 +27,6 @@
     <Folder Include="Lock\Queries\" />
     <Folder Include="Authorization\" />
     <Folder Include="Authorization\Commands\" />
+    <Folder Include="Led\" />
   </ItemGroup>
 </Project>

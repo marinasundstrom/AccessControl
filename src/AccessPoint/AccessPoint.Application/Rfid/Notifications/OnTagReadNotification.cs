@@ -74,14 +74,20 @@ namespace AccessPoint.Application.Rfid.Notifications
                     {
                         var errorTime = TimeSpan.FromSeconds(10);
 
-                        _ = _ledService.ToggleTimedColor(Color.Red, errorTime, ct.Token);
-                        _ = _buzzerService.BuzzAsync(errorTime, ct.Token);
+                        await BlinkRedAndBuzz(ct, errorTime);
                     }
                 }
                 catch
                 {
                     ct.Cancel();
                 }
+            }
+
+            private async Task BlinkRedAndBuzz(CancellationTokenSource ct, TimeSpan time)
+            {
+                await Task.WhenAll(
+                    _ledService.ToggleTimedColor(Color.Red, time, ct.Token),
+                    _buzzerService.BuzzAsync(time, ct.Token));
             }
         }
     }

@@ -10,24 +10,24 @@ using Microsoft.Extensions.Logging;
 
 namespace AccessPoint.Application.Sensors.Notifications
 {
-    public class MotionNotDetectedNotification : INotification
+    public class ButtonReleasedNotification : INotification
     {
-        public class MotionNotDetectedNotificationHandler : INotificationHandler<MotionNotDetectedNotification>
+        public class ButtonReleasedNotificationHandler : INotificationHandler<ButtonReleasedNotification>
         {
             private readonly ILEDService _ledService;
-            private readonly ILogger<MotionNotDetectedNotificationHandler> _logger;
+            private readonly ILogger<ButtonReleasedNotificationHandler> _logger;
 
-            public MotionNotDetectedNotificationHandler(
+            public ButtonReleasedNotificationHandler(
                 ILEDService ledService,
-                ILogger<MotionNotDetectedNotificationHandler> logger)
+                ILogger<ButtonReleasedNotificationHandler> logger)
             {
                 _ledService = ledService;
                 _logger = logger;
             }
 
-            public async Task Handle(MotionNotDetectedNotification notification, CancellationToken cancellationToken)
+            public async Task Handle(ButtonReleasedNotification notification, CancellationToken cancellationToken)
             {
-                _logger.LogInformation("Motion not detected");
+                _logger.LogInformation("Button released");
 
                 //await _ledService.ToggleOff();
             }

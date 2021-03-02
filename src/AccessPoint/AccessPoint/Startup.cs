@@ -61,6 +61,7 @@ namespace AccessPoint
                 client.BaseAddress = new Uri("https://192.168.1.82:5031/"))
                 .AddTypedClient<IAuthorizationClient>((http, sp) => new AuthorizationClient(http));
 
+            services.AddSingleton<IButtonService, ButtonService>();
             services.AddSingleton<IBuzzerService, BuzzerService>();
             services.AddSingleton<ILEDService, LEDService>();
             services.AddSingleton<IRelayControlService, RelayControlService>();

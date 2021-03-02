@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AccessControl.Messages.Events;
 using AccessPoint.Application.Alarm.Commands;
+using AccessPoint.Application.Led;
 using AccessPoint.Application.Lock.Commands;
 using AccessPoint.Application.Services;
 using AppService;
@@ -31,7 +32,7 @@ namespace AccessPoint.Application.Sensors.Notifications
             {
                 _logger.LogInformation("Motion detected");
 
-                await _ledService.SetColorAsync(Color.Orange);
+                //await _ledService.SetColorAsync(Color.Orange);
             }
         }
     }

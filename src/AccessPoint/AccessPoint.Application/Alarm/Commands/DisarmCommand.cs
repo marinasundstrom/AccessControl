@@ -12,6 +12,13 @@ namespace AccessPoint.Application.Alarm.Commands
 {
     public class DisarmCommand : IRequest<AlarmStateDto>
     {
+        public DisarmCommand(bool rex = false)
+        {
+            Rex = rex;
+        }
+
+        public bool Rex { get; }
+
         public class DisarmCommandHandler : IRequestHandler<DisarmCommand, AlarmStateDto>
         {
             private readonly IMediator _mediator;
@@ -47,7 +54,7 @@ namespace AccessPoint.Application.Alarm.Commands
 
                         _logger.LogInformation("Disarmed");
 
-                        await _serviceEventClient.PublishEvent(new AlarmEvent(AlarmState.Disarmed));
+                        await _serviceEventClient.PublishEvent(new AlarmEvent(AlarmState.Disarmed, request.Rex));
 
                         var lockState = await _mediator.Send(new UnlockCommand());
 

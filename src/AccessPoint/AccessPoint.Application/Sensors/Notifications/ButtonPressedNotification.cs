@@ -35,7 +35,7 @@ namespace AccessPoint.Application.Sensors.Notifications
             {
                 _logger.LogInformation("Button pressed");
 
-                await _mediator.Send(new DisarmCommand());
+                await _mediator.Send(new DisarmCommand(true));
 
                 for (int i = 0; i < 30; i++)
                 {

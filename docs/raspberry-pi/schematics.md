@@ -82,3 +82,10 @@ A Solenoid Lock could be attached as *Normally Open (N.O)*.
 | Input         | 17             |
 | + (VCC)       | 5v             |
 | GND           | 20             |
+
+## Button
+
+| Connector     | Pin (Logical)  |
+| ------------- | --------------:|
+| +             | 3.3v           |
+| GND           | 23             |

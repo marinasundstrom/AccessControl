@@ -55,6 +55,7 @@ The Raspberry Pi uses the following components:
 * RFID Card Reader (MFRC522) 
 * RGB LED (light with color)
 * Motion Sensor (PIR)
+* Button
 
 [Schematics](/docs/raspberry-pi/schematics.md) for the setup.
 

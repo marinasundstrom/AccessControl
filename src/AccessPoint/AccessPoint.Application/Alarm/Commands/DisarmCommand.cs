@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AccessControl.Messages.Events;
+using AccessControl.Contracts.Events;
 using AccessPoint.Application.Alarm.Queries;
 using AccessPoint.Application.Lock.Commands;
 using AccessPoint.Application.Services;

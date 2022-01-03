@@ -4,8 +4,18 @@
 # when you've given us a try, we'd love to know what you think:
 #    https://aka.ms/AA7q20u
 #
+
 name: accesscontrol
 services:
+- name: rabbitmq
+  image: rabbitmq:3-management
+  bindings:
+    - name: rabbit
+      port: 5672
+      protocol: rabbitmq
+    - name: management
+      port: 15672
+
 - name: appservice
   project: src/AppService/AppService/AppService.csproj
   bindings:

@@ -20,8 +20,8 @@ namespace AccessPoint.Application.Lock.Queries
             public Task<LockStateDto> Handle(GetLockStateQuery request, CancellationToken cancellationToken)
             {
                 return Task.FromResult(new LockStateDto(_state.Locked ?
-                                 AccessControl.Messages.Commands.LockState.Locked
-                                 : AccessControl.Messages.Commands.LockState.Unlocked));
+                                 AccessControl.Contracts.Commands.LockState.Locked
+                                 : AccessControl.Contracts.Commands.LockState.Unlocked));
             }
         }
     }

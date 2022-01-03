@@ -9,12 +9,12 @@ using AccessPoint.Application.Models;
 using AccessPoint.Application.Services;
 using AccessPoint.HostedServices;
 using AppService;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Devices.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,7 +51,17 @@ namespace AccessPoint
                 .AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AccessPointContext>();
 
-            services.AddSingleton(sp => DeviceClient.CreateFromConnectionString(Configuration["Hub:ConnectionString"]));
+            services.AddMassTransit(x =>
+            {
+                x.SetKebabCaseEndpointNameFormatter();
+                x.AddConsumers(typeof(AccessPoint.Application.Consumers.ArmCommandConsumer).Assembly);
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.ConfigureEndpoints(context);
+                });
+            })
+            .AddMassTransitHostedService()
+            .AddGenericRequestClient();
 
             services.AddSingleton(sp => new GpioController());
 
@@ -67,7 +77,6 @@ namespace AccessPoint
             services.AddSingleton<IRelayControlService, RelayControlService>();
             services.AddSingleton<ISwitchService, SwitchService>();
             services.AddSingleton<IPirSensorService, PirSensorService>();
-            services.AddSingleton<ICommandReceiver, CommandReceiver>();
             services.AddSingleton<IServiceEventClient, ServiceEventClient>();
 
             services.AddSingleton<AccessPointState>();

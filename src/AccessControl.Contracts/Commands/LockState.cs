@@ -1,4 +1,4 @@
-﻿namespace AccessControl.Messages.Commands
+﻿namespace AccessControl.Contracts.Commands
 {
     public enum LockState
     {

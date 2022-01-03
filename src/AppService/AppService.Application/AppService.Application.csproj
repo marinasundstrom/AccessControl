@@ -13,37 +13,16 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.15.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
-    <PackageReference Include="Microsoft.Azure.Devices" Version="1.36.0" />
     <PackageReference Include="Microsoft.Azure.NotificationHubs" Version="4.1.0" />
-    <PackageReference Include="Microsoft.Azure.EventHubs" Version="4.3.2" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.1.6" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.1.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppService.Domain\AppService.Domain.csproj" />
     <ProjectReference Include="..\AppService.Infrastructure\AppService.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\AccessControl.Messages\AccessControl.Messages.csproj" />
+    <ProjectReference Include="..\..\AccessControl.Contracts\AccessControl.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Alarm\" />
-    <Folder Include="Authorization\" />
-    <Folder Include="AccessLog\" />
-    <Folder Include="Alarm\Hubs\" />
-    <Folder Include="AccessLog\Hubs\" />
-    <Folder Include="Devices\" />
-    <Folder Include="Alarm\Commands\" />
-    <Folder Include="Alarm\Queries\" />
-    <Folder Include="Authorization\Commands\" />
-    <Folder Include="Registration\Commands\" />
-    <Folder Include="Test\" />
-    <Folder Include="AccessLog\Queries\" />
-    <Folder Include="Rfid\" />
-    <Folder Include="Rfid\Commands\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
-    <None Remove="MediatR" />
-  </ItemGroup>
 </Project>

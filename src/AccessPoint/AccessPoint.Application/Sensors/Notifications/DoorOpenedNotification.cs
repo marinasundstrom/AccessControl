@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AccessControl.Messages.Events;
+using AccessControl.Contracts.Events;
 using AccessPoint.Application.Services;
 using AppService;
 using MediatR;
@@ -54,7 +54,7 @@ namespace AccessPoint.Application.Sensors.Notifications
                     return;
                 }
 
-                await _serviceEventClient.PublishEvent(new AccessControl.Messages.Events.AccessEvent());
+                await _serviceEventClient.PublishEvent(new AccessControl.Contracts.Events.AccessEvent());
             }
         }
     }

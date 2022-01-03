@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace AccessControl.Messages.Commands
+namespace AccessControl.Contracts.Commands
 {
-    public class GetConfigurationResponse
+    public class ConfigureCommand
     {
-        public GetConfigurationResponse(TimeSpan accessTime, bool lockOnClose, bool armOnClose)
+        public ConfigureCommand()
+        {
+
+        }
+
+        public ConfigureCommand(TimeSpan accessTime, bool lockOnClose, bool armOnClose)
         {
             AccessTime = accessTime;
             LockOnClose = lockOnClose;
@@ -14,7 +18,9 @@ namespace AccessControl.Messages.Commands
         }
 
         public TimeSpan AccessTime { get; }
+
         public bool LockOnClose { get; }
+
         public bool ArmOnClose { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using AccessControl.Messages.Commands;
+﻿using AccessControl.Contracts.Commands;
 
 namespace AccessPoint.Application.Alarm.Queries
 {

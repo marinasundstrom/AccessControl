@@ -3,7 +3,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AccessControl.Messages.Commands;
+using AccessControl.Contracts.Commands;
 using AccessPoint.Application.Models;
 using AccessPoint.Application.Rfid.Notifications;
 using AccessPoint.Application.Sensors.Notifications;
@@ -20,7 +20,6 @@ namespace AccessPoint.Application.Services
         private readonly IServiceProvider _serviceProvider;
         private readonly IMediator _mediator;
         private readonly IButtonService _buttonService;
-        private readonly ICommandReceiver _commandReceiver;
 
         private readonly ISwitchService _switchService;
         private readonly IRfidReader _rfidReader;
@@ -46,7 +45,6 @@ namespace AccessPoint.Application.Services
             IRelayControlService relayControlService,
             IPirSensorService pirSensorService,
             AccessPointState state,
-            ICommandReceiver commandReceiver,
             IServiceEventClient serviceEventClient)
         {
             _serviceProvider = ServiceProvider;
@@ -57,7 +55,6 @@ namespace AccessPoint.Application.Services
             _relayControlService = relayControlService;
             _pirSensorService = pirSensorService;
             _state = state;
-            _commandReceiver = commandReceiver;
 
             WhenButtonPressedOpened = Observable.FromEventPattern(
                 handler => _buttonService.Pressed += handler,
@@ -107,8 +104,6 @@ namespace AccessPoint.Application.Services
 
             await _relayControlService.SetRelayStateAsync(1, false);
 
-            await _commandReceiver.SetCommandHandler<Command, object>(CommandHandler);
-
             whenButtonPressedSubscription = WhenButtonPressedOpened.Subscribe(async _ =>
                 await _mediator.Publish(new ButtonPressedNotification()));
 
@@ -136,42 +131,11 @@ namespace AccessPoint.Application.Services
             await _rfidReader.StartAsync();
         }
 
-        private async Task<object> CommandHandler(Command command)
-        {
-            switch (command.CommandName)
-            {
-                case AccessControl.Messages.Commands.ArmCommand.ArmCommandConstant:
-                    var result = await _mediator.Send(new Alarm.Commands.ArmCommand());
-                    return GetAlarmStatus();
-
-                case AccessControl.Messages.Commands.DisarmCommand.DisarmCommandConstant:
-                    var result2 = await _mediator.Send(new Alarm.Commands.DisarmCommand());
-                    return GetAlarmStatus();
-
-                case ConfigureCommand.ConfigureCommandConstant:
-                    var result3 = await _mediator.Send(new Configuration.Commands.SetConfigurationCommand(command.Args));
-                    break;
-
-                case GetConfigurationCommand.GetConfigurationCommandConstant:
-                    var result4 = await _mediator.Send(new Configuration.Queries.GetConfigurationQuery());
-                    return new GetConfigurationResponse(_state.AccessTime, _state.LockWhenShut, _state.ArmWhenShut);
-
-                case GetAlarmStateCommand.GetAlarmStateCommandConstant:
-                    var result5 = await _mediator.Send(new Alarm.Queries.GetAlarmStateQuery());
-                    return GetAlarmStatus();
-
-                case ReadTagCommand.ReadTagCommandConstant:
-                    return await _mediator.Send(new Rfid.Commands.ReadTagCommand());
-            }
-
-            return string.Empty;
-        }
-
         private object GetAlarmStatus()
         {
-            return new GetAlarmStateResponse(_state.Armed ?
-                 AccessControl.Messages.Commands.AlarmState.Armed
-                 : AccessControl.Messages.Commands.AlarmState.Disarmed);
+            return new GetAlarmStateCommandResponse(_state.Armed ?
+                 AccessControl.Contracts.Commands.AlarmState.Armed
+                 : AccessControl.Contracts.Commands.AlarmState.Disarmed);
         }
 
         private async Task<string> GetParam(string key)

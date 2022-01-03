@@ -1,4 +1,4 @@
-﻿namespace AccessControl.Messages.Events
+﻿namespace AccessControl.Contracts.Events
 {
     public enum LockState
     {

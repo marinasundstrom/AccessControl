@@ -47,9 +47,9 @@ namespace AccessPoint.Application.Configuration.Commands
             {
                 //Console.WriteLine(JsonConvert.SerializeObject(command.Args));
 
-                _state.AccessTime = TimeSpan.Parse((string)request.Args["accessTime"]);
-                _state.LockWhenShut = (bool)request.Args["lockOnClose"];
-                _state.ArmWhenShut = (bool)request.Args["armOnClose"];
+                _state.AccessTime = TimeSpan.Parse((string)request.Args["AccessTime"]);
+                _state.LockWhenShut = (bool)request.Args["LockOnClose"];
+                _state.ArmWhenShut = (bool)request.Args["ArmOnClose"];
                 await SetParam("accessTime", _state.AccessTime.ToString());
                 await SetParam("lockOnClose", _state.LockWhenShut.ToString());
                 await SetParam("armOnClose", _state.ArmWhenShut.ToString());

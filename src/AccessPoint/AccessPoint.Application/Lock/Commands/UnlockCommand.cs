@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AccessControl.Messages.Events;
+using AccessControl.Contracts.Events;
 using AccessPoint.Application.Lock.Queries;
 using AccessPoint.Application.Services;
 using MediatR;

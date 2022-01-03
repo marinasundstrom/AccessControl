@@ -27,7 +27,7 @@ namespace AppService.Application.Alarm.Queries
             {
                 return new AlarmResult
                 {
-                    AlarmState = (await _deviceController.GetState(request.DeviceId)).AlarmState == AccessControl.Messages.Commands.AlarmState.Armed ? AlarmState.Armed : AlarmState.Disarmed
+                    AlarmState = (await _deviceController.GetState(request.DeviceId)).AlarmState == AccessControl.Contracts.Commands.AlarmState.Armed ? AlarmState.Armed : AlarmState.Disarmed
                 };
             }
         }

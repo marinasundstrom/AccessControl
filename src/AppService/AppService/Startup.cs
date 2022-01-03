@@ -12,6 +12,7 @@ using AppService.Application.Services;
 using AppService.Domain.Entities;
 using AppService.Infrastructure;
 using AppService.Infrastructure.Persistence;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -20,8 +21,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Azure.Devices;
-using Microsoft.Azure.EventHubs;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -124,12 +123,25 @@ namespace AppService
 
             services.AddOpenApiDocument();
 
+            /*
             services.AddSingleton(sp => NotificationHubClient.CreateClientFromConnectionString(Configuration["Notifications:ConnectionString"], Configuration["Notifications:Path"]));
             services.AddSingleton(sp => ServiceClient.CreateFromConnectionString(Configuration["Hub:ConnectionString"]));
             services.AddSingleton(sp => EventHubClient.CreateFromConnectionString(Configuration["Events:ConnectionString"]));
+            */
+
+            services.AddMassTransit(x =>
+            {
+                x.SetKebabCaseEndpointNameFormatter();
+                x.AddConsumers(typeof(AppService.Application.Alarm.AlarmConsumer).Assembly);
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.ConfigureEndpoints(context);
+                });
+            })
+            .AddMassTransitHostedService()
+            .AddGenericRequestClient();
 
             services.AddSingleton<DeviceController>();
-            services.AddHostedService<AlarmService>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
 
             services.AddSingleton<IAccessLogNotifier, AccessLogNotifier>();

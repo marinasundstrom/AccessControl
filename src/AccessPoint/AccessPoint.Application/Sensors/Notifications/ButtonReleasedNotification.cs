@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
-using AccessControl.Messages.Events;
+using AccessControl.Contracts.Events;
 using AccessPoint.Application.Services;
 using AppService;
 using MediatR;

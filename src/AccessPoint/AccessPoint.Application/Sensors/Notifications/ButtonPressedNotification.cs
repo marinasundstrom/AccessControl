@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
-using AccessControl.Messages.Events;
+using AccessControl.Contracts.Events;
 using AccessPoint.Application.Alarm.Commands;
 using AccessPoint.Application.Led;
 using AccessPoint.Application.Lock.Commands;

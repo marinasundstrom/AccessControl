@@ -23,6 +23,8 @@ namespace WebApp.Server
         {
             if (env.IsDevelopment())
             {
+                app.UseWebAssemblyDebugging();
+
                 app.UseDeveloperExceptionPage();
             }
 

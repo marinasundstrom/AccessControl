@@ -30,7 +30,6 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1931" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />  
     <PackageReference Include="Xamarin.Forms.BehaviorsPack" Version="2.2.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
   </ItemGroup>
 

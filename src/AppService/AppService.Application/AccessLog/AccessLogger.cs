@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppService.Domain;
 using AppService.Domain.Entities;
 using AppService.Domain.Enums;
-using AppService.Infrastructure;
-using AppService.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AppService.Application.AccessLog
@@ -29,7 +28,7 @@ namespace AppService.Application.AccessLog
         {
             using (var scope = serviceScopeFactory.CreateScope())
             {
-                var dataContext = scope.ServiceProvider.GetService<AccessControlContext>();
+                var dataContext = scope.ServiceProvider.GetService<IAccessControlContext>();
                 var logEntry = new AccessLogEntry()
                 {
                     AccessPoint = accessPoint != null ? await dataContext.AccessPoints.FindAsync(accessPoint.Id) : null,

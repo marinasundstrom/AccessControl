@@ -1,11 +1,12 @@
 ﻿using System;
+using AppService.Domain;
 using AppService.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppService.Infrastructure.Persistence
 {
-    public class AccessControlContext : IdentityDbContext<User>
+    public class AccessControlContext : IdentityDbContext<User>, IAccessControlContext
     {
         public AccessControlContext(DbContextOptions<AccessControlContext> options)
             : base(options)

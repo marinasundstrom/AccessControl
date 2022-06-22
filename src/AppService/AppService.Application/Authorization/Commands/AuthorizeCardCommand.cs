@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AppService.Application.Devices;
-using AppService.Infrastructure.Persistence;
+using AppService.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,11 +21,11 @@ namespace AppService.Application.Authorization.Commands
         public sealed class AuthorizeCardHandler : IRequestHandler<AuthorizeCardCommand, AuthorizeCardResult>
         {
             private readonly DeviceController _deviceController;
-            private readonly AccessControlContext _context;
+            private readonly IAccessControlContext _context;
 
             public AuthorizeCardHandler(
                 DeviceController deviceController,
-                AccessControlContext context)
+                IAccessControlContext context)
             {
                 _deviceController = deviceController;
                 _context = context;

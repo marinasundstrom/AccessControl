@@ -11,17 +11,17 @@ namespace AppService.Application.Alarm
 {
     public class AlarmConsumer
         : IConsumer<LockEvent>,
-        IConsumer<AccessEvent>,
+        IConsumer<AccessControl.Contracts.Events.AccessEvent>,
         IConsumer<UnauthorizedAccessEvent>,
         IConsumer<AlarmEvent>
     {
         private readonly NotificationHubClient _notificationHubClient;
-        private readonly IHubContext<AlarmNotificationsHub, IAlarmNotificationClient> _hubContext;
+        private readonly IHubContext<AlarmNotificationsHub, AppService.Application.Alarm.Hubs.IAlarmNotificationClient> _hubContext;
         private readonly IAccessLogger _accessLogger;
 
         public AlarmConsumer(
             NotificationHubClient notificationHubClient,
-            IHubContext<AlarmNotificationsHub, IAlarmNotificationClient> hubContext,
+            IHubContext<AlarmNotificationsHub, AppService.Application.Alarm.Hubs.IAlarmNotificationClient> hubContext,
             IAccessLogger accessLogger)
         {
             _notificationHubClient = notificationHubClient;
@@ -36,7 +36,7 @@ namespace AppService.Application.Alarm
             await Do(message);
         }
 
-        public async Task Consume(ConsumeContext<AccessEvent> context)
+        public async Task Consume(ConsumeContext<AccessControl.Contracts.Events.AccessEvent> context)
         {
             var message = context.Message;
 

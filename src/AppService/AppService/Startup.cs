@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AppService.Application;
 using AppService.Application.AccessLog;
 using AppService.Application.AccessLog.Hubs;
 using AppService.Application.Alarm;
@@ -48,7 +49,9 @@ namespace AppService
                 .AddControllers()
                 .AddNewtonsoftJson();
 
-            services.AddInfrastructure();
+            services
+                .AddApplication()
+                .AddInfrastructure(Configuration);
 
             services.AddResponseCompression(opts =>
             {
@@ -141,15 +144,8 @@ namespace AppService
             .AddMassTransitHostedService()
             .AddGenericRequestClient();
 
-            services.AddSingleton<DeviceController>();
-            services.AddTransient<IJwtTokenService, JwtTokenService>();
-
-            services.AddSingleton<IAccessLogNotifier, AccessLogNotifier>();
-            services.AddSingleton<IAccessLogger, AccessLogger>();
-
             services.AddSignalR();
 
-            services.AddMediatR(typeof(AuthCommand));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>));
 
             //services.AddValidatorsFromAssemblyContaining<LoginCommandValidator>();

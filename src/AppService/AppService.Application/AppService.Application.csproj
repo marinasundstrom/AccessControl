@@ -7,22 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="10.3.6" />
+    <PackageReference Include="FluentValidation" Version="11.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.15.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.20.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.20.0" />
     <PackageReference Include="Microsoft.Azure.NotificationHubs" Version="4.1.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MassTransit.AspNetCore" Version="7.1.6" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.1.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppService.Infrastructure\AppService.Infrastructure.csproj" />
     <ProjectReference Include="..\..\AccessControl.Contracts\AccessControl.Contracts.csproj" />
+    <ProjectReference Include="..\AppService.Domain\AppService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

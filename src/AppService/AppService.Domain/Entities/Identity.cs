@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using AppService.Domain.Common;
 
 namespace AppService.Domain.Entities
 {
-    public class Identity
+    public class Identity : AuditableEntity
     {
         public Guid Id { get; set; }
 

@@ -28,16 +28,15 @@ namespace AppService.Application.AccessLog
         {
             using (var scope = serviceScopeFactory.CreateScope())
             {
-                var dataContext = scope.ServiceProvider.GetService<IAccessControlContext>();
-                var logEntry = new AccessLogEntry()
-                {
-                    AccessPoint = accessPoint != null ? await dataContext.AccessPoints.FindAsync(accessPoint.Id) : null,
-                    Event = accessEvent,
-                    Timestamp = DateTime.UtcNow,
-                    Identity = identity != null ? await dataContext.Identitiets.FindAsync(identity.Id) : null,
-                    Message = message,
-                    AccessLog = null
-                };
+                var dataContext = scope.ServiceProvider.GetRequiredService<IAccessControlContext>();
+
+                var logEntry = new AccessLogEntry(
+                    DateTime.UtcNow,
+                    accessPoint != null ? await dataContext.AccessPoints.FindAsync(accessPoint.Id) : null,
+                    identity != null ? await dataContext.Identitiets.FindAsync(identity.Id) : null,
+                    accessEvent,
+                    message);
+
                 await dataContext.AccessLogEntries.AddAsync(logEntry);
                 await dataContext.SaveChangesAsync();
 

@@ -1,16 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using AppService.Domain.Common;
 
 namespace AppService.Domain.Entities
 {
-    public class AccessList
+    public class AccessList : AuditableEntity
     {
-        public Guid Id { get; set; }
+        private HashSet<AccessListMembership> _memberships = new HashSet<AccessListMembership>();
+        private HashSet<Identity> _members = new HashSet<Identity>();
 
-        public string Name { get; set; }
+        internal AccessList() {}
 
-        public ICollection<Identity> Members { get; set; } = new List<Identity>();
+        public AccessList(string name)
+        {
+            Name = name;
+        }
 
-        public ICollection<AccessListMembership> Memberships { get; set; } = new List<AccessListMembership>();
+        public Guid Id { get; private set; }
+
+        public string Name { get; private set; } = null!;
+
+        public IReadOnlyCollection<Identity> Members => _members;
+
+        public IReadOnlyCollection<AccessListMembership> Memberships => _memberships;
+
+        public AccessListMembership AddMember(Identity identity)
+        {
+            var membership = new AccessListMembership(identity);
+
+            _memberships.Add(membership);
+
+            return membership;
+        }
+
+        public void RemoveMember(Identity identity)
+        {
+            _members.Remove(identity);
+        }
     }
 }

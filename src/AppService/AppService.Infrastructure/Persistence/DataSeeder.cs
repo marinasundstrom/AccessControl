@@ -20,21 +20,11 @@ namespace AppService.Infrastructure.Persistence
 
                 accessControlContext.Identitiets.Add(identity);
 
-                var accessPoint = new AccessPoint()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "AccessPoint1",
-                    AccessTime = TimeSpan.FromSeconds(8),
-                    IPAddress = "192.168.1.182"
-                };
+                var accessPoint = new AccessPoint("AccessPoint1", "192.168.1.182");
 
-                accessPoint.AccessList = new AccessList()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "AccessPoint1_AccessList",
-                };
+                accessPoint.AccessList = new AccessList("AccessPoint1_AccessList");
 
-                accessPoint.AccessList.Members.Add(identity);
+                accessPoint.AccessList.AddMember(identity);
 
                 accessControlContext.AccessPoints.Add(accessPoint);
 

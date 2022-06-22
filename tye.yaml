@@ -16,17 +16,39 @@ services:
     - name: management
       port: 15672
 
+- name: nginx
+  image: nginx
+  bindings:
+    - name: http
+      protocol: http
+      port: 80
+    - name: https
+      protocol: https
+      port: 443
+  volumes:
+    - source: nginx.conf
+      target: /etc/nginx/templates/default.conf.template
+    - source: certs
+      target: /etc/nginx/certs
+
 - name: appservice
   project: src/AppService/AppService/AppService.csproj
   bindings:
   - protocol: https
     port: 5031
 
-- name: WebApp
-  project: src/WebApp/WebApp.Server/WebApp.Server.csproj
+- name: webapp
+  project: src/WebApp/ClientApp/ClientApp.csproj
   bindings:
   - protocol: https
     port: 5032
+
+- name: identity
+  project: src/IdentityService/IdentityService/IdentityService.csproj
+  replicas: 1
+  bindings:
+  - protocol: https
+    port: 5033
 
 - name: appservice-db
   image: mcr.microsoft.com/azure-sql-edge:latest

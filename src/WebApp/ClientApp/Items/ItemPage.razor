@@ -1,0 +1,229 @@
+﻿@page "/items/{Id}"
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<ItemsPage> T
+@inject IStringLocalizer<Resources.App> T2
+@inject IItemsClient ItemsClient
+@inject ICommentsClient CommentsClient
+@inject IStatusesClient StatusesClient
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+@inject ICurrentUserService CurrentUserService
+
+@if (item is null)
+{
+    if (loading)
+    {
+        <p>Loading...</p>
+    }
+    else if (error)
+    {
+        @if (notFound)
+        {
+            <MudText Typo="Typo.h3" GutterBottom="true">Not found :(</MudText>
+        }
+        else
+        {
+            <MudText Typo="Typo.h3" GutterBottom="true">Something went wrong</MudText>
+        }
+    }
+}
+else
+{
+    <PageTitle>@item.Name</PageTitle>
+
+    <MudText Typo="Typo.h3" GutterBottom="true">@item.Name</MudText>
+
+    <MudText Typo="Typo.caption" GutterBottom="true">Created by @item.CreatedBy at @item.Created.ToString("g")</MudText>
+
+    <MudGrid class="mt-4">
+        @if (item.Image is not null)
+        {
+            <MudItem xs="12" md="4">
+                <MudImage Src="@item.Image" Alt="Item picture" ObjectFit="ObjectFit.Cover" Elevation="25" Width="250" Class="rounded-lg" />
+            </MudItem>
+        }
+
+        <MudItem xs="12" md="8">
+            <MudPaper Elevation="25" Class="pa-4">
+                <MudText Typo="Typo.body1">@item.Description</MudText>
+
+                <MudSelect T="StatusDto" Label="@T["Status"]" Class="mt-3" ToStringFunc="(s) => T2[s.Name]" Value="item.Status" ValueChanged="OnStatusChanged">
+                    @foreach (var status in statuses ?? Array.Empty<StatusDto>())
+                    {
+                        <MudSelectItem Value="@status">@T2[status.Name]</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <AuthorizeView>
+        <MudButton @onclick="NewComment" Variant="Variant.Filled" StartIcon="@Icons.Filled.Add" Color="Color.Primary" Class="mb-2 mt-2">
+            @T["NewComment"]
+        </MudButton>
+    </AuthorizeView>
+
+    <MudTable T="CommentDto" Elevation="25" Bordered="false" Dense="true" @ref="table" SortLabel="@T["SortBy"]" ServerData="@(new Func<TableState, Task<TableData<CommentDto>>>(ServerReload))" OnRowClick="CommentClicked" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info" class="mt-4">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel T="CommentDto" SortLabel="Text">@T["Header_Text"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel T="CommentDto" SortLabel="Created">@T["Header_Created"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel T="CommentDto" SortLabel="CreatedBy">@T["Header_CreatedBy"]</MudTableSortLabel></MudTh>
+            @*<MudTh><MudTableSortLabel T="ItemDto" SortLabel="LastModified">@T["Header_LastModified"]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel T="ItemDto" SortLabel="LastModifiedBy">@T["Header_LastModifiedBy"]</MudTableSortLabel></MudTh>*@
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="@T["Header_Text"]">@context.Text</MudTd>
+            <MudTd DataLabel="@T["Header_Created"]">@context.Created.ToString("g")</MudTd>
+            <MudTd DataLabel="@T["Header_CreatedBy"]">@context.CreatedBy</MudTd>
+            @*<MudTd DataLabel="@T["Header_LastModified"]">@context.LastModified?.ToString("g")</MudTd>
+                <MudTd DataLabel="@T["Header_LastModifiedBy"]">@context.LastModifiedBy</MudTd>*@
+            <MudTd><MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteComment(context)" /></MudTd>
+        </RowTemplate>
+        <NoRecordsContent>
+            <MudText>@T["NoRecordsFound"]</MudText>
+        </NoRecordsContent>
+        <LoadingContent>
+            <MudText>@T["Loading"]</MudText>
+        </LoadingContent>
+        <PagerContent>
+            <MudTablePager RowsPerPageString="@T["RowsPerPage"]" />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    MudTable<CommentDto> table = null!;
+    ItemDto? item;
+    bool loading;
+    bool error;
+    bool notFound;
+    IEnumerable<StatusDto>? statuses = null;
+
+    [Parameter] public string Id { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        loading = true;
+        notFound = false;
+
+        statuses = await StatusesClient.GetStatusesAsync();
+
+        try
+        {
+            item = await ItemsClient.GetItemAsync(Id);
+        }
+        catch (ApiException exc)
+        {
+            if (exc.StatusCode == 404)
+            {
+                notFound = true;
+            }
+            error = true;
+        }
+        catch (HttpRequestException exc)
+        {
+            error = true;
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private async Task<TableData<CommentDto>> ServerReload(TableState state)
+    {
+        try
+        {
+            var results = await CommentsClient.GetCommentsAsync(state.Page + 1, state.PageSize, Id, null,
+                state.SortLabel, state.SortDirection == MudBlazor.SortDirection.Ascending ? Client.SortDirection.Asc : Client.SortDirection.Desc);
+
+            return new TableData<CommentDto>() { TotalItems = results.TotalCount, Items = results.Items };
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+
+        return null!;
+    }
+
+    private void CommentClicked(TableRowClickEventArgs<CommentDto> args)
+    {
+        //NavigationManager.NavigateTo($"/items/{args.Item.Id}");
+    }
+
+    private async Task DeleteComment(CommentDto comment)
+    {
+        try
+        {
+            var result = await DialogService.ShowMessageBox(T["DeleteSelectedItem", comment.Text], T["AreYouSure"], T["Yes"], T["No"]);
+
+            if (result.GetValueOrDefault())
+            {
+                await ItemsClient.DeleteCommentAsync(Id, comment.Id);
+
+                //selectedItems.Remove(comment);
+
+                await table.ReloadServerData();
+            }
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+        catch (Exception)
+        {
+            Snackbar.Add(T["FailedToDeleteComment"], Severity.Error);
+        }
+    }
+
+    async Task OnStatusChanged(StatusDto newStatus)
+    {
+        if (item!.Status.Id == newStatus.Id)
+        {
+            return;
+        }
+
+        var oldStatus = item!.Status;
+
+        try
+        {
+            await ItemsClient.UpdateStatusAsync(item.Id, new UpdateItemStatusDto { StatusId = newStatus.Id });
+
+            Snackbar.Add(T["StatusUpdated"], Severity.Info);
+        }
+        catch (Exception)
+        {
+            item.Status = oldStatus;
+
+            Snackbar.Add(T["StatusUpdatedFailed"], Severity.Error);
+        }
+    }
+
+    private async Task NewComment()
+    {
+        var dialogReference = DialogService.Show<CommentDialog>(T["NewComment"]);
+
+        var result = await dialogReference.Result;
+        var model = (CommentDialog.FormModel)result.Data;
+
+        if (result.Cancelled)
+            return;
+
+        try
+        {
+            var item = await ItemsClient.AddCommentAsync(Id, new CreateCommentDto()
+            {
+                Text = model.Text
+            });
+
+            await table.ReloadServerData();
+        }
+        catch (Exception exc)
+        {
+            Snackbar.Add(T["FailedToCreateItem"], Severity.Error);
+        }
+    }
+
+}

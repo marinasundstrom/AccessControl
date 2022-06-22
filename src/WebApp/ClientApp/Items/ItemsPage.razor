@@ -1,0 +1,260 @@
+﻿@page "/items"
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<ItemsPage> T
+@inject IStringLocalizer<Resources.App> T2
+@inject IItemsClient ItemsClient
+@inject IStatusesClient StatusesClient
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+@inject ICurrentUserService CurrentUserService
+
+<PageTitle>@T["Items"]</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">@T["Items"]</MudText>
+
+<AuthorizeView>
+    <MudButton @onclick="NewItem" Variant="Variant.Filled" StartIcon="@Icons.Filled.Add" Color="Color.Primary" Class="mb-2 mt-2">
+        @T["NewItem"]
+    </MudButton>
+
+    <MudCheckBox Label="@T["JustMyItems"]" CheckedChanged="new Func<bool, Task>(OnJustMyItemsCheckedChanged)" Checked="justMyItems" />
+
+    <MudCheckBox Label="@T["SelectMultiple"]" @bind-Checked="selectMultiple" />
+
+    @if (selectedItems.Count > 0)
+    {
+        <MudButton @onclick="DeleteSelectedItems" Variant="Variant.Filled" StartIcon="@Icons.Filled.Delete" Color="Color.Primary" Class="ms-2 mb-2 mt-2">
+            @T["DeleteSelected"]
+        </MudButton>
+    }
+</AuthorizeView>
+
+
+<MudTable T="ItemDto" MultiSelection="@selectMultiple" @bind-SelectedItems="selectedItems" Elevation="25" Bordered="false" Dense="true" @ref="table" SortLabel="@T["SortBy"]" ServerData="@(new Func<TableState, Task<TableData<ItemDto>>>(ServerReload))" OnRowClick="ItemClicked" Hover="true" Breakpoint="Breakpoint.Sm" LoadingProgressColor="Color.Info" class="mt-4">
+    <ToolBarContent>
+        <MudSpacer />
+        <MudSelect T="StatusDto?" Label="Filter by Status" MultiSelection="true" @bind-Value="Status" SelectedValues="selectedStatuses" SelectedValuesChanged="OnSelectedStatusesChanged" ToStringFunc="i => T2[i.Name]" Class="mt-0">
+            @foreach (var status in statuses)
+            {
+                <MudSelectItem T="StatusDto?" Value="@status">@T2[status.Name]</MudSelectItem>
+            }
+        </MudSelect>
+    </ToolBarContent>
+
+    <HeaderContent>
+        <MudTh></MudTh>
+        <MudTh><MudTableSortLabel T="ItemDto" SortLabel="Name">@T["Header_Name"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="ItemDto" SortLabel="Description">@T["Header_Description"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="ItemDto" SortLabel="Status">@T["Header_Status"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="ItemDto" SortLabel="Created">@T["Header_Created"]</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel T="ItemDto" SortLabel="CreatedBy">@T["Header_CreatedBy"]</MudTableSortLabel></MudTh>
+        @*<MudTh><MudTableSortLabel T="ItemDto" SortLabel="LastModified">@T["Header_LastModified"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel T="ItemDto" SortLabel="LastModifiedBy">@T["Header_LastModifiedBy"]</MudTableSortLabel></MudTh>*@
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>
+            @if (context.Image is not null)
+            {
+                <MudImage Src="@context.Image" Alt="Item picture" Width="100" Class="rounded-lg" />
+            }
+        </MudTd>
+        <MudTd DataLabel="@T["Header_Name"]">@context.Name</MudTd>
+        <MudTd DataLabel="@T["Header_Description"]">@context.Description</MudTd>
+        <MudTd DataLabel="@T["Header_Status"]">@T2[context.Status.Name]</MudTd>
+        <MudTd DataLabel="@T["Header_Created"]">@context.Created.ToString("g")</MudTd>
+        <MudTd DataLabel="@T["Header_CreatedBy"]">@context.CreatedBy</MudTd>
+        @*<MudTd DataLabel="@T["Header_LastModified"]">@context.LastModified?.ToString("g")</MudTd>
+            <MudTd DataLabel="@T["Header_LastModifiedBy"]">@context.LastModifiedBy</MudTd>*@
+        <MudTd><MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async () => await DeleteItem(context)" /></MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>@T["NoRecordsFound"]</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>@T["Loading"]</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager RowsPerPageString="@T["RowsPerPage"]" />
+    </PagerContent>
+</MudTable>
+
+@code {
+    MudTable<ItemDto> table = null!;
+    string? createdBy;
+    bool justMyItems;
+    bool selectMultiple;
+    private HashSet<ItemDto> selectedItems = new HashSet<ItemDto>();
+    StatusDto? Status;
+    IEnumerable<StatusDto?> selectedStatuses = new List<StatusDto?>();
+    IEnumerable<StatusDto>? statuses = Array.Empty<StatusDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        statuses = await StatusesClient.GetStatusesAsync();
+    }
+
+    private async Task<TableData<ItemDto>> ServerReload(TableState state)
+    {
+        try
+        {
+            var results = await ItemsClient.GetItemsAsync(state.Page + 1, state.PageSize, selectedStatuses?.Select(x => x.Id), createdBy,
+                state.SortLabel, state.SortDirection == MudBlazor.SortDirection.Ascending ? Client.SortDirection.Asc : Client.SortDirection.Desc);
+
+            return new TableData<ItemDto>() { TotalItems = results.TotalCount, Items = results.Items };
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+
+        return null!;
+    }
+
+    private async Task OnJustMyItemsCheckedChanged(bool isChecked)
+    {
+        if (isChecked)
+        {
+            createdBy = await CurrentUserService.GetUserId();
+        }
+        else
+        {
+            createdBy = null;
+        }
+
+        selectedItems.Clear();
+
+        await table.ReloadServerData();
+
+        justMyItems = isChecked;
+    }
+
+    private void ItemClicked(TableRowClickEventArgs<ItemDto> args)
+    {
+        if (selectMultiple)
+        {
+            return;
+        }
+
+        NavigationManager.NavigateTo($"/items/{args.Item.Id}");
+    }
+
+    private async Task NewItem()
+    {
+        var dialogReference = DialogService.Show<NewItemDialog>(T["NewItem"]);
+
+        var result = await dialogReference.Result;
+        var model = (NewItemDialog.FormModel)result.Data;
+
+        if (result.Cancelled)
+            return;
+
+        selectedItems.Clear();
+
+        try
+        {
+            var item = await ItemsClient.CreateItemAsync(new CreateItemDto()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                StatusId = model.Status.Id
+            });
+
+            if (model.Stream is not null)
+            {
+                await ItemsClient.UploadImageAsync(item.Id, new FileParameter(model.Stream, model.FileName, model.ContentType));
+            }
+
+            await table.ReloadServerData();
+        }
+        catch (Exception exc)
+        {
+            Snackbar.Add(T["FailedToCreateItem"], Severity.Error);
+        }
+    }
+
+    private async Task DeleteItem(ItemDto item)
+    {
+        try
+        {
+            var result = await DialogService.ShowMessageBox(T["DeleteSelectedItem", item.Name], T["AreYouSure"], T["Yes"], T["No"]);
+
+            if (result.GetValueOrDefault())
+            {
+                await DeleteItemCore(item);
+
+                await table.ReloadServerData();
+            }
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+        catch (Exception)
+        {
+            Snackbar.Add(T["FailedToDeleteItem"], Severity.Error);
+        }
+    }
+
+    private async Task DeleteItemCore(ItemDto item)
+    {
+        await ItemsClient.DeleteItemAsync(item.Id);
+
+        selectedItems.Remove(item);
+    }
+
+    private async Task DeleteSelectedItems()
+    {
+        try
+        {
+            var result = await DialogService.ShowMessageBox(T["DeleteSelectedItems"], T["AreYouSure"], T["Yes"], T["No"]);
+
+            if (result.GetValueOrDefault())
+            {
+                List<ItemDto>? failedItems = null;
+
+                foreach (var item in selectedItems)
+                {
+                    try
+                    {
+                        await DeleteItemCore(item);
+
+                        selectedItems.Remove(item);
+                    }
+                    catch (AccessTokenNotAvailableException exception)
+                    {
+                        exception.Redirect();
+                    }
+                    catch (Exception)
+                    {
+                        if (failedItems is null)
+                        {
+                            failedItems = new List<ItemDto>();
+                        }
+
+                        failedItems.Add(item);
+                    }
+                }
+
+                if (failedItems?.Any() ?? false)
+                {
+                    Snackbar.Add(T["FailedToDeleteItems", failedItems!.Count()], Severity.Error);
+                }
+
+                await table.ReloadServerData();
+
+                StateHasChanged();
+            }
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    private async Task OnSelectedStatusesChanged(IEnumerable<StatusDto?> selectedValues)
+    {
+        selectedStatuses = selectedValues;
+        await table.ReloadServerData();
+    }
+}

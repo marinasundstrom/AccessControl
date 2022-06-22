@@ -1,0 +1,18 @@
+﻿@page "/counter"
+@inject IStringLocalizer<Counter> T
+
+<PageTitle>@T["Counter"]</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">@T["Counter"]</MudText>
+<MudText Class="mb-4">@T["CurrentCount"] @currentCount</MudText>
+<MudButton Color="Color.Primary" Variant="Variant.Filled" @onclick="IncrementCount">@T["ClickMe"]</MudButton>
+
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}

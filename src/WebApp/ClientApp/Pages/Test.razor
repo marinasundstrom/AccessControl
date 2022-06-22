@@ -1,0 +1,20 @@
+@page "/test"
+@attribute [Authorize]
+@implements IAsyncDisposable
+@inject NavigationManager NavigationManager
+@inject AccessControl.Client.Authentication.IAccessTokenProvider AccessTokenProvider
+@inject ISnackbar Snackbar
+
+<PageTitle>Test</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Test</MudText>
+
+<MudPaper Elevation="25" Class="px-4 py-4">
+    <EditForm Model="@this" OnValidSubmit="OnSubmit">
+        <DataAnnotationsValidator />
+
+        <MudTextField Variant="Variant.Outlined" Label="Your name" @bind-Value="Name" For="() => Name"></MudTextField>
+
+        <MudButton Class="mt-2" Color="Color.Primary" Variant="Variant.Filled" ButtonType="ButtonType.Submit">Say hi</MudButton>
+    </EditForm>
+</MudPaper>

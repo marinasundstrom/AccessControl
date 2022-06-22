@@ -1,0 +1,42 @@
+﻿@page "/fetchdata"
+@attribute [Authorize]
+@inject IWeatherForecastClient WeatherForecastClient
+@inject IStringLocalizer<FetchData> T
+
+<PageTitle>@T["WeatherForecast"]</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">@T["WeatherForecast"]</MudText>
+<MudText Class="mb-8">@T["Description"]</MudText>
+@if (forecasts == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudTable Items="forecasts" Hover="true" SortLabel="@T["SortBy"]" Elevation="25">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="MudBlazor.SortDirection.Ascending" SortBy="new Func<WeatherForecast, object>(x=>x.Date)">@T["Date"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<WeatherForecast, object>(x=>x.TemperatureC)">@T["TempC"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<WeatherForecast, object>(x=>x.TemperatureF)">@T["TempF"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<WeatherForecast, object>(x=>x.Summary!)">@T["Summary"]</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="@T["Date"]">@context.Date.ToString("g")</MudTd>
+            <MudTd DataLabel="@T["TempC"]">@context.TemperatureC</MudTd>
+            <MudTd DataLabel="@T["TempF"]">@context.TemperatureF</MudTd>
+            <MudTd DataLabel="@T["Summary"]">@context.Summary</MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{50, 100}" RowsPerPageString="@T["RowsPerPage"]" />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    private IEnumerable<WeatherForecast> forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await WeatherForecastClient.GetAsync();
+    }
+}

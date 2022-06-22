@@ -1,0 +1,17 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
+<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor!</MudText>
+<MudAlert Severity="Severity.Normal">You can find documentation and examples on our website here: <MudLink Href="https://mudblazor.com" Typo="Typo.body2" Color="Color.Inherit"><b>www.mudblazor.com</b></MudLink></MudAlert>
+
+<AuthorizeView Roles="User">
+    <MudText Class="mt-8">You are a User.</MudText>
+</AuthorizeView>
+
+<AuthorizeView Roles="Administrator">
+    <MudText Class="mt-8">You are an Administrator.</MudText>
+</AuthorizeView>
+
+<p class="mt-8 text">Scoped CSS</p>

@@ -1,0 +1,58 @@
+﻿@using AccessControl.Theming
+@using Blazored.LocalStorage
+@inherits LayoutComponentBase
+@inject IDialogService DialogService
+@inject IStringLocalizer<MainLayout> T
+@inject ThemeManager ThemeManager
+@inject ILocalStorageService LocalStorage
+
+<MudThemeProvider IsDarkMode="@(_currentColorScheme == ColorScheme.Dark)" Theme="_theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <AppBar DrawerToggleCallback="@((e) => DrawerToggle())" />
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">@T["AppTitle"]</MudText>
+        </MudDrawerHeader>
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-8">
+            @Body
+
+            <MudScrollToTop>
+                <MudFab Color="Color.Tertiary" Icon="@Icons.Filled.KeyboardArrowUp" />
+            </MudScrollToTop>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private MudTheme _theme = new();
+    bool _drawerOpen = false;
+    ColorScheme? _currentColorScheme;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ThemeManager.ColorSchemeChanged += OnColorSchemeChanged;
+        _currentColorScheme = ThemeManager.CurrentColorScheme;
+
+        _drawerOpen = await LocalStorage.GetItemAsync<bool?>("drawerOpen") ?? true;
+    }
+
+    async Task DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+
+        await LocalStorage.SetItemAsync("drawerOpen", _drawerOpen);
+    }
+
+    void OnColorSchemeChanged(object? sender, ColorSchemeChangedEventArgs ea)
+    {
+        _currentColorScheme = ea.ColorScheme;
+
+        StateHasChanged();
+    }
+}

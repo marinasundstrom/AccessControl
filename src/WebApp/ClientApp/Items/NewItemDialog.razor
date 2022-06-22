@@ -1,0 +1,138 @@
+﻿@using System.ComponentModel.DataAnnotations
+@inject IStringLocalizer<NewItemDialog> T
+@inject IStringLocalizer<Resources.App> T2
+@inject IStatusesClient StatusesClient
+@inject ISnackbar Snackbar
+
+<div style="width: 350px; max-width: 350px;">
+    <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+
+        <DataAnnotationsValidator />
+        <MudDialog>
+            <DialogContent>
+                <MudTextField Label="@T["Name"]" HelperText="Max. 60 characters" @bind-Value="model.Name"
+                    For="@(() => model.Name)" />
+                <MudTextField Label="@T["Description"]" Lines="3" Class="mt-3" @bind-Value="model.Description"
+                    For="@(() => model.Description)" />
+                <MudSelect T="StatusDto" Label="@T["Status"]" Class="mt-3" ToStringFunc="(s) => T2[s.Name]"
+                    @bind-Value="model.Status">
+                    @foreach (var status in statuses ?? Array.Empty<StatusDto>())
+                    {
+                        <MudSelectItem Value="@status">@T2[status.Name]</MudSelectItem>
+                    }
+                </MudSelect>
+
+                <div class="mt-4">
+                    <InputFile id="fileInput2" OnChange="UploadFiles" Class="mt-3" hidden accept=".jpg, .jpeg, .png" />
+
+                    <MudButton HtmlTag="label"
+                            Variant="Variant.Filled"
+                            Color="Color.Primary"
+                            StartIcon="@Icons.Filled.CloudUpload"
+                            for="fileInput2"
+                            Class="mt-3">
+                        @(model.Stream is null ? T["UploadImage"] : T["ChooseAnotherImage"])
+                    </MudButton>
+
+                    @if (model.Stream is not null)
+                    {
+                        <MudIconButton Variant="Variant.Filled" Color="Color.Secondary" Icon="@Icons.Filled.Remove"
+                        Class="ml-3 mt-3" OnClick="() => { model.Stream = null; imageBytes = null; }">
+                        </MudIconButton>
+
+                        @if (imageBytes is not null)
+                        {
+                            <img style="height: 150px; margin-top: 15px"
+                                src="data:image/png;base64,@Convert.ToBase64String(imageBytes)" />
+                        }
+                    }
+
+                    <MudText Typo="Typo.subtitle2" GutterBottom="true" Class="mt-3">@T2["Optional"]. Max 2 MB.</MudText>
+                </div>
+            </DialogContent>
+
+            <DialogActions>
+                <MudButton Variant="Variant.Text" Color="Color.Secondary" OnClick="() => MudDialog.Cancel()">
+                    @T["Cancel"]</MudButton>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Primary">@T["Create"]
+                </MudButton>
+            </DialogActions>
+        </MudDialog>
+
+    </EditForm>
+</div>
+
+@code {
+    FormModel model = new FormModel();
+    IEnumerable<StatusDto>? statuses = null;
+    byte[]? imageBytes = null;
+    bool success;
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        statuses = await StatusesClient.GetStatusesAsync();
+        model.Status = statuses.First();
+    }
+
+    void OnValidSubmit() => MudDialog.Close(DialogResult.Ok(model));
+
+    void Cancel() => MudDialog.Cancel();
+
+    public class FormModel
+    {
+        [Required(ErrorMessageResourceType = typeof(Resources.App), ErrorMessageResourceName = "RequiredError")]
+        [StringLength(60, ErrorMessageResourceType = typeof(Resources.App), ErrorMessageResourceName = "MaxLengthError")]
+        public string Name { get; set; } = null!;
+
+        [Required(ErrorMessageResourceType = typeof(Resources.App), ErrorMessageResourceName = "RequiredError")]
+        [StringLength(240, ErrorMessageResourceType = typeof(Resources.App), ErrorMessageResourceName = "MaxLengthError")]
+        public string Description { get; set; } = null!;
+
+        [Required]
+        public StatusDto Status { get; set; } = null!;
+
+        public Stream? Stream { get; set; }
+
+        public string? FileName { get; set; }
+
+        public string? ContentType { get; set; }
+    }
+
+    private async Task UploadFiles(InputFileChangeEventArgs e)
+    {
+        if (e.File.Size > Constants.FileMaxSize)
+        {
+            Snackbar.Add("Image is too large.", Severity.Error);
+            return;
+        }
+
+        var file = e.File;
+
+        //file = await file.RequestImageFileAsync("png", 550, 550);
+
+        var stream = file.OpenReadStream(Constants.FileMaxSize);
+        await Process(stream);
+
+        model.FileName = file.Name;
+        model.ContentType = file.ContentType;
+    }
+
+    private async Task Process(Stream stream)
+    {
+        var memoryStream = new MemoryStream();
+        await stream.CopyToAsync(memoryStream);
+        memoryStream.Seek(0, SeekOrigin.Begin);
+        imageBytes = await GetBytes(memoryStream);
+        memoryStream.Seek(0, SeekOrigin.Begin);
+        Console.WriteLine(memoryStream.Length);
+        model.Stream = memoryStream;
+    }
+
+    private async Task<byte[]> GetBytes(MemoryStream memoryStream)
+    {
+        var imageBytes = memoryStream.ToArray();
+        return imageBytes;
+    }
+}

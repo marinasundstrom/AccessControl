@@ -1,0 +1,11 @@
+﻿@inject IStringLocalizer<NavMenu> T
+
+<MudNavMenu>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">@T["Home"]</MudNavLink>
+    <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">@T["Counter"]</MudNavLink>
+    <AuthorizeView>
+        <MudNavLink Href="fetchdata" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">@T["FetchData"]</MudNavLink>
+        <MudNavLink Href="test" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">@T["Test"]</MudNavLink>
+        <MudNavLink Href="users" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">@T["Users"]</MudNavLink>
+    </AuthorizeView>
+</MudNavMenu>

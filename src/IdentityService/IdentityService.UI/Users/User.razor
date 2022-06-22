@@ -1,0 +1,63 @@
+﻿@page "/users/{userId}"
+@attribute [Authorize]
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+@inject IUsersClient UsersClient
+@inject ISnackbar Snackbar
+
+@if (isLoading)
+{
+    <LoadingIndicator />
+}
+else if(!isLoading && user is not null)
+{
+    <PageTitle>@user.GetDisplayName() - AccessControl</PageTitle>
+
+    <MudText Typo="Typo.h3" GutterBottom="true">@user.GetDisplayName()</MudText>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Edit" Class="me-2" OnClick="ChangeUserDetails">Edit details</MudButton>
+    <MudButton Variant="Variant.Filled" OnClick="ChangePassword">Change password</MudButton>
+}
+
+@code {
+    bool isLoading = false;
+    AccessControl.IdentityService.Client.UserDto user;
+
+    [Parameter] public string UserId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+
+        try
+        {
+            user = await UsersClient.GetUserAsync(UserId);
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+        catch (Exception exception)
+        {
+            Snackbar.Add("Failed to load users", Severity.Error);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    async Task ChangeUserDetails()
+    {
+        NavigationManager.NavigateTo($"/Users/{user.Id}/Edit");
+    }
+
+    async Task ChangePassword()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(ChangePasswordDialog.UserId), UserId);
+
+        var r = DialogService.Show<ChangePasswordDialog>("Change password", parameters);
+    }
+}
+

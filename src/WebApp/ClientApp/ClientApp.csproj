@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>AccessControl.Client</RootNamespace>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'AccessControl' ">
+      <ExternalConsole>true</ExternalConsole>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.6" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.6" />
+        <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="6.0.6">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.6" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+        <PackageReference Include="NSwag.ApiDescription.Client" Version="13.16.1">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="MudBlazor" Version="6.0.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <OpenApiReference Include="OpenAPIs\swagger.json" Options="/UseBaseUrl:false /GenerateClientInterfaces:true" Namespace="AccessControl.Client">
+            <SourceUri>https://localhost:5001/swagger/v1/swagger.json</SourceUri>
+            <ClassName>{controller}Client</ClassName>
+            <OutputPath>AccessControlClient.cs</OutputPath>
+        </OpenApiReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Resources\App.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>App.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\App.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>App.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+      <ItemGroup>
+    <ProjectReference Include="..\AppService\AppService.Client\AppService.Client.csproj" />
+    <ProjectReference Include="..\..\IdentityService\IdentityService.UI\IdentityService.UI.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

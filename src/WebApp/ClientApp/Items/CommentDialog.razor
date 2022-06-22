@@ -1,0 +1,49 @@
+﻿@using System.ComponentModel.DataAnnotations
+@inject IStringLocalizer<NewItemDialog> T
+@inject IStringLocalizer<CommentDialog> T3
+@inject IStringLocalizer<Resources.App> T2
+@inject IStatusesClient StatusesClient
+@inject ISnackbar Snackbar
+
+<div style="width: 350px; max-width: 350px;">
+    <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+
+        <DataAnnotationsValidator />
+        <MudDialog>
+            <DialogContent>
+                <MudTextField Label="@T3["Text"]" Lines="3" Class="mt-3" @bind-Value="model.Text"
+                    For="@(() => model.Text)" />    
+            </DialogContent>
+
+            <DialogActions>
+                <MudButton Variant="Variant.Text" Color="Color.Secondary" OnClick="() => MudDialog.Cancel()">
+                    @T3["Cancel"]</MudButton>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Primary">@T3["Post"]
+                </MudButton>
+            </DialogActions>
+        </MudDialog>
+
+    </EditForm>
+</div>
+
+@code {
+    FormModel model = new FormModel();
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+    void OnValidSubmit() => MudDialog.Close(DialogResult.Ok(model));
+
+    void Cancel() => MudDialog.Cancel();
+
+    public class FormModel
+    {
+        [Required(ErrorMessageResourceType = typeof(Resources.App), ErrorMessageResourceName = "RequiredError")]
+        [StringLength(240, ErrorMessageResourceType = typeof(Resources.App), ErrorMessageResourceName = "MaxLengthError")]
+        public string Text { get; set; } = null!;
+    }
+}

@@ -4,6 +4,6 @@
     {
         string? UserId { get; }
 
-        bool IsUserInRole(string role);
+        //bool IsUserInRole(string role);
     }
 }

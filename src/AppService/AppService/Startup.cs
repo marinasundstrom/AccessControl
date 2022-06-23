@@ -13,6 +13,7 @@ using AppService.Application.Services;
 using AppService.Domain.Entities;
 using AppService.Infrastructure;
 using AppService.Infrastructure.Persistence;
+using AppService.Services;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -52,6 +53,8 @@ namespace AppService
             services
                 .AddApplication()
                 .AddInfrastructure(Configuration);
+
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddResponseCompression(opts =>
             {

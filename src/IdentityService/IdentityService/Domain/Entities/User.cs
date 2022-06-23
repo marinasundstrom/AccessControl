@@ -2,14 +2,13 @@
 // See LICENSE in the project root for license information.
 
 
-using AccessControl.IdentityService.Domain.Common.Interfaces;
-
+using AccessControl.IdentityService.Domain.Common;
 using Microsoft.AspNetCore.Identity;
 
 namespace AccessControl.IdentityService.Domain.Entities;
 
 // Add profile data for application users by adding properties to the ApplicationUser class
-public class User : IdentityUser, IAuditableEntity, ISoftDelete
+public class User : IdentityUser //, BaseAuditableEntity
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

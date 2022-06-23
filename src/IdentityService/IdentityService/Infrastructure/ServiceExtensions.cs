@@ -1,6 +1,7 @@
 ﻿
 using AccessControl.IdentityService.Application.Common.Interfaces;
 using AccessControl.IdentityService.Infrastructure.Persistence;
+using AccessControl.IdentityService.Infrastructure.Persistence.Interceptors;
 using AccessControl.IdentityService.Infrastructure.Services;
 
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ public static class ServiceExtensions
             options.UseSqlServer(configuration.GetConnectionString("appservice-db", "IdentityServer") ?? configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+
+        services.AddTransient<AuditableEntitySaveChangesInterceptor>();
 
         services.AddScoped<IDomainEventService, DomainEventService>();
 
